@@ -10,6 +10,10 @@ public class testCreatureReactionColor : MonoBehaviour {
 	
 	public Color myReceivedColor = Color.black;
 	
+	public GameObject prefabColor;
+	
+	public bool bProduced = false;
+	
 	// Use this for initialization
 	void Start () {
 		//test initmaterial
@@ -33,5 +37,17 @@ public class testCreatureReactionColor : MonoBehaviour {
 		Debug.Log("receivingColor");
 		Debug.Log(c);
 		myReceivedColor = c;
+		
+		//test for feedback/output
+		if(bProduced == false) {
+			_ProduceColor(myReceivedColor);
+			bProduced = true;
+		}
+		
+	}
+	
+	void _ProduceColor(Color c) {
+		GameObject producedColor = Instantiate(prefabColor, gameObject.transform.position, gameObject.transform.rotation) as GameObject;
+		producedColor.BroadcastMessage("_SetMyColor", c, SendMessageOptions.DontRequireReceiver);
 	}
 }
