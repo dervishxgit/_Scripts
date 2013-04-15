@@ -5,6 +5,7 @@ public class testResourceTrigger : MonoBehaviour {
 	
 	public Color myColor = Color.red;
 	
+	public bool bDoesDecay = true;
 	public float fDecayRate = 1.0f;
 	public float fLifeSpanSeconds = 5.0f;
 	
@@ -15,7 +16,10 @@ public class testResourceTrigger : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		_Decay(Time.deltaTime * fDecayRate);
+		if(bDoesDecay == true) {
+			_Decay(Time.deltaTime * fDecayRate);
+		}
+		
 	}
 	
 	void OnTriggerEnter(Collider other) {
