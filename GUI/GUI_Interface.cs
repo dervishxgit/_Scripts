@@ -10,7 +10,6 @@ public class GUI_Interface : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		//GUI.skin = myGUISkin;
 		_guiCore = GetComponent<GUI_Core>() as GUI_Core;
 	}
 	
@@ -18,14 +17,14 @@ public class GUI_Interface : MonoBehaviour {
 	void Update () {
 		//toggle for main menu
 		if( Input.GetButtonUp("ToggleMainMenu") ) {
-			//Debug.Log ("hit spacebar");
-			bDisplayAllMenus = !bDisplayAllMenus;
+   			bDisplayAllMenus = !bDisplayAllMenus;
 		}
 	}
 	
 	 void OnGUI() {
 		//set custom skin
 		GUI.skin = _myGUISkin;
+		
 		if(bDisplayAllMenus) {
 			//initial test
 			GUI.BeginGroup(_guiCore._CreateCenteredRect(Screen.width/4, Screen.height/4) );
@@ -36,14 +35,19 @@ public class GUI_Interface : MonoBehaviour {
 			GUI.Box(_guiCore._CreateTopMenu(), new GUIContent() );
 			GUI.EndGroup();
 			//end top menu
+			
+			//create bottommenu group
+			GUI.BeginGroup(_guiCore._CreateBottomMenu() );
+			GUI.Box(_guiCore._CreateBottomMenu(0,0), new GUIContent() );
+			GUI.EndGroup();
+			//end bottommenu
+			
+			//create sidebar group
+			GUI.BeginGroup(_guiCore._CreateSidebar() );
+			GUI.Box(_guiCore._CreateSidebar(0,0), new GUIContent() );
+			GUI.EndGroup();
+			//end sidebar
 		} else {return;}
     }
-		
-//	public Rect CreateCenteredRect(float width, float height) {
-//			return new Rect(Screen.width/2 - width/2,
-//				Screen.height/2 - height/2,
-//				width, height
-//				);
-//		}
 }
 		
