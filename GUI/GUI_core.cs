@@ -8,8 +8,13 @@ public class GUI_Core : MonoBehaviour {
 	Vector2 topSize;
 	float fTopHeightPercent = 0.5f;
 	
+	int topMenuState = 0;
+	const int topMenuState_NoDisplay = 0;
+	const int topMenuState_Simulation = 1;
+	const int topMenuState_Configuration = 2;
+	const int topMenuState_Runtime = 3;
 	
-	string[] sTopMenuStrings = new string[] {"New", "Save", "Load", "Exit"};
+	string topMenuStateString = "_NoDisplay_";
 	
 	//sidebar settings
 	Vector4 sBar; //.xyzw
@@ -50,8 +55,35 @@ public class GUI_Core : MonoBehaviour {
 		return new Rect(topOrigin.x, topOrigin.y, topSize.x, topSize.y);
 	}
 	
-	public string[] _GetTopMenuStrings() {
-		return sTopMenuStrings;	
+	public void _SetTopMenuState(int state) {
+		topMenuState = state;	
+	}
+	
+	public void _SetTopMenuState(string state) {
+//		switch( state ) {
+//		case "Simulation":
+//			_SetTopMenuState(1);
+//			break;
+//		case "Configuration":
+//			_SetTopMenuState(2);
+//			break;
+//		case "Runtime":
+//			_SetTopMenuState(3);
+//			break;
+//		}
+		topMenuStateString = state;
+	}
+	
+	public int _GetTopMenuState() {
+		return topMenuState;	
+	}
+	
+	public string _GetTopMenuStateString() {
+		return topMenuStateString;	
+	}
+	
+	public void _ResetTopMenuState() {
+		topMenuStateString = "_NoDisplay_";	
 	}
 	
 	public Rect _CreateBottomMenu() {

@@ -11,6 +11,8 @@ public class GUI_Interface : MonoBehaviour
 	bool bDisplayConfigurationMenu = false;
 	bool bDisplayRuntimeMenu = false;
 	
+	
+	
 	//top menu toolbar
 	int iTopMenuInt = 0;
 	
@@ -28,6 +30,8 @@ public class GUI_Interface : MonoBehaviour
 			//Debug.Log ("space");
 			bDisplayAllMenus = !bDisplayAllMenus;
 		}
+		
+		
 	}
 	
 	void OnGUI ()
@@ -72,10 +76,32 @@ public class GUI_Interface : MonoBehaviour
 			if (GUILayout.Button ("Simulation")) {
 				Debug.Log ("user clicked simulation button");
 				bDisplaySimMenu = !bDisplaySimMenu;
+				if(bDisplaySimMenu) {
+				 	_guiCore._SetTopMenuState ("_Simulation_");
+				} else _guiCore._ResetTopMenuState();
+				
 			}
-			if (bDisplaySimMenu) {
+			if (GUILayout.Button ("Configuration")) {
+				Debug.Log ("user clicked configutation menu");
+				bDisplayConfigurationMenu = !bDisplayConfigurationMenu;
+				if(bDisplayConfigurationMenu) {
+					_guiCore._SetTopMenuState ("_Configuration_");	
+				} else _guiCore._ResetTopMenuState();
+				
+			}
+			if (GUILayout.Button ("Runtime")) {
+				Debug.Log ("user clicked runtime menu");
+				bDisplayRuntimeMenu = !bDisplayRuntimeMenu;
+				if(bDisplayRuntimeMenu) {
+					_guiCore._SetTopMenuState ("_Runtime_");	
+				} else _guiCore._ResetTopMenuState();				
+			}
+			switch (_guiCore._GetTopMenuStateString ()) {
+			case "_NoDisplay_":
+				break;
+			case "_Simulation_":
 				GUILayout.BeginArea (new Rect (5, 30, 600, 600));
-				GUILayout.BeginVertical (GUILayout.MaxWidth(50));
+				GUILayout.BeginVertical (GUILayout.MaxWidth (50));
 				if (GUILayout.Button ("New")) {
 						
 				}
@@ -90,14 +116,11 @@ public class GUI_Interface : MonoBehaviour
 				}
 				GUILayout.EndVertical ();
 				GUILayout.EndArea ();
-			}
-			if (GUILayout.Button ("Configuration")) {
-				Debug.Log ("user clicked configutation menu");
-				bDisplayConfigurationMenu = !bDisplayConfigurationMenu;
-			}
-			if (bDisplayConfigurationMenu) {
+				break;
+				
+			case "_Configuration_":
 				GUILayout.BeginArea (new Rect (100, 30, 600, 600));
-				GUILayout.BeginVertical (GUILayout.MaxWidth(50));
+				GUILayout.BeginVertical (GUILayout.MaxWidth (50));
 				if (GUILayout.Button ("Global Settings")) {
 						
 				}
@@ -109,14 +132,11 @@ public class GUI_Interface : MonoBehaviour
 				}
 				GUILayout.EndVertical ();
 				GUILayout.EndArea ();	
-			}
-			if (GUILayout.Button ("Runtime")) {
-				Debug.Log ("user clicked runtime menu");
-				bDisplayRuntimeMenu = !bDisplayRuntimeMenu;
-			}
-			if (bDisplayRuntimeMenu) {
+				break;
+				
+			case "_Runtime_":
 				GUILayout.BeginArea (new Rect (150, 30, 600, 600));
-				GUILayout.BeginVertical (GUILayout.MaxWidth(50));
+				GUILayout.BeginVertical (GUILayout.MaxWidth (50));
 				if (GUILayout.Button ("TimeScale")) {
 						
 				}
@@ -124,8 +144,10 @@ public class GUI_Interface : MonoBehaviour
 						
 				}
 				GUILayout.EndVertical ();
-				GUILayout.EndArea ();	
+				GUILayout.EndArea ();
+				break;
 			}
+			
 			GUILayout.EndArea ();
 			//end top menu
 			
