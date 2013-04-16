@@ -6,16 +6,19 @@ public class GUI_Core : MonoBehaviour {
 	//topmenu settings
 	Vector2 topOrigin;
 	Vector2 topSize;
-	float fTopHeightPercent = 0.05f;
+	float fTopHeightPercent = 0.5f;
+	
+	
+	string[] sTopMenuStrings = new string[] {"New", "Save", "Load", "Exit"};
 	
 	//sidebar settings
 	Vector4 sBar; //.xyzw
-	float fSBarWidthPercent = 0.25f;
+	float fSBarWidthPercent = 0.2f;
 	
 	//bottom panel
 	Vector2 bottomOrigin;
 	Vector2 bottomSize;
-	float fBottomSizePercent = 0.1f;
+	float fBottomSizePercent = 0.05f;
 	
 	// Use this for initialization
 	void Start () {
@@ -45,6 +48,10 @@ public class GUI_Core : MonoBehaviour {
 	public Rect _CreateTopMenu()
 	{
 		return new Rect(topOrigin.x, topOrigin.y, topSize.x, topSize.y);
+	}
+	
+	public string[] _GetTopMenuStrings() {
+		return sTopMenuStrings;	
 	}
 	
 	public Rect _CreateBottomMenu() {
