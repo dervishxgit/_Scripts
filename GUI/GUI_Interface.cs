@@ -11,11 +11,6 @@ public class GUI_Interface : MonoBehaviour
 	bool bDisplayConfigurationMenu = false;
 	bool bDisplayRuntimeMenu = false;
 	
-	
-	
-	//top menu toolbar
-	int iTopMenuInt = 0;
-	
 	// Use this for initialization
 	void Start ()
 	{
