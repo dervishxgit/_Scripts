@@ -23,7 +23,7 @@ public class GUI_Core : MonoBehaviour {
 	//bottom panel
 	Vector2 bottomOrigin;
 	Vector2 bottomSize;
-	float fBottomSizePercent = 0.05f;
+	float fBottomSizePercent = 0.10f;
 	
 	// Use this for initialization
 	void Start () {

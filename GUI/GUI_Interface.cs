@@ -11,6 +11,11 @@ public class GUI_Interface : MonoBehaviour
 	bool bDisplayConfigurationMenu = false;
 	bool bDisplayRuntimeMenu = false;
 	
+	int bottomPanelGridSelection;
+	string[] bottomPanelGridStrings = {"Focus", "Orbit", "Goto", "LookThrough", "TakeControl"};
+	
+	GUILayoutOption[] bottomPanelLayoutOptions = {GUILayout.MaxWidth(200)};
+	
 	// Use this for initialization
 	void Start ()
 	{
@@ -148,13 +153,17 @@ public class GUI_Interface : MonoBehaviour
 			
 			//create bottommenu group
 			GUILayout.BeginArea (_guiCore._CreateBottomMenu ());
-			GUILayout.Box (new GUIContent ());
+			//GUILayout.Box (new GUIContent ());
+			bottomPanelGridSelection = GUILayout.SelectionGrid(bottomPanelGridSelection, bottomPanelGridStrings, 3, bottomPanelLayoutOptions);  
 			GUILayout.EndArea ();
 			//end bottommenu
 			
 			//create sidebar group
 			GUILayout.BeginArea (_guiCore._CreateSidebar ());
-			GUILayout.Box (new GUIContent ());
+			GUILayout.BeginVertical();
+			GUILayout.Box (new GUIContent ("Metrics") );
+			GUILayout.Box (new GUIContent ("Inspector") ); 
+			GUILayout.EndVertical();
 			GUILayout.EndArea ();
 			//end sidebar
 			
