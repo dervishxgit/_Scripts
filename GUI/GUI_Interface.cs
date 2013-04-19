@@ -14,7 +14,7 @@ public class GUI_Interface : MonoBehaviour
 	int bottomPanelGridSelection;
 	string[] bottomPanelGridStrings = {"Focus", "Orbit", "Goto", "LookThrough", "TakeControl"};
 	
-	GUILayoutOption[] bottomPanelLayoutOptions = {GUILayout.MaxWidth(200)};
+	GUILayoutOption[] bottomPanelLayoutOptions = {GUILayout.MaxWidth(300)};
 	
 	// Use this for initialization
 	void Start ()
