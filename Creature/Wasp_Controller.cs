@@ -38,6 +38,15 @@ public class Wasp_Controller : MonoBehaviour {
 	private ArrayList lWaypoints;			//list of all waypoints we've decided to store
 	private ArrayList lPathToDestination;	//list of waypoints, ordered to our destination
 	
+	struct FuzzyTarget {
+		GameObject gObject;
+		Transform trans;
+		float InFrontMe, BehindMe, BelowMe, AboveMe, LeftMe, RightMe;
+		float distance;
+	};
+	
+	FuzzyTarget FT;
+	
 	//States
 	int ControllerState = 0;
 	const int stateControllerWaiting = 0;
@@ -94,8 +103,13 @@ public class Wasp_Controller : MonoBehaviour {
 //	}
 	
 	//WayPoint functions
-	void _SetDestinationFinal(Transform trans) {
+	public void _SetDestinationFinal(Transform trans) {
 		destinationFinal = trans;	
+	}
+	public bool _CheckValidWaypoint(Transform trans) {
+		bool valid = false;
+		
+		return valid;
 	}
 	
 	//	MAIN AUTO CONTROLLER FUNCTION
@@ -113,6 +127,8 @@ public class Wasp_Controller : MonoBehaviour {
 		 * 		Moving: controller has a destination and is in the process of going
 		 * 
 		 */ 
+		_CheckValidWaypoint(destinationFinal);
+		_CheckValidWaypoint(destinationNext);
 		if(ControllerState == stateControllerWaiting) {
 			return;
 		}
@@ -156,6 +172,12 @@ public class Wasp_Controller : MonoBehaviour {
 	
 	//Movement Functions
 	bool _LookAt(Transform target) {
+		bool looking = false;
+		
+		return looking;
+	}
+	
+	bool _LookAt(FuzzyTarget ft) {
 		bool looking = false;
 		
 		return looking;
