@@ -20,8 +20,8 @@ public class Wasp_Controller : MonoBehaviour {
 	//Control mode
 	public bool bAuto = true;				//AI controlled?
 	public bool bOverride = false;			//Override controller (user control)
-	public bool bReadyToGo = true;
-	public bool bShouldIGo = false;
+	//public bool bReadyToGo = true;
+	//public bool bShouldIGo = false;
 	
 	//References
 	public Datacore dCore;					//map to datacore
@@ -31,8 +31,26 @@ public class Wasp_Controller : MonoBehaviour {
 	
 	//Waypoints
 	private Transform destinationFinal; 	//final destination
+	private Transform destinationNext;		//next waypoint
+	private Transform destinationPrev;		//previous waypoint
+	private GameObject targetObject;		//if we are orienting or moving to something
+	//these lists, and functions for them, may have to be moved to the creature's core
 	private ArrayList lWaypoints;			//list of all waypoints we've decided to store
 	private ArrayList lPathToDestination;	//list of waypoints, ordered to our destination
+	
+	//States
+	int ControllerState = 0;
+	const int stateControllerWaiting = 0;
+	const int stateControllerSeeking = 1;
+	const int stateControllerMoving = 2;
+	
+	string MoveState = "default";
+	const string stateMoveStanding = "Standing";
+	const string stateMoveWalking = "Walking";
+	const string stateMoveTakeOff = "TakeOff";
+	const string stateMoveFlying = "Flying";
+	const string stateMoveHovering = "Hovering";
+	const string stateMoveLanding = "Landing";
 	
 	// Use this for initialization
 	void Start () {
@@ -67,13 +85,13 @@ public class Wasp_Controller : MonoBehaviour {
 		bOverride = b;	
 	}
 	
-	void _ToggleReadyToGo(bool b) {
-		bReadyToGo = b;
-	}
-	
-	void _ToggleShouldIGo(bool b) {
-		bShouldIGo = b;
-	}
+//	void _ToggleReadyToGo(bool b) {
+//		bReadyToGo = b;
+//	}
+//	
+//	void _ToggleShouldIGo(bool b) {
+//		bShouldIGo = b;
+//	}
 	
 	//WayPoint functions
 	void _SetDestinationFinal(Transform trans) {
@@ -82,10 +100,67 @@ public class Wasp_Controller : MonoBehaviour {
 	
 	//	MAIN AUTO CONTROLLER FUNCTION
 	private void RunControllerAuto() {
+		RunControllerStateMachine();
 		/*
 		 * Auto control routine:
 		 * check if final destination is still valid, will involve future check for whether controller SHOULD go
 		 * 
+		 * check if next waypoint in path is valid
+		 * 
+		 * logic:
+		 * 		Waiting: controller will wait
+		 * 		Seeking: Controller will actively search for a nearby or known waypoint on its own
+		 * 		Moving: controller has a destination and is in the process of going
+		 * 
 		 */ 
+		if(ControllerState == stateControllerWaiting) {
+			return;
+		}
+		else if (ControllerState == stateControllerSeeking) {
+			return;
+		}
+		else if(ControllerState == stateControllerMoving) {
+			/*
+			 * There will be slightly different ways of getting around, 
+			 * depending on whether the wasp has landed or is flying, 
+			 * and where the destination is,
+			 * generically: orient to target (and/or ground), moveto target by increment
+			 */ 
+			switch (_GetMoveState()) {
+			case "Standing":
+				break;
+			case "TakeOff":
+				break;
+			case "Landing":
+				break;
+			case "Walking":
+				break;
+			case "Flying":
+				
+				break;
+				
+			}
+		}
 	}
+	
+	private void RunControllerStateMachine() {
+		
+	}
+	
+	//state functions
+	public string _GetMoveState() {
+		return MoveState;
+	}
+	
+	//Movement Functions
+	bool _LookAt(Transform target) {
+		bool looking = false;
+		
+		return looking;
+	}
+	
+	void _MoveTo(Transform target) {
+		//simple move
+	}
+	
 }
