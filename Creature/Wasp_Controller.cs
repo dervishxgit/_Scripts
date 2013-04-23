@@ -38,14 +38,14 @@ public class Wasp_Controller : MonoBehaviour {
 	private ArrayList lWaypoints;			//list of all waypoints we've decided to store
 	private ArrayList lPathToDestination;	//list of waypoints, ordered to our destination
 	
-	struct FuzzyTarget {
-		GameObject gObject;
-		Transform trans;
-		float InFrontMe, BehindMe, BelowMe, AboveMe, LeftMe, RightMe;
-		float distance;
-	};
+	public struct FuzzyTarget {
+		public	GameObject gObject;
+		public Transform trans;
+		public float InFrontMe, BehindMe, BelowMe, AboveMe, LeftMe, RightMe;
+		public float distance;
+	}
 	
-	FuzzyTarget FT;
+	public FuzzyTarget FT;
 	
 	//States
 	int ControllerState = 0;
@@ -151,10 +151,16 @@ public class Wasp_Controller : MonoBehaviour {
 				break;
 			case "Walking":
 				break;
+			case "Hovering":
+				break;
 			case "Flying":
 				//Orient
+				//	if not facing, face
 				//MoveTo
-				
+				bool facing = _CheckFacing(destinationNext);
+				if(facing) {
+					_MoveTo(destinationNext);
+				}
 				break;
 				
 			}
@@ -171,16 +177,22 @@ public class Wasp_Controller : MonoBehaviour {
 	}
 	
 	//Movement Functions
-	bool _LookAt(Transform target) {
-		bool looking = false;
-		
-		return looking;
+	bool _CheckFacing(Transform target) {
+		//takes target, assigns it to current fuzzytarget and outputs values
+		bool facing = false;
+		FT.trans = target;
+		facing = _CheckFacing(FT);		
+		return facing;
 	}
 	
-	bool _LookAt(FuzzyTarget ft) {
-		bool looking = false;
-		
-		return looking;
+	bool _CheckFacing(FuzzyTarget ft) {
+		bool facing = false;
+		AICORE._GetSpatialAwareness3D(ft.trans,
+			waspRoot.transform, out ft.distance,
+			out ft.BehindMe, out ft.InFrontMe,
+			out ft.LeftMe, out ft.RightMe,
+			out ft.AboveMe, out ft.BelowMe);
+		return facing;
 	}
 	
 	void _MoveTo(Transform target) {
