@@ -16,7 +16,7 @@ public class AICORE : MonoBehaviour {
 	
 	// Probability : Miscellaneous Probability and Statistics Functions ////////
 	
-	bool _AreFloatsEqual(float x, float y, float threshhold) {
+	public static bool _AreFloatsEqual(float x, float y, float threshhold) {
 		return System.Math.Abs(x - y) < threshhold;
 	}
 

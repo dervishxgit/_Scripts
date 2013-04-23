@@ -47,13 +47,18 @@ public class Wasp_Controller : MonoBehaviour {
 	
 	public FuzzyTarget FT;
 	
+	//Settings: Movement, Rotation, Thresholds
+	public float fMoveRate = 1.0f;
+	public float fRotationRate = 1.0f;
+	public float fFacingTolerance = 0.1f;
+	
 	//States
-	int ControllerState = 0;
+	public int ControllerState = 0;
 	const int stateControllerWaiting = 0;
 	const int stateControllerSeeking = 1;
 	const int stateControllerMoving = 2;
 	
-	string MoveState = "default";
+	public string MoveState = "default";
 	const string stateMoveStanding = "Standing";
 	const string stateMoveWalking = "Walking";
 	const string stateMoveTakeOff = "TakeOff";
@@ -159,8 +164,9 @@ public class Wasp_Controller : MonoBehaviour {
 				//MoveTo
 				bool facing = _CheckFacing(destinationNext);
 				if(facing) {
+					Debug.Log ("facing object");
 					_MoveTo(destinationNext);
-				}
+				} else {};//_Face();
 				break;
 				
 			}
@@ -192,11 +198,16 @@ public class Wasp_Controller : MonoBehaviour {
 			out ft.BehindMe, out ft.InFrontMe,
 			out ft.LeftMe, out ft.RightMe,
 			out ft.AboveMe, out ft.BelowMe);
+		facing = AICORE._AreFloatsEqual(ft.RightMe, ft.LeftMe, fFacingTolerance);
 		return facing;
 	}
 	
 	void _MoveTo(Transform target) {
 		//simple move
+	}
+	
+	void _Face() {
+		//this version depends on having a fuzzy target
 	}
 	
 }
