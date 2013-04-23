@@ -88,6 +88,16 @@ public class AICORE : MonoBehaviour {
 	
 	// Behavior Matrices ////////////////////////////////////////////////////
 	
+	public static float _BehaviorMatrix2(float[] B, float[] C) {
+		float z = _Or(
+		              B[0] * _And(_Not(C[1]), _Not(C[0])),
+		              B[1] * _And(_Not(C[1]), _Yes(C[0])),
+		              B[2] * _And(_Yes(C[1]), _Not(C[0])),
+		              B[3] * _And(_Yes(C[1]), _Yes(C[0]))
+		              );
+		return z;
+	}
+	
 	public static float _BehaviorMatrix3(float[] B, float[] C) {
 		float z = _Or(
 			B[0] * _And(_Not(C[2]), _Not(C[1]), _Not(C[0])),      

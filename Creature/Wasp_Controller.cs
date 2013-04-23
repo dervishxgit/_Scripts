@@ -136,6 +136,8 @@ public class Wasp_Controller : MonoBehaviour {
 			case "Walking":
 				break;
 			case "Flying":
+				//Orient
+				//MoveTo
 				
 				break;
 				
