@@ -52,6 +52,8 @@ public class Wasp_Controller : MonoBehaviour {
 	public float fRotationRate = 5.0f;
 	public float fFacingTolerance = 0.1f;
 	public float fForwardThreshold = 0.98f; //are we sufficiently towards target?
+	public float fForwardMovementSpeed = 5.0f;
+	public float fTargetDistanceThreshold = 0.5f;
 	//States
 	public int ControllerState = 0;
 	const int stateControllerWaiting = 0;
@@ -165,7 +167,8 @@ public class Wasp_Controller : MonoBehaviour {
 				bool facing = _CheckFacing(destinationNext);
 				if(facing) {
 					Debug.Log ("facing object");
-					_MoveTo(destinationNext);
+					//_MoveTo(destinationNext);
+					Datacore._MoveForward(waspRoot, Time.deltaTime * fForwardMovementSpeed);
 				} else {_Face(this.FT);}
 				break;
 				
@@ -218,8 +221,18 @@ public class Wasp_Controller : MonoBehaviour {
 		return facing;
 	}
 	
+	public bool _ReachedTarget(Transform target) {
+		if(AICORE._GetTargetDistance(waspRoot, target.gameObject) < fTargetDistanceThreshold) {
+			return true;
+		} else return false;
+	}
+	
 	void _MoveTo(Transform target) {
 		//simple move
+		if(!_ReachedTarget(target) ) {
+			Datacore._MoveForward(waspRoot, Time.deltaTime * fForwardMovementSpeed);
+		}
+		
 	}
 	
 	void _Face(FuzzyTarget target) {
