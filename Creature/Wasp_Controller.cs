@@ -167,8 +167,8 @@ public class Wasp_Controller : MonoBehaviour {
 				bool facing = _CheckFacing(destinationNext);
 				if(facing) {
 					Debug.Log ("facing object");
-					//_MoveTo(destinationNext);
-					Datacore._MoveForward(waspRoot, Time.deltaTime * fForwardMovementSpeed);
+					_MoveTo(destinationNext);
+					//Datacore._MoveForward(waspRoot, Time.deltaTime * fForwardMovementSpeed);
 				} else {_Face(this.FT);}
 				break;
 				
