@@ -166,7 +166,7 @@ public class Wasp_Controller : MonoBehaviour {
 				if(facing) {
 					Debug.Log ("facing object");
 					_MoveTo(destinationNext);
-				} else {_Face();}
+				} else {_Face(this.FT);}
 				break;
 				
 			}
@@ -186,25 +186,35 @@ public class Wasp_Controller : MonoBehaviour {
 	bool _CheckFacing(Transform target) {
 		//takes target, assigns it to current fuzzytarget and outputs values
 		bool facing = false;
-		FT.trans = target;
-		facing = _CheckFacing(FT);		
+		this.FT.trans = target;
+		facing = _CheckFacing(this.FT);		
 		return facing;
 	}
 	
-	bool _CheckFacing(FuzzyTarget ft) {
+	bool _CheckFacing(FuzzyTarget target) {
 		bool facing = false;
 		AICORE._GetSpatialAwareness3D(waspRoot.transform,
-			ft.trans, out ft.distance,
-			out ft.BehindMe, out ft.InFrontMe,
-			out ft.LeftMe, out ft.RightMe,
-			out ft.AboveMe, out ft.BelowMe);
-		Debug.Log (FT.AboveMe);
-		Debug.Log (FT.BelowMe);
+			target.trans, out target.distance,
+			out target.BehindMe, out target.InFrontMe,
+			out target.LeftMe, out target.RightMe,
+			out target.AboveMe, out target.BelowMe);
+//		Debug.Log (FT.InFrontMe);
+//		Debug.Log (FT.BehindMe);
+//		Debug.Log (FT.AboveMe);
+//		Debug.Log (FT.BelowMe);
+//		Debug.Log (FT.LeftMe);
+//		Debug.Log (FT.RightMe);
 		//Debug.Log (FT);
 		//facing = ( AICORE._AreFloatsEqual(ft.abov AICORE._AreFloatsEqual(ft.RightMe, ft.LeftMe, fFacingTolerance) );
 		//facing = ( AICORE._AreFloatsEqual(ft.InFrontMe, 1.0f, fFacingTolerance) );
-		Debug.Log (ft.InFrontMe);
-		if (ft.InFrontMe > fForwardThreshold) {facing = true;}
+//		Debug.Log (target.InFrontMe);
+//		Debug.Log (target.BehindMe);
+//		Debug.Log (target.AboveMe);
+//		Debug.Log (target.BelowMe);
+//		Debug.Log (target.LeftMe);
+//		Debug.Log (target.RightMe);
+		this.FT = target;
+		if (target.InFrontMe > fForwardThreshold) {facing = true;}
 		return facing;
 	}
 	
@@ -212,33 +222,69 @@ public class Wasp_Controller : MonoBehaviour {
 		//simple move
 	}
 	
-	void _Face() {
+	void _Face(FuzzyTarget target) {
 		//this version depends on having a fuzzy target
-		//Debug.Log (FT.AboveMe);
-		//Debug.Log (FT.BelowMe);
-		if(FT.AboveMe > FT.BelowMe) 
+		//Debug.Log (target.AboveMe);
+		//Debug.Log (target.BelowMe);
+		if(target.AboveMe > target.BelowMe) 
 		{
 			Debug.Log ("target is above");
-			Datacore._Pitch (waspRoot, FT.AboveMe * Time.deltaTime * fRotationRate);
+			Datacore._Pitch (waspRoot, target.AboveMe * Time.deltaTime * fRotationRate);
 		}
-		else if (FT.AboveMe < FT.BelowMe) 
+		else if (target.AboveMe < target.BelowMe) 
 		{
 			Debug.Log("target is below");
-			Datacore._Pitch(waspRoot, -FT.BelowMe * Time.deltaTime * fRotationRate);
+			Datacore._Pitch(waspRoot, -target.BelowMe * Time.deltaTime * fRotationRate);
 		}
 		
-//		if(FT.RightMe > FT.LeftMe)
-//		{Datacore._Yaw(waspRoot, FT.RightMe * Time.deltaTime * fRotationRate);}
-//		else if( FT.RightMe < FT.LeftMe)
-//		{Datacore._Yaw(waspRoot, -FT.RightMe * Time.deltaTime * fRotationRate);}
+		if(target.RightMe > target.LeftMe)
+		{Datacore._Yaw(waspRoot, target.RightMe * Time.deltaTime * fRotationRate);}
+		else if( target.RightMe < target.LeftMe)
+		{Datacore._Yaw(waspRoot, -target.RightMe * Time.deltaTime * fRotationRate);}
+		
+//		Debug.Log (target.InFrontMe);
+//		Debug.Log (target.BehindMe);
+//		Debug.Log (target.AboveMe);
+//		Debug.Log (target.BelowMe);
+//		Debug.Log (target.LeftMe);
+//		Debug.Log (target.RightMe);
 		
 		//Debug.Log ("will call yaw....");
-		float test = FT.RightMe * Time.deltaTime * fRotationRate;
+		float test = target.RightMe * Time.deltaTime * fRotationRate;
 		//Debug.Log (test);
 		//Datacore._Yaw(waspRoot,0.1f * Time.deltaTime * fRotationRate);
 		//need to roll until oriented up?
 		
 		
 	}
+	
+//	void _Face() {
+//		//this version depends on having a fuzzy target
+//		//Debug.Log (FT.AboveMe);
+//		//Debug.Log (FT.BelowMe);
+////		if(FT.AboveMe > FT.BelowMe) 
+////		{
+////			Debug.Log ("target is above");
+////			Datacore._Pitch (waspRoot, FT.AboveMe * Time.deltaTime * fRotationRate);
+////		}
+////		else if (FT.AboveMe < FT.BelowMe) 
+////		{
+////			Debug.Log("target is below");
+////			Datacore._Pitch(waspRoot, -FT.BelowMe * Time.deltaTime * fRotationRate);
+////		}
+//		
+//		if(FT.RightMe > FT.LeftMe)
+//		{Datacore._Yaw(waspRoot, FT.RightMe * Time.deltaTime * fRotationRate);}
+//		else if( FT.RightMe < FT.LeftMe)
+//		{Datacore._Yaw(waspRoot, -FT.RightMe * Time.deltaTime * fRotationRate);}
+//		
+//		//Debug.Log ("will call yaw....");
+//		float test = FT.RightMe * Time.deltaTime * fRotationRate;
+//		//Debug.Log (test);
+//		//Datacore._Yaw(waspRoot,0.1f * Time.deltaTime * fRotationRate);
+//		//need to roll until oriented up?
+//		
+//		
+//	}
 	
 }
