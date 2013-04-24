@@ -30,10 +30,10 @@ public class Wasp_Controller : MonoBehaviour {
 	public GameObject waspGeo;				//creature's root geometry	
 	
 	//Waypoints
-	private Transform destinationFinal; 	//final destination
-	private Transform destinationNext;		//next waypoint
-	private Transform destinationPrev;		//previous waypoint
-	private GameObject targetObject;		//if we are orienting or moving to something
+	public Transform destinationFinal; 	//final destination
+	public Transform destinationNext;		//next waypoint
+	public Transform destinationPrev;		//previous waypoint
+	public GameObject targetObject;		//if we are orienting or moving to something
 	//these lists, and functions for them, may have to be moved to the creature's core
 	private ArrayList lWaypoints;			//list of all waypoints we've decided to store
 	private ArrayList lPathToDestination;	//list of waypoints, ordered to our destination
@@ -49,9 +49,9 @@ public class Wasp_Controller : MonoBehaviour {
 	
 	//Settings: Movement, Rotation, Thresholds
 	public float fMoveRate = 1.0f;
-	public float fRotationRate = 1.0f;
+	public float fRotationRate = 5.0f;
 	public float fFacingTolerance = 0.1f;
-	
+	public float fForwardThreshold = 0.98f; //are we sufficiently towards target?
 	//States
 	public int ControllerState = 0;
 	const int stateControllerWaiting = 0;
@@ -166,7 +166,7 @@ public class Wasp_Controller : MonoBehaviour {
 				if(facing) {
 					Debug.Log ("facing object");
 					_MoveTo(destinationNext);
-				} else {};//_Face();
+				} else {_Face();}
 				break;
 				
 			}
@@ -193,12 +193,18 @@ public class Wasp_Controller : MonoBehaviour {
 	
 	bool _CheckFacing(FuzzyTarget ft) {
 		bool facing = false;
-		AICORE._GetSpatialAwareness3D(ft.trans,
-			waspRoot.transform, out ft.distance,
+		AICORE._GetSpatialAwareness3D(waspRoot.transform,
+			ft.trans, out ft.distance,
 			out ft.BehindMe, out ft.InFrontMe,
 			out ft.LeftMe, out ft.RightMe,
 			out ft.AboveMe, out ft.BelowMe);
-		facing = AICORE._AreFloatsEqual(ft.RightMe, ft.LeftMe, fFacingTolerance);
+		Debug.Log (FT.AboveMe);
+		Debug.Log (FT.BelowMe);
+		//Debug.Log (FT);
+		//facing = ( AICORE._AreFloatsEqual(ft.abov AICORE._AreFloatsEqual(ft.RightMe, ft.LeftMe, fFacingTolerance) );
+		//facing = ( AICORE._AreFloatsEqual(ft.InFrontMe, 1.0f, fFacingTolerance) );
+		Debug.Log (ft.InFrontMe);
+		if (ft.InFrontMe > fForwardThreshold) {facing = true;}
 		return facing;
 	}
 	
@@ -208,6 +214,31 @@ public class Wasp_Controller : MonoBehaviour {
 	
 	void _Face() {
 		//this version depends on having a fuzzy target
+		//Debug.Log (FT.AboveMe);
+		//Debug.Log (FT.BelowMe);
+		if(FT.AboveMe > FT.BelowMe) 
+		{
+			Debug.Log ("target is above");
+			Datacore._Pitch (waspRoot, FT.AboveMe * Time.deltaTime * fRotationRate);
+		}
+		else if (FT.AboveMe < FT.BelowMe) 
+		{
+			Debug.Log("target is below");
+			Datacore._Pitch(waspRoot, -FT.BelowMe * Time.deltaTime * fRotationRate);
+		}
+		
+//		if(FT.RightMe > FT.LeftMe)
+//		{Datacore._Yaw(waspRoot, FT.RightMe * Time.deltaTime * fRotationRate);}
+//		else if( FT.RightMe < FT.LeftMe)
+//		{Datacore._Yaw(waspRoot, -FT.RightMe * Time.deltaTime * fRotationRate);}
+		
+		//Debug.Log ("will call yaw....");
+		float test = FT.RightMe * Time.deltaTime * fRotationRate;
+		//Debug.Log (test);
+		//Datacore._Yaw(waspRoot,0.1f * Time.deltaTime * fRotationRate);
+		//need to roll until oriented up?
+		
+		
 	}
 	
 }

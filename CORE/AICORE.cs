@@ -239,7 +239,7 @@ public class AICORE : MonoBehaviour {
 		zIsTargetToMyRight = AICORE._Not(zIsTargetToMyLeft);
 		
 		// Answer the question: Is the target above or below me?
-		float dot3 = Vector3.Dot (up, vector);
+		float dot3 = Vector3.Dot(up, vector);
 		zIsTargetBelowMe = AICORE._IsItMin(dot3, -1.0f, 1.0f);
 		zIsTargetAboveMe = AICORE._Not(zIsTargetBelowMe);
 	}
