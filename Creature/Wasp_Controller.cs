@@ -131,6 +131,13 @@ public class Wasp_Controller : MonoBehaviour {
 			return;
 		}
 		else if (ControllerState == stateControllerSeeking) {
+			//looking for next
+			
+			//test for now, just pick a new
+			wCore._GetNextRandomWaypoint();
+			
+			ControllerState = stateControllerMoving;
+			
 			return;
 		}
 		else if(ControllerState == stateControllerMoving) {
@@ -222,8 +229,10 @@ public class Wasp_Controller : MonoBehaviour {
 		//simple move
 		if(!_ReachedTarget(target) ) {
 			Datacore._MoveForward(waspRoot, Time.deltaTime * fForwardMovementSpeed);
+		} else {
+			Debug.Log("should set new");
+			ControllerState = stateControllerSeeking;
 		}
-		
 	}
 	
 	void _Face(FuzzyTarget target) {

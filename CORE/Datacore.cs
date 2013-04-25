@@ -1,11 +1,14 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Datacore : MonoBehaviour {
 	
 	public bool bDisplayAllMenus = false;
 	
-	public ArrayList _lAllWaypoints  = new ArrayList();
+	//public ArrayList _lAllWaypoints  = new ArrayList();
+	
+	public List<Transform> _lAllWaypoints = new List<Transform>();
 	
 	// Use this for initialization
 	void Start () {
@@ -35,8 +38,15 @@ public class Datacore : MonoBehaviour {
 		_lAllWaypoints.Remove(point);
 	}
 	
-	public Transform _GetWaypoint(int index) {
-		return _lAllWaypoints[index] as Transform;
+//	static public PigBehavior _GetTargetPig(int pig) {
+//		if (_Pig.Count > 0) {
+//			return _Pig[pig];
+//		}
+//		return null;
+//	}
+	
+	public Transform _GetWaypoint(int point) {
+		return _lAllWaypoints[point];
 	}
 	
 	public Transform _ReturnRandomWaypoint() {
@@ -45,7 +55,7 @@ public class Datacore : MonoBehaviour {
 		if(_lAllWaypoints != null) {
 			int numpoints = this._lAllWaypoints.Count;
 			int selection = AICORE._RandomInteger(0, numpoints);
-			return _lAllWaypoints[selection] as Transform;
+			return _lAllWaypoints[selection];
 		} else return null;
 	}
 	

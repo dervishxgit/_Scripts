@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Wasp_Core : MonoBehaviour {
 	
@@ -18,7 +19,7 @@ public class Wasp_Core : MonoBehaviour {
 	private ArrayList lPathToDestination;	//list of waypoints, ordered to our destination
 	private float fWaypointRefreshInterval = 5.0f;
 	
-	public ArrayList lKnownWaypoints  = new ArrayList();
+	public List<Transform> lKnownWaypoints  = new List<Transform>();
 	
 	// Use this for initialization
 	void Start () {
@@ -28,8 +29,7 @@ public class Wasp_Core : MonoBehaviour {
 		
 		//for now, we will just get our known waypoints at startup, for testing
 		foreach (Transform i in dCore._lAllWaypoints) {
-			//lKnownWaypoints[i] = dCore._lAllWaypoints[i] as Transform;
-			//lKnownWaypoints[i] = dCore._ReturnRandomWaypoint();
+			_AddKnownWaypoint(i);
 		}
 		
 		destinationNext = _ReturnRandomKnownWaypoint();
@@ -54,10 +54,20 @@ public class Wasp_Core : MonoBehaviour {
 		//count waypoints
 		//choose random number from available, return waypoint at index
 		if(lKnownWaypoints != null) {
-			int numpoints = this.lKnownWaypoints.Count;
-			int selection = AICORE._RandomInteger(0, numpoints);
-			return lKnownWaypoints[selection] as Transform;
+			if(lKnownWaypoints.Count > 0) {
+				int numpoints = this.lKnownWaypoints.Count;
+				int selection = AICORE._RandomInteger(0, numpoints);
+				return lKnownWaypoints[selection] as Transform;
+			} else return null;
 		} else return null;
+	}
+	
+	public void _SetDestinationNext(Transform trans) {
+		destinationNext = trans;
+	}
+	
+	public void _GetNextRandomWaypoint() {
+		destinationNext = _ReturnRandomKnownWaypoint();
 	}
 	
 }
