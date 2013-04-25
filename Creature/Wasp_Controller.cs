@@ -253,7 +253,7 @@ public class Wasp_Controller : MonoBehaviour {
 		if(target.RightMe > target.LeftMe)
 		{Datacore._Yaw(waspRoot, target.RightMe * Time.deltaTime * fRotationRate);}
 		else if( target.RightMe < target.LeftMe)
-		{Datacore._Yaw(waspRoot, -target.RightMe * Time.deltaTime * fRotationRate);}
+		{Datacore._Yaw(waspRoot, -target.LeftMe * Time.deltaTime * fRotationRate);}
 		
 //		Debug.Log (target.InFrontMe);
 //		Debug.Log (target.BehindMe);
@@ -263,7 +263,7 @@ public class Wasp_Controller : MonoBehaviour {
 //		Debug.Log (target.RightMe);
 		
 		//Debug.Log ("will call yaw....");
-		float test = target.RightMe * Time.deltaTime * fRotationRate;
+		//float test = target.RightMe * Time.deltaTime * fRotationRate;
 		//Debug.Log (test);
 		//Datacore._Yaw(waspRoot,0.1f * Time.deltaTime * fRotationRate);
 		//need to roll until oriented up?
