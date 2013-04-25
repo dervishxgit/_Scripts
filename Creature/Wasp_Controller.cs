@@ -27,16 +27,7 @@ public class Wasp_Controller : MonoBehaviour {
 	public Datacore dCore;					//map to datacore
 	public Wasp_Core wCore;					//this creature's core
 	public GameObject waspRoot;				//creature's root object
-	public GameObject waspGeo;				//creature's root geometry	
-	
-	//Waypoints
-	public Transform destinationFinal; 	//final destination
-	public Transform destinationNext;		//next waypoint
-	public Transform destinationPrev;		//previous waypoint
-	public GameObject targetObject;		//if we are orienting or moving to something
-	//these lists, and functions for them, may have to be moved to the creature's core
-	private ArrayList lWaypoints;			//list of all waypoints we've decided to store
-	private ArrayList lPathToDestination;	//list of waypoints, ordered to our destination
+	public GameObject waspGeo;				//creature's root geometry
 	
 	public struct FuzzyTarget {
 		public	GameObject gObject;
@@ -111,7 +102,7 @@ public class Wasp_Controller : MonoBehaviour {
 	
 	//WayPoint functions
 	public void _SetDestinationFinal(Transform trans) {
-		destinationFinal = trans;	
+		wCore.destinationFinal = trans;	
 	}
 	public bool _CheckValidWaypoint(Transform trans) {
 		bool valid = false;
@@ -134,8 +125,8 @@ public class Wasp_Controller : MonoBehaviour {
 		 * 		Moving: controller has a destination and is in the process of going
 		 * 
 		 */ 
-		_CheckValidWaypoint(destinationFinal);
-		_CheckValidWaypoint(destinationNext);
+		//_CheckValidWaypoint(destinationFinal);
+		//_CheckValidWaypoint(destinationNext);
 		if(ControllerState == stateControllerWaiting) {
 			return;
 		}
@@ -164,10 +155,10 @@ public class Wasp_Controller : MonoBehaviour {
 				//Orient
 				//	if not facing, face
 				//MoveTo
-				bool facing = _CheckFacing(destinationNext);
+				bool facing = _CheckFacing(wCore.destinationNext);
 				if(facing) {
 					Debug.Log ("facing object");
-					_MoveTo(destinationNext);
+					_MoveTo(wCore.destinationNext);
 					//Datacore._MoveForward(waspRoot, Time.deltaTime * fForwardMovementSpeed);
 				} else {_Face(this.FT);}
 				break;

@@ -5,6 +5,8 @@ public class Datacore : MonoBehaviour {
 	
 	public bool bDisplayAllMenus = false;
 	
+	public ArrayList _lAllWaypoints;
+	
 	// Use this for initialization
 	void Start () {
 		
@@ -17,6 +19,29 @@ public class Datacore : MonoBehaviour {
 	
 	void ToggleAllMenus(bool b) {
 		bDisplayAllMenus = b;	
+	}
+	
+	//Waypoints
+	public void _AddWaypoint(Transform point) {
+		_lAllWaypoints.Add(point);
+	}
+	
+	public void _RemoveWaypoint(Transform point) {
+		_lAllWaypoints.Remove(point);
+	}
+	
+	public Transform _GetWaypoint(int index) {
+		return _lAllWaypoints[index] as Transform;
+	}
+	
+	public Transform _ReturnRandomWaypoint() {
+		//count waypoints
+		//choose random number from available, return waypoint at index
+		if(_lAllWaypoints != null) {
+			int numpoints = this._lAllWaypoints.Count;
+			int selection = AICORE._RandomInteger(0, numpoints);
+			return _lAllWaypoints[selection] as Transform;
+		} else return null;
 	}
 	
 	//Orientation
