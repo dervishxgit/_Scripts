@@ -166,6 +166,7 @@ public class Wasp_Controller : MonoBehaviour {
 				if(facing) {
 					Debug.Log ("facing object");
 					_MoveTo(wCore.destinationNext);
+					//_ElevateTo(wCore.destinationNext);
 					//Datacore._MoveForward(waspRoot, Time.deltaTime * fForwardMovementSpeed);
 				} else {_Face(this.FT);}
 				break;
@@ -228,7 +229,20 @@ public class Wasp_Controller : MonoBehaviour {
 	void _MoveTo(Transform target) {
 		//simple move
 		if(!_ReachedTarget(target) ) {
+			Debug.Log("should be trying to reach");
 			Datacore._MoveForward(waspRoot, Time.deltaTime * fForwardMovementSpeed);
+//			if(FT.AboveMe > FT.BelowMe) 
+//			{
+//				Debug.Log ("target is above");
+//				//Datacore._Pitch (waspRoot, target.AboveMe * Time.deltaTime * fRotationRate);
+//				Datacore._MoveUp(waspRoot, Time.deltaTime * fForwardMovementSpeed);
+//			}
+//			else if (FT.AboveMe < FT.BelowMe) 
+//			{
+//				Debug.Log("target is below");
+//				//Datacore._Pitch(waspRoot, -target.BelowMe * Time.deltaTime * fRotationRate);
+//				Datacore._MoveDown(waspRoot, Time.deltaTime * fForwardMovementSpeed);
+//			}
 		} else {
 			Debug.Log("should set new");
 			ControllerState = stateControllerSeeking;
@@ -239,16 +253,16 @@ public class Wasp_Controller : MonoBehaviour {
 		//this version depends on having a fuzzy target
 		//Debug.Log (target.AboveMe);
 		//Debug.Log (target.BelowMe);
-		if(target.AboveMe > target.BelowMe) 
-		{
-			Debug.Log ("target is above");
-			Datacore._Pitch (waspRoot, target.AboveMe * Time.deltaTime * fRotationRate);
-		}
-		else if (target.AboveMe < target.BelowMe) 
-		{
-			Debug.Log("target is below");
-			Datacore._Pitch(waspRoot, -target.BelowMe * Time.deltaTime * fRotationRate);
-		}
+//		if(target.AboveMe > target.BelowMe) 
+//		{
+//			Debug.Log ("target is above");
+//			Datacore._Pitch (waspRoot, target.AboveMe * Time.deltaTime * fRotationRate);
+//		}
+//		else if (target.AboveMe < target.BelowMe) 
+//		{
+//			Debug.Log("target is below");
+//			Datacore._Pitch(waspRoot, -target.BelowMe * Time.deltaTime * fRotationRate);
+//		}
 		
 		if(target.RightMe > target.LeftMe)
 		{Datacore._Yaw(waspRoot, target.RightMe * Time.deltaTime * fRotationRate);}
@@ -268,7 +282,15 @@ public class Wasp_Controller : MonoBehaviour {
 		//Datacore._Yaw(waspRoot,0.1f * Time.deltaTime * fRotationRate);
 		//need to roll until oriented up?
 		
+		_ElevateTo(target.trans);
 		
+		
+	}
+	
+	void _ElevateTo(Transform target) {
+		float targetY = target.transform.position.y;
+		float to  = AICORE._IsItMax(-1 * (waspRoot.transform.position.y - targetY), 0.1f, 5.0f);
+		Datacore._MoveUp(waspRoot, to * Time.deltaTime * fForwardMovementSpeed);
 	}
 	
 //	void _Face() {

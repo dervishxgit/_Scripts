@@ -70,6 +70,14 @@ public class Datacore : MonoBehaviour {
 		mono.transform.Translate(fMult * Vector3.forward, Space.Self);
 	}
 	
+	static public void _MoveUp(GameObject obj, float fMult) {
+		obj.transform.Translate(fMult * Vector3.up, Space.World);
+	}
+	
+	static public void _MoveDown(GameObject obj, float fMult) {
+		obj.transform.Translate(-fMult * Vector3.up, Space.World);
+	}
+	
 	static public Vector3 _GetForwardVector(GameObject obj) {
 		return obj.transform.TransformDirection(Vector3.forward);	
 	}
@@ -96,7 +104,7 @@ public class Datacore : MonoBehaviour {
 	static public void _Yaw(GameObject obj, float fRotation) {
 		//rotates obj around world up vector
 		Vector3 axis = fRotation * Vector3.up;
-		obj.transform.Rotate(axis, Space.Self);
+		obj.transform.Rotate(axis, Space.World);
 	}
 	
 	static public void _Yaw(MonoBehaviour mono, float fRotation) {
@@ -108,7 +116,7 @@ public class Datacore : MonoBehaviour {
 	static public void _Pitch(GameObject obj, float fRotation) {
 		//rotates obj around world right vector
 		Vector3 axis = fRotation * Vector3.right;
-		obj.transform.Rotate(axis, Space.Self);
+		obj.transform.Rotate(axis, Space.World);
 	}
 	
 	static public void _Pitch(MonoBehaviour mono, float fRotation) {
