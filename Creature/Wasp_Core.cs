@@ -2,6 +2,21 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+/*
+ * Wasp_Core.cs (c) - Steve Miller 2013
+ * 
+ * the wasp core is the central code repository and interface to the wider world
+ * wasp data is stored and accessed here, other scripts will map to this
+ * core wasp utility functions should also be stored here
+ * 
+ * note on state machines and interaction:
+ * other scripts will, when required, access functions, but should not modify data here directly
+ * other scripts in wasp creature will not directly modify any other scripts, including the virtual mind
+ * example: the virtual mind will use functions in the datacore to update information,
+ * the most important output of the virtual mind will be the output of its state machine (what it wants to "do")
+ * this output state will direct the datacore interface to make changes to the other scripts where necessary
+ */ 
+
 public class Wasp_Core : MonoBehaviour {
 	
 	//References
