@@ -5,7 +5,7 @@ public class Datacore : MonoBehaviour {
 	
 	public bool bDisplayAllMenus = false;
 	
-	public ArrayList _lAllWaypoints;
+	public ArrayList _lAllWaypoints  = new ArrayList();
 	
 	// Use this for initialization
 	void Start () {
@@ -23,7 +23,12 @@ public class Datacore : MonoBehaviour {
 	
 	//Waypoints
 	public void _AddWaypoint(Transform point) {
-		_lAllWaypoints.Add(point);
+		//_lAllWaypoints.Add(point);
+		if(_lAllWaypoints != null) {
+			//Debug.Log("going to add waypoint to datacore");
+			_lAllWaypoints.Add(point);
+		}
+		
 	}
 	
 	public void _RemoveWaypoint(Transform point) {

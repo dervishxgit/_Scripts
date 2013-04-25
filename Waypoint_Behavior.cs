@@ -10,8 +10,10 @@ public class Waypoint_Behavior : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		dCore = GameObject.FindGameObjectWithTag("CORE").GetComponent<Datacore>() as Datacore;
-		//dCore._AddWaypoint(gameObject.transform);
+		
 		testtrans = gameObject.transform;
+		
+		dCore._AddWaypoint(testtrans);
 	}
 	
 	// Update is called once per frame

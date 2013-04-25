@@ -18,7 +18,7 @@ public class Wasp_Core : MonoBehaviour {
 	private ArrayList lPathToDestination;	//list of waypoints, ordered to our destination
 	private float fWaypointRefreshInterval = 5.0f;
 	
-	public ArrayList lKnownWaypoints;
+	public ArrayList lKnownWaypoints  = new ArrayList();
 	
 	// Use this for initialization
 	void Start () {
@@ -27,8 +27,9 @@ public class Wasp_Core : MonoBehaviour {
 		//wCore = this;
 		
 		//for now, we will just get our known waypoints at startup, for testing
-		foreach (int i in dCore._lAllWaypoints) {
-			lKnownWaypoints[i] = dCore._lAllWaypoints[i];
+		foreach (Transform i in dCore._lAllWaypoints) {
+			//lKnownWaypoints[i] = dCore._lAllWaypoints[i] as Transform;
+			//lKnownWaypoints[i] = dCore._ReturnRandomWaypoint();
 		}
 		
 		destinationNext = _ReturnRandomKnownWaypoint();
