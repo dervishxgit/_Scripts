@@ -40,7 +40,9 @@ public class Wasp_Core : MonoBehaviour {
 	void Start () {
 		//establish connection to creature core and global datacore
 		dCore = GameObject.FindGameObjectWithTag("CORE").GetComponent<Datacore>() as Datacore;
-		//wCore = this;
+		
+		//Register our wasp
+		dCore._RegisterWasp( this );
 		
 		//for now, we will just get our known waypoints at startup, for testing
 		foreach (Transform i in dCore._lAllWaypoints) {

@@ -2,6 +2,14 @@ using UnityEngine;
 using System.Collections;
 
 public class RULECORE : MonoBehaviour {
+	
+	/*
+	 * Imported Rulecore, (Johnathan Nix) needs adjustment
+	 * TODO:
+	 * add orientation functions wheer necessary
+	 * adjust seek target (or create new) for 3D space
+	 */ 
+	
 		
 	static public void _RotateYaw(Component bot, float fTurnRate) {
 		if(fTurnRate > 6.0f) fTurnRate = 6.0f;

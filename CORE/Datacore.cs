@@ -6,9 +6,20 @@ public class Datacore : MonoBehaviour {
 	
 	public bool bDisplayAllMenus = false;
 	
-	//public ArrayList _lAllWaypoints  = new ArrayList();
 	
+	//Stored World Waypoints
 	public List<Transform> _lAllWaypoints = new List<Transform>();
+	
+	//Wasps in World
+	public List<Wasp_Core> _lAllWasps = new List<Wasp_Core>();
+	
+	public void _RegisterWasp( Wasp_Core wasp ) {
+		_lAllWasps.Add( wasp );
+	}
+	
+	public void _UnregisterWasp( Wasp_Core wasp ) {
+		_lAllWasps.Remove( wasp );
+	}
 	
 	// Use this for initialization
 	void Start () {
@@ -37,13 +48,6 @@ public class Datacore : MonoBehaviour {
 	public void _RemoveWaypoint(Transform point) {
 		_lAllWaypoints.Remove(point);
 	}
-	
-//	static public PigBehavior _GetTargetPig(int pig) {
-//		if (_Pig.Count > 0) {
-//			return _Pig[pig];
-//		}
-//		return null;
-//	}
 	
 	public Transform _GetWaypoint(int point) {
 		return _lAllWaypoints[point];

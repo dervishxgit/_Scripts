@@ -29,12 +29,12 @@ public class Wasp_Controller : MonoBehaviour {
 	public GameObject waspRoot;				//creature's root object
 	public GameObject waspGeo;				//creature's root geometry
 	
-	public struct FuzzyTarget {
+	public class FuzzyTarget {
 		public	GameObject gObject;
 		public Transform trans;
 		public float InFrontMe, BehindMe, BelowMe, AboveMe, LeftMe, RightMe;
 		public float distance;
-	}
+	};
 	
 	public FuzzyTarget FT;
 	
@@ -66,6 +66,9 @@ public class Wasp_Controller : MonoBehaviour {
 		wCore = gameObject.GetComponent<Wasp_Core>() as Wasp_Core;
 		waspRoot = wCore.waspRoot;
 		waspGeo = wCore.waspGeo;
+		
+		//create fuzzytarget
+		this.FT = new FuzzyTarget();
 	}
 	
 	// Update is called once per frame
@@ -212,7 +215,7 @@ public class Wasp_Controller : MonoBehaviour {
 			out target.LeftMe, out target.RightMe,
 			out target.AboveMe, out target.BelowMe);
 		
-		this.FT = target;
+		//this.FT = target;
 		if (target.InFrontMe > fForwardThreshold) {facing = true;}
 		
 		return facing;
