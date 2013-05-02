@@ -10,6 +10,9 @@ public class RULECORE : MonoBehaviour {
 	 * adjust seek target (or create new) for 3D space
 	 */ 
 	
+	//additional notes: most likely the functionality will be copied out of here into datacore
+	//so that we do not look to multiple places for these conceptually similar functions
+	
 	//SeekTarget3D settings
 	
 		
