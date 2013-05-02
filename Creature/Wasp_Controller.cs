@@ -141,7 +141,7 @@ public class Wasp_Controller : MonoBehaviour {
 			//test for now, just pick a new
 			wCore._GetNextRandomWaypoint();
 			
-			//ControllerState = stateControllerMoving;
+			ControllerState = stateControllerMoving;
 			
 			return;
 		}
@@ -167,15 +167,22 @@ public class Wasp_Controller : MonoBehaviour {
 				//Orient
 				//	if not facing, face
 				//MoveTo
-				bool facing = _CheckFacing(wCore.destinationNext);
-				if(facing) {
-					Debug.Log ("facing object");
-					_MoveTo(wCore.destinationNext);
-				} 
-				else {
-					_Face(this.FT);
-				}
 				
+				//proto
+//				bool facing = _CheckFacing(wCore.destinationNext);
+//				if(facing) {
+//					Debug.Log ("facing object");
+//					_MoveTo(wCore.destinationNext);
+//				} 
+//				else {
+//					_Face(this.FT);
+//				}
+				
+				//new test
+				bool reached = Datacore._SeekTarget3D( this, wCore.destinationNext.position, 2.0f ) ;
+				//temp force state change
+				if(reached) ControllerState = stateControllerSeeking;
+					
 				break;
 				
 			}
@@ -184,11 +191,11 @@ public class Wasp_Controller : MonoBehaviour {
 	
 	private void RunControllerStateMachine() {
 		//for now we just check if we reached our destination, goto seeking
-		if( _ReachedTarget(wCore.destinationNext) ) {
-			ControllerState = stateControllerSeeking;
-		} else if( _CheckValidWaypoint(wCore.destinationNext) ) {
-			ControllerState = stateControllerMoving;
-		}
+//		if( _ReachedTarget(wCore.destinationNext) ) {
+//			ControllerState = stateControllerSeeking;
+//		} else if( _CheckValidWaypoint(wCore.destinationNext) ) {
+//			ControllerState = stateControllerMoving;
+//		}
 	}
 	
 	//state functions
