@@ -159,6 +159,12 @@ public class Datacore : MonoBehaviour {
 		bot.transform.Rotate(fTurnRate * Vector3.right, Space.World);		
 	}
 	
+	static public void _RotateRoll(Component bot, float fTurnRate) {
+		if(fTurnRate > 6.0f) fTurnRate = 6.0f;
+		if(fTurnRate < -6.0f) fTurnRate = -6.0f;
+		bot.transform.Rotate(fTurnRate * Vector3.forward, Space.Self);
+	}
+	
 	static public void _MoveForward(Component bot, float fVelocity) {
 		if(fVelocity > 0.75f) fVelocity = 0.75f;
 		if(fVelocity < -0.75f) fVelocity = -0.75f;
@@ -202,22 +208,22 @@ public class Datacore : MonoBehaviour {
 			
 			// Should we pitch up or down?
 			if ( zIsTargetAboveMe > zIsTargetBelowMe ) {
+				//pitch up
 				float fPitchRate;
 				if( zIsTargetBehindMe > zIsTargetAboveMe ) {
 					fPitchRate = AICORE._Defuzzify(zIsTargetBehindMe, 0.0f, 6.0f);
 				} else {
 					fPitchRate = AICORE._Defuzzify(zIsTargetAboveMe, 0.0f, 6.0f);
 				}
-				//pitch up
 				_RotatePitch(bot, fPitchRate);
 			} else if ( zIsTargetBelowMe > zIsTargetAboveMe ) {
+				//pitch down
 				float fPitchRate;
 				if( zIsTargetBehindMe > zIsTargetBelowMe ) {
 					fPitchRate = AICORE._Defuzzify(zIsTargetBehindMe, 0.0f, 6.0f);
 				} else {
 					fPitchRate = AICORE._Defuzzify(zIsTargetBelowMe, 0.0f, 6.0f);
 				}
-				//pitch down
 				_RotatePitch(bot, -fPitchRate);
 			}
 		}
