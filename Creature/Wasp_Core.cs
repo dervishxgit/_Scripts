@@ -25,13 +25,16 @@ public class Wasp_Core : MonoBehaviour {
 	public GameObject waspRoot;
 	public GameObject waspGeo;
 	
+	//State of mind (from Virtual Mind)
+	public string stateOfMind;
+	
 	//Waypoints
 	public Transform destinationFinal; 	//final destination
 	public Transform destinationNext;		//next waypoint
 	public Transform destinationPrev;		//previous waypoint
 	public GameObject targetObject;		//if we are orienting or moving to something
 	//these lists, and functions for them, may have to be moved to the creature's core
-	private ArrayList lPathToDestination;	//list of waypoints, ordered to our destination
+	private List<Transform> lPathToDestination;	//list of waypoints, ordered to our destination
 	private float fWaypointRefreshInterval = 5.0f;
 	
 	public List<Transform> lKnownWaypoints  = new List<Transform>();
