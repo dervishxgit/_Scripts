@@ -17,7 +17,8 @@ using System.Collections.Generic;
  * this output state will direct the datacore interface to make changes to the other scripts where necessary
  */ 
 
-public class Wasp_Core : MonoBehaviour {
+public class Wasp_Core : MonoBehaviour
+{
 	
 	//References
 	public Datacore dCore;
@@ -36,58 +37,66 @@ public class Wasp_Core : MonoBehaviour {
 	//these lists, and functions for them, may have to be moved to the creature's core
 	private List<Transform> lPathToDestination;	//list of waypoints, ordered to our destination
 	private float fWaypointRefreshInterval = 5.0f;
-	
-	public List<Transform> lKnownWaypoints  = new List<Transform>();
+	public List<Transform> lKnownWaypoints = new List<Transform> ();
 	
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
 		//establish connection to creature core and global datacore
-		dCore = GameObject.FindGameObjectWithTag("CORE").GetComponent<Datacore>() as Datacore;
+		dCore = GameObject.FindGameObjectWithTag ("CORE").GetComponent<Datacore> () as Datacore;
 		
 		//Register our wasp
-		dCore._RegisterWasp( this );
+		dCore._RegisterWasp (this);
 		
 		//for now, we will just get our known waypoints at startup, for testing
 		foreach (Transform i in dCore._lAllWaypoints) {
-			_AddKnownWaypoint(i);
+			_AddKnownWaypoint (i);
 		}
 		
-		destinationNext = _ReturnRandomKnownWaypoint();
+		destinationNext = _ReturnRandomKnownWaypoint ();
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
 	
 	}
 	
 	//Waypoints
 	//concept: list of waypoints known to this wasp, retrieved from master list in datacore
-	public void _AddKnownWaypoint(Transform point) {
-		lKnownWaypoints.Add(point);
+	public void _AddKnownWaypoint (Transform point)
+	{
+		lKnownWaypoints.Add (point);
 	}
 	
-	public void _RemoveKnownWaypoint(Transform point) {
-		lKnownWaypoints.Remove(point);
+	public void _RemoveKnownWaypoint (Transform point)
+	{
+		lKnownWaypoints.Remove (point);
 	}
 	
-	public Transform _ReturnRandomKnownWaypoint() {
+	public Transform _ReturnRandomKnownWaypoint ()
+	{
 		//count waypoints
 		//choose random number from available, return waypoint at index
-		if(lKnownWaypoints != null) {
-			if(lKnownWaypoints.Count > 0) {
+		if (lKnownWaypoints != null) {
+			if (lKnownWaypoints.Count > 0) {
 				int numpoints = this.lKnownWaypoints.Count;
-				int selection = AICORE._RandomInteger(0, numpoints);
-				return lKnownWaypoints[selection] as Transform;
-			} else return null;
-		} else return null;
+				int selection = AICORE._RandomInteger (0, numpoints);
+				return lKnownWaypoints [selection] as Transform;
+			} else
+				return null;
+		} else
+			return null;
 	}
 	
-	public void _SetDestinationNext(Transform trans) {
+	public void _SetDestinationNext (Transform trans)
+	{
 		destinationNext = trans;
 	}
 	
-	public void _GetNextRandomWaypoint() {
-		destinationNext = _ReturnRandomKnownWaypoint();
+	public void _GetNextRandomWaypoint ()
+	{
+		destinationNext = _ReturnRandomKnownWaypoint ();
 	}
 	
 }
