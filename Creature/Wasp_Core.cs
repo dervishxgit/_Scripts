@@ -50,7 +50,7 @@ public class Wasp_Core : MonoBehaviour
 	
 	//ChemoSense
 	public class _Chemo_ {
-		Color chemoColor;
+		public Color chemoColor;
 		float fInitialMemTime, fCurrentMemTime;
 		float fMemDecayRate = 1.0f;
 		float fDefaultInitialMemTime = 30.0f; //default seconds for Chemo to persist in memory
