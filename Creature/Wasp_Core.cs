@@ -43,6 +43,10 @@ public class Wasp_Core : MonoBehaviour
 	
 	//ColorSense
 	public GameObject lastSeenObject;
+	public Color currentColor;
+	public void _UpdateCurrentColor(Color c) {
+		currentColor = c;
+	}
 	
 	// Use this for initialization
 	void Start ()

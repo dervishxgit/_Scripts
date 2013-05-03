@@ -19,6 +19,9 @@ public class Wasp_Photoreceptor : MonoBehaviour {
 	
 	
 	public GameObject lastSeenObject;
+	public RaycastHit currentHitInfo;
+	
+	public Color _cSeenColor;
 	
 	//Settings
 	float fVisRayDistance = 240.0f;
@@ -31,13 +34,21 @@ public class Wasp_Photoreceptor : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		wCore._UpdateCurrentColor(_cSeenColor = _GetColorFromRaycast(transform.position, transform.forward, out currentHitInfo));
 	}
 	
-	Color _GetColorFromRaycast(Vector3 dir) {
+	Color _GetColorFromRaycast(Vector3 pos, Vector3 dir, out RaycastHit hitInfo) {
 		Color outColor = Color.black;
 		
+//		LayerMask mask = LayerMask.NameToLayer("Color");
+//		
+//		if(Physics.Raycast( pos, dir, out hitInfo, fVisRayDistance, mask)) {
+//			outColor = hitInfo.collider.transform.gameObject.renderer.material.color;
+//		} 
 		
+		if(Physics.Raycast( pos, dir, out hitInfo, fVisRayDistance)) {
+			outColor = hitInfo.collider.transform.gameObject.renderer.material.color;
+		}
 		
 		return outColor;
 	}
