@@ -22,7 +22,7 @@ public class ChemoSphere_Behavoir : MonoBehaviour {
 	
 	public void _SetAlpha(float alph) {
 		Color tempColor = gameObject.renderer.material.color;
-			tempColor.a = Mathf.Clamp(alph, 0.0f, 1.0f);
+		tempColor.a = Mathf.Clamp(alph, 0.0f, 1.0f);
 		
 		gameObject.renderer.material.color = tempColor;
 	}
