@@ -48,6 +48,65 @@ public class Wasp_Core : MonoBehaviour
 		currentColor = c;
 	}
 	
+	//ChemoSense
+	public class _Chemo_ {
+		Color chemoColor;
+		float fInitialMemTime, fCurrentMemTime;
+		float fMemDecayRate = 1.0f;
+		float fDefaultInitialMemTime = 30.0f; //default seconds for Chemo to persist in memory
+		
+		public _Chemo_() {
+			fInitialMemTime = fDefaultInitialMemTime;
+		}
+		
+		public _Chemo_( Color color ) {
+			
+		}
+		
+		public _Chemo_( _Chemo_ chem ) {
+			
+		}
+		
+		bool _Decay(float amount) {
+			fCurrentMemTime -= amount * fMemDecayRate;
+			return fCurrentMemTime <= 0.0f;
+		}
+		
+		public void _Run(float fTime, out bool bExpired) {
+			bExpired = _Decay(fTime);
+		}
+		
+		public void _Refresh() {
+			fCurrentMemTime = fInitialMemTime;
+		}
+		
+		
+	};
+	public _Chemo_ currentChemo;
+	public List<_Chemo_> _lChemos = new List<_Chemo_>();
+	public void _UpdateCurrentChemo(_Chemo_ chem) {
+		//called by the chemoreceptor
+		//we will check if it is  a new chemo
+		//if new, add; else refresh
+		
+		if( _lChemos.Contains(chem) ) {
+			chem._Refresh();
+		} else {
+			_lChemos.Add(chem);
+		}
+	}
+	void _RunChemos() {
+		if(_lChemos != null && _lChemos.Count > 0) {
+			foreach(_Chemo_ chem in _lChemos) {
+				bool expired;
+				chem._Run(Time.deltaTime, out expired);
+				if(expired) {
+					_lChemos.Remove(chem);
+				}
+			}
+		}
+	}
+	
 	// Use this for initialization
 	void Start ()
 	{
@@ -73,7 +132,10 @@ public class Wasp_Core : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-	
+		//-there will be many things we will end up doing in update
+		
+		//Chemos
+		_RunChemos();
 	}
 	
 	//Waypoints

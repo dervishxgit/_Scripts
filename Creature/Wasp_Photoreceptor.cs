@@ -35,6 +35,8 @@ public class Wasp_Photoreceptor : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		wCore._UpdateCurrentColor(_cSeenColor = _GetColorFromRaycast(transform.position, transform.forward, out currentHitInfo));
+		
+		SetEyesToSeenColor();
 	}
 	
 	Color _GetColorFromRaycast(Vector3 pos, Vector3 dir, out RaycastHit hitInfo) {
@@ -51,6 +53,15 @@ public class Wasp_Photoreceptor : MonoBehaviour {
 		}
 		
 		return outColor;
+	}
+	
+	void SetEyeColor(Color c, GameObject eye) {
+		eye.renderer.material.color = c;	
+	}
+	
+	void SetEyesToSeenColor() {
+		SetEyeColor(_cSeenColor, waspEye01);
+		SetEyeColor(_cSeenColor, waspEye02);
 	}
 	
 }
