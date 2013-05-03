@@ -20,6 +20,8 @@ public class ChemoBehavior : MonoBehaviour {
 	public GameObject chemoSpherePrefab;
 	GameObject mysphere;
 	Material sphereMaterial;
+	float sphereMaxAlpha = 0.9f;
+	float sphereMinAlpha = 0.1f;
 	
 	Wasp_Core._Chemo_ _Chemo = new Wasp_Core._Chemo_();
 	
@@ -42,8 +44,14 @@ public class ChemoBehavior : MonoBehaviour {
 			}	
 		}
 		
-		//dynamic resize
-		_ResizeChemoSphere(fLifeTimeRemaining);
+		//dynamic resize test
+		//_ResizeChemoSphere(fLifeTimeRemaining);
+		
+		//dynamic alpha
+		_SetChemoSphereAlpha( Mathf.Clamp(  
+			AICORE._IsItMax(fLifeTimeRemaining, 0.0f, fLifeTime), 
+			sphereMinAlpha, sphereMaxAlpha)
+			);
 	}
 	
 	void _InitializeChemoSphere() {
@@ -59,10 +67,16 @@ public class ChemoBehavior : MonoBehaviour {
 		
 		sphereMaterial.color = _Chemo.chemoColor;
 		
+		_SetChemoSphereAlpha(sphereMaxAlpha);
+		
 	}
 	
 	void _ResizeChemoSphere(float rad) {
-		mysphere.SendMessage("_ResizeSphere", rad, SendMessageOptions.DontRequireReceiver);
+		mysphere.BroadcastMessage("_ResizeSphere", rad, SendMessageOptions.DontRequireReceiver);
+	}
+	
+	void _SetChemoSphereAlpha(float alph) {
+		mysphere.BroadcastMessage("_SetAlpha", alph, SendMessageOptions.DontRequireReceiver);
 	}
 	
 	// Use this for initialization

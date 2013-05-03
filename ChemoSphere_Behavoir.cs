@@ -20,6 +20,13 @@ public class ChemoSphere_Behavoir : MonoBehaviour {
 		//_SetRadius(radius);
 	}
 	
+	public void _SetAlpha(float alph) {
+		Color tempColor = gameObject.renderer.material.color;
+			tempColor.a = Mathf.Clamp(alph, 0.0f, 1.0f);
+		
+		gameObject.renderer.material.color = tempColor;
+	}
+	
 	// Use this for initialization
 	void Start () {
 		
