@@ -41,6 +41,9 @@ public class Wasp_Core : MonoBehaviour
 	private float fWaypointRefreshInterval = 5.0f;
 	public List<Transform> lKnownWaypoints = new List<Transform> ();
 	
+	//ColorSense
+	public GameObject lastSeenObject;
+	
 	// Use this for initialization
 	void Start ()
 	{
@@ -58,6 +61,8 @@ public class Wasp_Core : MonoBehaviour
 		destinationNext = _ReturnRandomKnownWaypoint ();
 		
 		//map sensors
+		//--sensors mapped by default in prefab
+		
 		
 	}
 	
