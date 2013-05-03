@@ -25,6 +25,8 @@ public class Wasp_Core : MonoBehaviour
 	//private Wasp_Core wCore;
 	public GameObject waspRoot;
 	public GameObject waspGeo;
+	public GameObject waspColorSensor;
+	public GameObject waspChemoSensor;
 	
 	//State of mind (from Virtual Mind)
 	public string stateOfMind;
@@ -54,6 +56,9 @@ public class Wasp_Core : MonoBehaviour
 		}
 		
 		destinationNext = _ReturnRandomKnownWaypoint ();
+		
+		//map sensors
+		
 	}
 	
 	// Update is called once per frame
