@@ -23,13 +23,13 @@ public class ChemoBehavior : MonoBehaviour {
 	float sphereMaxAlpha = 0.9f;
 	float sphereMinAlpha = 0.1f;
 	
-	public Wasp_Core._Chemo_ _Chemo = new Wasp_Core._Chemo_();
+	public _Chemo_ _Chemo = new _Chemo_();
 	
 	ChemoBehavior() {
 		
 	}
 	
-	ChemoBehavior(float radius, float lifetime, Wasp_Core._Chemo_ chem) {
+	ChemoBehavior(float radius, float lifetime, _Chemo_ chem) {
 		fRadius = radius;
 		fLifeTimeRemaining = fLifeTime = lifetime;
 		

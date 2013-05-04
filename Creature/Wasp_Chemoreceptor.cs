@@ -5,12 +5,12 @@ public class Wasp_Chemoreceptor : MonoBehaviour {
 	
 	public Wasp_Core wCore;
 	
-	public Wasp_Core._Chemo_ currentChemo;
+	public _Chemo_ currentChemo;
 	
 	public Color currentChemoColor;
 	
-	float fTriggered = 0.0f;
-	bool bTriggered = false;
+	public float fTriggered = 0.0f;
+	public bool bTriggered = false;
 	float fTriggeredTimeThreshold = 1.0f;
 	
 	//should only trigger on "Chemo" Layer
@@ -20,11 +20,15 @@ public class Wasp_Chemoreceptor : MonoBehaviour {
 	
 	void OnTriggerStay(Collider other) {
 		currentChemo = other.transform.root.gameObject.GetComponent<ChemoBehavior>()._Chemo;
-		currentChemoColor = other.transform.root.gameObject.GetComponent<ChemoBehavior>()._Chemo.chemoColor;
+		currentChemoColor = currentChemo.chemoColor;
 		
 		bTriggered = true;
 		fTriggered = 0.0f;
 		Debug.Log("did trigger");
+	}
+	
+	void OnTriggerExit(Collider other) {
+		//bTriggered = false;
 	}
 	
 	// Use this for initialization
@@ -46,6 +50,7 @@ public class Wasp_Chemoreceptor : MonoBehaviour {
 			if(!bTriggered) {
 				//decay our chemocolor
 				currentChemo.chemoColor *= 0.9f;
+				//currentChemoColor *= 0.9f;
 			}
 		}
 		

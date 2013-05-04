@@ -29,17 +29,6 @@ public class Wasp_VirtualMind : MonoBehaviour {
 	 */ 
 	
 	
-	
-	public class _Action_ {
-		
-	};
-	
-	public class _Role_ {
-		string sName;
-		
-		List<_Action_> _lActions = new List<_Action_>();
-	};
-	
 	public Datacore dCore;
 	public Wasp_Core wCore;
 	
