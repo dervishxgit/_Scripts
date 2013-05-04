@@ -44,6 +44,8 @@ public class Wasp_Core : MonoBehaviour
 	//ColorSense
 	public GameObject lastSeenObject;
 	public Color currentColor;
+	//special placement of chemocolor here
+	public Color currentChemoColor;
 	public void _UpdateCurrentColor(Color c) {
 		currentColor = c;
 	}
@@ -94,6 +96,8 @@ public class Wasp_Core : MonoBehaviour
 		} else {
 			_lChemos.Add(chem);
 		}
+		
+		currentChemoColor = chem.chemoColor;
 	}
 	void _RunChemos() {
 		if(_lChemos != null && _lChemos.Count > 0) {
@@ -135,7 +139,7 @@ public class Wasp_Core : MonoBehaviour
 		//-there will be many things we will end up doing in update
 		
 		//Chemos
-		_RunChemos();
+		//_RunChemos();
 	}
 	
 	//Waypoints

@@ -23,7 +23,7 @@ public class ChemoBehavior : MonoBehaviour {
 	float sphereMaxAlpha = 0.9f;
 	float sphereMinAlpha = 0.1f;
 	
-	Wasp_Core._Chemo_ _Chemo = new Wasp_Core._Chemo_();
+	public Wasp_Core._Chemo_ _Chemo = new Wasp_Core._Chemo_();
 	
 	ChemoBehavior() {
 		
@@ -52,6 +52,8 @@ public class ChemoBehavior : MonoBehaviour {
 			AICORE._IsItMax(fLifeTimeRemaining, 0.0f, fLifeTime), 
 			sphereMinAlpha, sphereMaxAlpha)
 			);
+		
+		_Chemo.chemoColor = sphereMaterial.color;
 	}
 	
 	void _InitializeChemoSphere() {
@@ -87,6 +89,8 @@ public class ChemoBehavior : MonoBehaviour {
 		 * needs to create a proper sphere renderer and collider,
 		 * and initialize chemical properties for sensation
 		 */ 
+		
+		_Chemo.chemoColor = Color.red;
 		
 		_InitializeChemoSphere();
 		

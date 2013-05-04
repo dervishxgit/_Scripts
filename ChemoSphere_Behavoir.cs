@@ -29,7 +29,8 @@ public class ChemoSphere_Behavoir : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		
+		//test diff color
+		//gameObject.renderer.material.color = Color.red;
 	}
 	
 	// Update is called once per frame
