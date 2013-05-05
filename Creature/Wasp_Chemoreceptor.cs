@@ -34,6 +34,8 @@ public class Wasp_Chemoreceptor : MonoBehaviour
 		
 		//we've left the chemo zone, make a copy of the sensation
 		currentChemo = new _Chemo_ (other.transform.root.gameObject.GetComponent<ChemoBehavior> ()._Chemo);
+		//Debug.Log ("should see this once");
+		
 	}
 	
 	// Use this for initialization
@@ -57,6 +59,7 @@ public class Wasp_Chemoreceptor : MonoBehaviour
 			if (bTriggered == false) {
 				bool expired;
 				currentChemo._Run (0.1f, out expired);
+				Debug.Log ("yes we are hitting this");
 				Debug.Log (currentChemo._GetCurrentMemTime ());
 				//not smelling
 				if (expired) {
