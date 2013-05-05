@@ -5,9 +5,6 @@ public class RULECORE : MonoBehaviour {
 	
 	/*
 	 * Imported Rulecore, (Johnathan Nix) needs adjustment
-	 * TODO:
-	 * add orientation functions wheer necessary
-	 * adjust seek target (or create new) for 3D space
 	 */ 
 	
 	//additional notes: most likely the functionality will be copied out of here into datacore

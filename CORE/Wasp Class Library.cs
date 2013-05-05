@@ -21,10 +21,12 @@ public class _Role_
 public class _Chemo_
 {
 	public Color chemoColor = Color.black;
-	float fInitialMemTime, fCurrentMemTime;
+	public float fInitialMemTime, fCurrentMemTime;
 	float fMemDecayRate = 1.0f;
 	float fDefaultInitialMemTime = 30.0f; //default seconds for Chemo to persist in memory
-		
+	
+	//bool bIsDecaying = true; //not using
+	
 	public _Chemo_ ()
 	{
 		fInitialMemTime = fCurrentMemTime = fDefaultInitialMemTime;
@@ -45,7 +47,11 @@ public class _Chemo_
 		
 	bool _Decay (float amount)
 	{
-		fCurrentMemTime = fCurrentMemTime - amount;// * fMemDecayRate;
+		fCurrentMemTime -= amount * fMemDecayRate;
+		
+		//test
+		chemoColor *= 1.0f - amount;
+		
 		return fCurrentMemTime <= 0.0f;
 	}
 		
