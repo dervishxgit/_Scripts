@@ -28,6 +28,8 @@ public class Wasp_Core : MonoBehaviour
 	public GameObject waspColorSensor;
 	public GameObject waspChemoSensor;
 	
+	public GameObject chemoBehaviorPrefab;
+	
 	//State of mind (from Virtual Mind)
 	public string stateOfMind;
 	
@@ -97,6 +99,18 @@ public class Wasp_Core : MonoBehaviour
 		
 		//map sensors
 		//--sensors mapped by default in prefab
+		
+		//test of chemo transmit
+		GameObject cheminst = Instantiate(chemoBehaviorPrefab)as GameObject;
+		ChemoBehavior chembehave = cheminst.GetComponent<ChemoBehavior>();
+		//chembehave._Chemo = new _Chemo_Green();
+		//chembehave._Chemo.chemoColor = Color.green;
+		_Chemo_Green tempchem = new _Chemo_Green();
+		chembehave._Initialize(5.0f, 10.0f, tempchem);
+		//chembehave._Chemo.chemoColor = Color.green;
+		chembehave._Chemo = new _Chemo_Green();
+		chembehave.SendMessage("_SetReady", true, SendMessageOptions.DontRequireReceiver);
+		
 		
 		
 	}

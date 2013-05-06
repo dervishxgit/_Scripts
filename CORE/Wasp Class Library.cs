@@ -72,6 +72,18 @@ public class _Chemo_
 		
 };
 
+public class _Chemo_Red : _Chemo_ {
+	public Color chemoColor = Color.red;
+};
+
+public class _Chemo_Green : _Chemo_ {
+	public Color chemoColor = Color.green;
+	
+	public _Chemo_Green() {
+		chemoColor = Color.green;
+	}
+};
+
 //public class WaspClassLibrary : MonoBehaviour {
 //
 //	// Use this for initialization

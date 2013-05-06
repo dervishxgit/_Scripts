@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class ChemoBehavior : MonoBehaviour {
+public class ChemoBehavior : MonoBehaviour
+{
 	
 	/*
 	 * ChemoBehavior (c) 2013 - Steve Miller
@@ -16,31 +17,36 @@ public class ChemoBehavior : MonoBehaviour {
 	 * depending on the settings we provide it
 	 */ 
 	float fRadius = 10.0f, fLifeTime = 10.0f, fLifeTimeRemaining = 10.0f;
-	
 	public GameObject chemoSpherePrefab;
 	GameObject mysphere;
 	Material sphereMaterial;
 	float sphereMaxAlpha = 0.9f;
 	float sphereMinAlpha = 0.1f;
+	public _Chemo_ _Chemo;// = new _Chemo_ ();
+	int iMasterState = 0;
+	const int iStateNotReady = 0;
+	const int iStateReady = 1;
+	const int iStateRunning = 2;
 	
-	public _Chemo_ _Chemo = new _Chemo_();
+//	ChemoBehavior ()
+//	{
+//		
+//	}
+//	
+//	ChemoBehavior (float radius, float lifetime, _Chemo_ chem)
+//	{
+//		fRadius = radius;
+//		fLifeTimeRemaining = fLifeTime = lifetime;
+//		
+//		_Chemo = chem;
+//	}
 	
-	ChemoBehavior() {
-		
-	}
-	
-	ChemoBehavior(float radius, float lifetime, _Chemo_ chem) {
-		fRadius = radius;
-		fLifeTimeRemaining = fLifeTime = lifetime;
-		
-		_Chemo = chem;
-	}
-	
-	void Decay(float fAmount, bool bDestroyWhenFinished) {
+	void Decay (float fAmount, bool bDestroyWhenFinished)
+	{
 		fLifeTimeRemaining -= fAmount;
-		if(bDestroyWhenFinished) {
-			if(fLifeTimeRemaining <= 0.0f) {
-				Destroy(gameObject);
+		if (bDestroyWhenFinished) {
+			if (fLifeTimeRemaining <= 0.0f) {
+				Destroy (gameObject);
 			}	
 		}
 		
@@ -48,41 +54,58 @@ public class ChemoBehavior : MonoBehaviour {
 		//_ResizeChemoSphere(fLifeTimeRemaining);
 		
 		//dynamic alpha
-		_SetChemoSphereAlpha( Mathf.Clamp(  
-			AICORE._IsItMax(fLifeTimeRemaining, 0.0f, fLifeTime), 
+		_SetChemoSphereAlpha (Mathf.Clamp (
+			AICORE._IsItMax (fLifeTimeRemaining, 0.0f, fLifeTime), 
 			sphereMinAlpha, sphereMaxAlpha)
 			);
 		
-		_Chemo.chemoColor = sphereMaterial.color;
+		//_Chemo.chemoColor = sphereMaterial.color;
 	}
 	
-	void _InitializeChemoSphere() {
+	void _InitializeChemoSphere ()
+	{
 		//spawn and map
-		mysphere = Instantiate(chemoSpherePrefab, transform.position, transform.rotation) as GameObject;
+		mysphere = Instantiate (chemoSpherePrefab, transform.position, transform.rotation) as GameObject;
 		
 		mysphere.transform.root.parent = gameObject.transform;
 		
 		//mysphere.BroadcastMessage("_ResizeSphere", fRadius, SendMessageOptions.DontRequireReceiver);
-		_ResizeChemoSphere(fRadius);
+		_ResizeChemoSphere (fRadius);
 		
-		sphereMaterial = mysphere.GetComponent<Renderer>().material;
+		sphereMaterial = mysphere.GetComponent<Renderer> ().material;
 		
 		sphereMaterial.color = _Chemo.chemoColor;
 		
-		_SetChemoSphereAlpha(sphereMaxAlpha);
+		_SetChemoSphereAlpha (sphereMaxAlpha);
 		
 	}
 	
-	void _ResizeChemoSphere(float rad) {
-		mysphere.BroadcastMessage("_ResizeSphere", rad, SendMessageOptions.DontRequireReceiver);
+	void _ResizeChemoSphere (float rad)
+	{
+		mysphere.BroadcastMessage ("_ResizeSphere", rad, SendMessageOptions.DontRequireReceiver);
 	}
 	
-	void _SetChemoSphereAlpha(float alph) {
-		mysphere.BroadcastMessage("_SetAlpha", alph, SendMessageOptions.DontRequireReceiver);
+	void _SetChemoSphereAlpha (float alph)
+	{
+		mysphere.BroadcastMessage ("_SetAlpha", alph, SendMessageOptions.DontRequireReceiver);
+	}
+	
+	void _SetReady(bool bReady) {
+		if(bReady) {
+			iMasterState = iStateReady;
+		} else iMasterState = iStateNotReady;
+	}
+	
+	public void _Initialize(float radius, float lifetime, _Chemo_ chem) {
+		fRadius = radius;
+		fLifeTimeRemaining = fLifeTime = lifetime;
+		
+		_Chemo = new _Chemo_(chem);
 	}
 	
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
 		//mysphere = gameObject.AddComponent<SphereCollider>();
 		
 		/*this starts as an empty gameobject
@@ -90,16 +113,35 @@ public class ChemoBehavior : MonoBehaviour {
 		 * and initialize chemical properties for sensation
 		 */ 
 		
-		_Chemo.chemoColor = Color.red;
+		//_Chemo.chemoColor = Color.red;
 		
-		_InitializeChemoSphere();
+		//_InitializeChemoSphere ();
 		
 		//_SetRadius(fRadius);
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		Decay(Time.deltaTime, true);
+	void Update ()
+	{
+		switch (iMasterState) {
+		case iStateNotReady:
+			Debug.Log ("chemobehavior not ready");
+			break;
+			
+		case iStateReady:
+			Debug.Log ("chemobehavior ready");
+			//_Chemo.chemoColor = Color.red;
+		
+			_InitializeChemoSphere ();
+			
+			iMasterState = iStateRunning;
+			break;
+
+		
+		case iStateRunning:
+			Decay (Time.deltaTime, true);
+			break;
+		}
 	}
 	
 //	public void _SetRadius(float rad) {
