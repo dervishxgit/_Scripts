@@ -16,14 +16,14 @@ public class ChemoBehavior : MonoBehaviour
 	 * object will need to be able to be created and will create its own components when instantiated
 	 * depending on the settings we provide it
 	 */ 
-	float fRadius = 10.0f, fLifeTime = 10.0f, fLifeTimeRemaining = 10.0f;
+	public float fRadius = 10.0f, fLifeTime = 10.0f, fLifeTimeRemaining = 10.0f;
 	public GameObject chemoSpherePrefab;
 	GameObject mysphere;
 	Material sphereMaterial;
 	float sphereMaxAlpha = 0.9f;
 	float sphereMinAlpha = 0.1f;
-	public _Chemo_ _Chemo;// = new _Chemo_ ();
-	int iMasterState = 0;
+	public _Chemo_ _Chemo = new _Chemo_ ();
+	public int iMasterState = 0;
 	const int iStateNotReady = 0;
 	const int iStateReady = 1;
 	const int iStateRunning = 2;
@@ -72,11 +72,14 @@ public class ChemoBehavior : MonoBehaviour
 		//mysphere.BroadcastMessage("_ResizeSphere", fRadius, SendMessageOptions.DontRequireReceiver);
 		_ResizeChemoSphere (fRadius);
 		
-		sphereMaterial = mysphere.GetComponent<Renderer> ().material;
+		//sphereMaterial = mysphere.GetComponent<Renderer> ().material;
 		
-		sphereMaterial.color = _Chemo.chemoColor;
+		//sphereMaterial.color = _Chemo.chemoColor;
 		
 		_SetChemoSphereAlpha (sphereMaxAlpha);
+		
+		_SetChemoSphereColor (ref _Chemo.chemoColor);
+		
 		
 	}
 	
@@ -88,6 +91,10 @@ public class ChemoBehavior : MonoBehaviour
 	void _SetChemoSphereAlpha (float alph)
 	{
 		mysphere.BroadcastMessage ("_SetAlpha", alph, SendMessageOptions.DontRequireReceiver);
+	}
+	
+	void _SetChemoSphereColor (ref Color c) {
+		mysphere.BroadcastMessage ("_SetColor", c, SendMessageOptions.DontRequireReceiver);
 	}
 	
 	void _SetReady(bool bReady) {

@@ -27,6 +27,10 @@ public class ChemoSphere_Behavoir : MonoBehaviour {
 		gameObject.renderer.material.color = tempColor;
 	}
 	
+	public void _SetColor(Color c) {
+		gameObject.renderer.material.color = c;
+	}
+	
 	// Use this for initialization
 	void Start () {
 		//test diff color

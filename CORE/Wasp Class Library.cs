@@ -20,7 +20,7 @@ public class _Role_
 
 public class _Chemo_
 {
-	public Color chemoColor = Color.black;
+	public Color chemoColor;// = Color.black;
 	public float fInitialMemTime, fCurrentMemTime;
 	float fMemDecayRate = 1.0f;
 	float fDefaultInitialMemTime = 30.0f; //default seconds for Chemo to persist in memory
@@ -73,15 +73,12 @@ public class _Chemo_
 };
 
 public class _Chemo_Red : _Chemo_ {
-	public Color chemoColor = Color.red;
+	public new Color chemoColor = Color.red;
 };
 
 public class _Chemo_Green : _Chemo_ {
-	public Color chemoColor = Color.green;
+	public new Color chemoColor  = Color.green;
 	
-	public _Chemo_Green() {
-		chemoColor = Color.green;
-	}
 };
 
 //public class WaspClassLibrary : MonoBehaviour {
