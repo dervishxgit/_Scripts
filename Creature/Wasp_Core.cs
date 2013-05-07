@@ -64,7 +64,7 @@ public class Wasp_Core : MonoBehaviour
 		if( _lChemos.Contains(chem) ) {
 			chem._Refresh();
 		} else {
-			_lChemos.Add(chem);
+			_lChemos.Add(new _Chemo_(chem));
 		}
 		
 		currentChemoColor = chem.chemoColor;
@@ -106,7 +106,7 @@ public class Wasp_Core : MonoBehaviour
 		//chembehave._Chemo = new _Chemo_Green();
 		//chembehave._Chemo.chemoColor = Color.green;
 		_Chemo_Green tempchem = new _Chemo_Green();
-		tempchem.chemoColor = Color.green;
+		//tempchem.chemoColor = Color.green;
 		chembehave._Initialize(5.0f, 10.0f, tempchem);
 		chembehave._Chemo.chemoColor = Color.green;
 		//chembehave._Chemo = new _Chemo_Green();
@@ -122,7 +122,7 @@ public class Wasp_Core : MonoBehaviour
 		//-there will be many things we will end up doing in update
 		
 		//Chemos
-		//_RunChemos();
+		_RunChemos();
 	}
 	
 	//Waypoints
