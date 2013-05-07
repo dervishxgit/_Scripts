@@ -23,8 +23,7 @@ public class _Chemo_
 	public Color chemoColor;// = Color.black;
 	public float fInitialMemTime, fCurrentMemTime;
 	float fMemDecayRate = 1.0f;
-	//float fDefaultInitialMemTime = 30.0f; //default seconds for Chemo to persist in memory
-	float fDefaultInitialMemTime = 3.0f; //default seconds for Chemo to persist in memory
+	float fDefaultInitialMemTime = 30.0f; //default seconds for Chemo to persist in memory
 	
 	//bool bIsDecaying = true; //not using
 	
@@ -51,22 +50,22 @@ public class _Chemo_
 		fCurrentMemTime -= amount * fMemDecayRate;
 		
 		//test
-		//chemoColor.a *= 1.0f - amount;
+		chemoColor *= 1.0f - amount;
 		
 		return fCurrentMemTime <= 0.0f;
 	}
 		
-	public virtual void _Run (float fTime, out bool bExpired)
+	public void _Run (float fTime, out bool bExpired)
 	{
 		bExpired = _Decay (fTime);
 	}
 		
-	public virtual void _Refresh ()
+	public void _Refresh ()
 	{
 		fCurrentMemTime = fInitialMemTime;
 	}
 	
-	public virtual float _GetCurrentMemTime() {
+	public float _GetCurrentMemTime() {
 		return fCurrentMemTime;
 	}
 		

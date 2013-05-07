@@ -54,12 +54,7 @@ public class ChemoBehavior : MonoBehaviour
 		//_ResizeChemoSphere(fLifeTimeRemaining);
 		
 		//dynamic alpha
-//		_SetChemoSphereAlpha (Mathf.Clamp (
-//			AICORE._IsItMax (fLifeTimeRemaining, 0.0f, fLifeTime), 
-//			sphereMinAlpha, sphereMaxAlpha)
-//			);
-		
-		_Chemo.chemoColor.a =  (Mathf.Clamp (
+		_SetChemoSphereAlpha (Mathf.Clamp (
 			AICORE._IsItMax (fLifeTimeRemaining, 0.0f, fLifeTime), 
 			sphereMinAlpha, sphereMaxAlpha)
 			);
@@ -83,9 +78,7 @@ public class ChemoBehavior : MonoBehaviour
 		
 		_SetChemoSphereAlpha (sphereMaxAlpha);
 		
-		Color tempc = new Color(_Chemo.chemoColor.r, _Chemo.chemoColor.g, _Chemo.chemoColor.b, _Chemo.chemoColor.a);
-		
-		_SetChemoSphereColor (ref tempc);
+		_SetChemoSphereColor (ref _Chemo.chemoColor);
 		
 		
 	}
@@ -115,7 +108,6 @@ public class ChemoBehavior : MonoBehaviour
 		fLifeTimeRemaining = fLifeTime = lifetime;
 		
 		_Chemo = new _Chemo_(chem);
-		_Chemo.chemoColor = chem.chemoColor;
 	}
 	
 	// Use this for initialization
@@ -155,7 +147,6 @@ public class ChemoBehavior : MonoBehaviour
 		
 		case iStateRunning:
 			Decay (Time.deltaTime, true);
-			_SetChemoSphereColor(ref _Chemo.chemoColor);
 			break;
 		}
 	}
