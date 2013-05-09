@@ -71,7 +71,7 @@ public class Wasp_Chemoreceptor : MonoBehaviour
 				//currentChemo._Run (Time.deltaTime, out expired);
 				//Debug.Log ("yes we are hitting this");
 				//Debug.Log (currentChemo._GetCurrentMemTime ());
-				Debug.Log (currentChemo.fCurrentMemTime);
+				//Debug.Log (currentChemo.fCurrentMemTime);
 				//not smelling
 //				if (expired) {
 //					currentChemo = null;
