@@ -23,7 +23,7 @@ public class _Chemo_
 	public Color chemoColor = Color.black;
 	public float fInitialMemTime, fCurrentMemTime;
 	float fMemDecayRate = 1.0f;
-	float fDefaultInitialMemTime = 30.0f; //default seconds for Chemo to persist in memory
+	float fDefaultInitialMemTime = 3.0f; //default seconds for Chemo to persist in memory
 	
 	//bool bIsDecaying = true; //not using
 	

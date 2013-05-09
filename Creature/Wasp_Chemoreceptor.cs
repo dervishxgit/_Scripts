@@ -67,16 +67,16 @@ public class Wasp_Chemoreceptor : MonoBehaviour
 			currentChemoColor = currentChemo.chemoColor;
 			
 			if (bTriggered == false) {
-				bool expired;
-				currentChemo._Run (Time.deltaTime, out expired);
+				//bool expired;
+				//currentChemo._Run (Time.deltaTime, out expired);
 				//Debug.Log ("yes we are hitting this");
 				//Debug.Log (currentChemo._GetCurrentMemTime ());
 				Debug.Log (currentChemo.fCurrentMemTime);
 				//not smelling
-				if (expired) {
-					currentChemo = null;
-					currentChemoColor = Color.black;
-				}
+//				if (expired) {
+//					currentChemo = null;
+//					currentChemoColor = Color.black;
+//				}
 			} else wCore._UpdateCurrentChemo (currentChemo);
 		} 
 		
