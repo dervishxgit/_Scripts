@@ -103,7 +103,7 @@ public class Wasp_Core : MonoBehaviour
 		//--sensors mapped by default in prefab
 		
 		//test of chemo transmit
-		waspChemoTransmitter._SpawnChemoBehavior(chemoBehaviorPrefab, new _Chemo_(), Color.blue);
+		waspChemoTransmitter._SpawnChemoBehavior(chemoBehaviorPrefab, new _Chemo_(), Color.blue, 10.0f);
 		
 		
 	}

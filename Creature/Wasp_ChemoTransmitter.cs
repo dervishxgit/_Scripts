@@ -26,26 +26,25 @@ public class Wasp_ChemoTransmitter : MonoBehaviour {
 		//test of chemo transmit
 		GameObject cheminst = Instantiate(wCore.chemoBehaviorPrefab)as GameObject;
 		ChemoBehavior chembehave = cheminst.GetComponent<ChemoBehavior>();
-		//chembehave._Chemo = new _Chemo_Green();
-		//chembehave._Chemo.chemoColor = Color.green;
-		//_Chemo_ tempchem = new _Chemo_();
 		chembehave._Initialize(5.0f, 10.0f, new _Chemo_(), Color.green);
-		//chembehave._Chemo.chemoColor = Color.green;
-		//chembehave._Chemo = new _Chemo_Green();
 		chembehave.SendMessage("_SetReady", true, SendMessageOptions.DontRequireReceiver);
 	}
 	
 	public void _SpawnChemoBehavior(GameObject chemPrefab, _Chemo_ chem, Color col) {
 		Debug.Log("spawning chemo");
 		//test of chemo transmit
-		GameObject cheminst = Instantiate(chemPrefab)as GameObject;
+		GameObject cheminst = Instantiate(chemPrefab, transform.position, transform.rotation)as GameObject;
 		ChemoBehavior chembehave = cheminst.GetComponent<ChemoBehavior>();
-		//chembehave._Chemo = new _Chemo_Green();
-		//chembehave._Chemo.chemoColor = Color.green;
-		//_Chemo_ tempchem = new _Chemo_();
 		chembehave._Initialize(5.0f, 10.0f, chem, col);
-		//chembehave._Chemo.chemoColor = Color.green;
-		//chembehave._Chemo = new _Chemo_Green();
+		chembehave.SendMessage("_SetReady", true, SendMessageOptions.DontRequireReceiver);
+	}
+	
+	public void _SpawnChemoBehavior(GameObject chemPrefab, _Chemo_ chem, Color col, float lifetime ) {
+		Debug.Log("spawning chemo");
+		//test of chemo transmit
+		GameObject cheminst = Instantiate(chemPrefab, transform.position, transform.rotation)as GameObject;
+		ChemoBehavior chembehave = cheminst.GetComponent<ChemoBehavior>();
+		chembehave._Initialize(5.0f, lifetime, chem, col);
 		chembehave.SendMessage("_SetReady", true, SendMessageOptions.DontRequireReceiver);
 	}
 }
