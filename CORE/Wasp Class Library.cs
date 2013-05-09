@@ -2,6 +2,14 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+public static class _ListOfLevels_ {
+	//List<string> levels = new List<string>();
+	
+	public static string[] levels = {
+		"one", "two"	
+	};
+};
+
 public class _TestClass_
 {
 	

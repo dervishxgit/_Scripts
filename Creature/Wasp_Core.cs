@@ -100,7 +100,7 @@ public class Wasp_Core : MonoBehaviour
 		destinationNext = _ReturnRandomKnownWaypoint ();
 		
 		//map sensors
-		//--sensors mapped by default in prefab
+		//--sensors and transmitters mapped by default in prefab
 		
 		//test of chemo transmit
 		waspChemoTransmitter._SpawnChemoBehavior(chemoBehaviorPrefab, new _Chemo_(), Color.blue, 10.0f);

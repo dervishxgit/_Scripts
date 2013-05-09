@@ -6,6 +6,10 @@ public class Datacore : MonoBehaviour
 {
 	
 	public bool bDisplayAllMenus = false;
+	
+	//Level list
+	public static List<string> _AllLevels_ = new List<string>();
+	
 	//Wasp Movement calibration settings
 	
 	
@@ -28,7 +32,10 @@ public class Datacore : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		
+		//test levels list
+		//Debug.Log("calling scenes");
+		//Debug.Log(_GetAllScenes());
+		_PrintAllScenes ();
 	}
 	
 	// Update is called once per frame
@@ -41,6 +48,37 @@ public class Datacore : MonoBehaviour
 	{
 		bDisplayAllMenus = b;	
 	}
+	
+	//Levels
+	public List<string> _GetAllScenes ()
+	{
+		List<string> strings = new List<string>();
+		
+		for(int i = 0; i < _ListOfLevels_.levels.Length; i++) {
+			strings.Add(_ListOfLevels_.levels[i]);
+		}
+		
+		return strings;
+	}
+	
+//	public string[] _GetAllScenes() {
+//		//ReadSceneNames sceneNames = gameObject.GetComponent<ReadSceneNames>();
+//		string[] scenes = new string[ReadSceneNames._AllScenes_.Length];
+//		scenes = ReadSceneNames._AllScenes_;
+//		return scenes;
+//	}
+	
+	public void _PrintAllScenes ()
+	{
+//		foreach (string s in _AllLevels_) {
+//			Debug.Log(s);
+//		}
+		
+		for(int i = 0; i < _ListOfLevels_.levels.Length; i++) {
+			Debug.Log(_ListOfLevels_.levels[i]);
+		}
+	}
+	
 	
 	//Waypoints
 	public void _AddWaypoint (Transform point)
