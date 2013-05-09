@@ -15,7 +15,7 @@ public class Wasp_Chemoreceptor : MonoBehaviour
 	 */
 	
 	public Wasp_Core wCore;
-	public _Chemo_ currentChemo;
+	public _Chemo_ currentChemo = new _Chemo_();
 	public Color currentChemoColor;
 	public float fTriggered = 0.0f;
 	public bool bTriggered = false;
@@ -30,8 +30,8 @@ public class Wasp_Chemoreceptor : MonoBehaviour
 	
 	void OnTriggerStay (Collider other)
 	{
-		currentChemo = other.transform.root.gameObject.GetComponent<ChemoBehavior> ()._Chemo;
-		currentChemoColor = currentChemo.chemoColor;
+		currentChemo.chemoColor = other.transform.root.gameObject.GetComponent<ChemoBehavior> ()._Chemo.chemoColor;
+		//currentChemoColor = currentChemo.chemoColor;
 		
 		bTriggered = true;
 		fTriggered = 0.0f;
@@ -43,7 +43,7 @@ public class Wasp_Chemoreceptor : MonoBehaviour
 		//bTriggered = false;
 		
 		//we've left the chemo zone, make a copy of the sensation
-		currentChemo = new _Chemo_ (other.transform.root.gameObject.GetComponent<ChemoBehavior> ()._Chemo);
+		//currentChemo = new _Chemo_ (other.transform.root.gameObject.GetComponent<ChemoBehavior> ()._Chemo);
 		//Debug.Log ("should see this once");
 		
 	}

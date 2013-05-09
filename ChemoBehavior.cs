@@ -15,6 +15,8 @@ public class ChemoBehavior : MonoBehaviour
 	 * 
 	 * object will need to be able to be created and will create its own components when instantiated
 	 * depending on the settings we provide it
+	 * 
+	 * Chemo.chemocolor should determine the color of the material and the decay
 	 */ 
 	float fRadius = 10.0f, fLifeTime = 10.0f, fLifeTimeRemaining = 10.0f;
 	public GameObject chemoSpherePrefab;
@@ -54,12 +56,18 @@ public class ChemoBehavior : MonoBehaviour
 		//_ResizeChemoSphere(fLifeTimeRemaining);
 		
 		//dynamic alpha
-		_SetChemoSphereAlpha (Mathf.Clamp (
-			AICORE._IsItMax (fLifeTimeRemaining, 0.0f, fLifeTime), 
-			sphereMinAlpha, sphereMaxAlpha)
-			);
+//		_SetChemoSphereAlpha (Mathf.Clamp (
+//			AICORE._IsItMax (fLifeTimeRemaining, 0.0f, fLifeTime), 
+//			sphereMinAlpha, sphereMaxAlpha)
+//			);
 		
-		//_Chemo.chemoColor = sphereMaterial.color;
+		float newAlpha = Mathf.Clamp (
+			AICORE._IsItMax (fLifeTimeRemaining, 0.0f, fLifeTime), 
+			sphereMinAlpha, sphereMaxAlpha);
+		
+		_SetChemoSphereAlpha (newAlpha);
+		
+		_Chemo.chemoColor.a = sphereMaterial.color.a;
 	}
 	
 	void _InitializeChemoSphere ()
@@ -101,6 +109,14 @@ public class ChemoBehavior : MonoBehaviour
 		fLifeTimeRemaining = fLifeTime = lifetime;
 		
 		_Chemo = new _Chemo_(chem);
+	}
+	
+	public void _Initialize(float radius, float lifetime, _Chemo_ chem, Color c) {
+		fRadius = radius;
+		fLifeTimeRemaining = fLifeTime = lifetime;
+		
+		_Chemo = new _Chemo_(chem);
+		_Chemo.chemoColor = c;
 	}
 	
 	// Use this for initialization

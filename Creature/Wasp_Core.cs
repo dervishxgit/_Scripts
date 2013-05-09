@@ -106,9 +106,9 @@ public class Wasp_Core : MonoBehaviour
 		//chembehave._Chemo = new _Chemo_Green();
 		//chembehave._Chemo.chemoColor = Color.green;
 		_Chemo_Green tempchem = new _Chemo_Green();
-		chembehave._Initialize(5.0f, 10.0f, tempchem);
+		chembehave._Initialize(5.0f, 10.0f, tempchem, Color.green);
 		//chembehave._Chemo.chemoColor = Color.green;
-		chembehave._Chemo = new _Chemo_Green();
+		//chembehave._Chemo = new _Chemo_Green();
 		chembehave.SendMessage("_SetReady", true, SendMessageOptions.DontRequireReceiver);
 		
 		
