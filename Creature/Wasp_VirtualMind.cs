@@ -46,8 +46,30 @@ public class Wasp_VirtualMind : MonoBehaviour {
 	
 	}
 	
-	//Perceive
+	
+	/*Perceive
+	 * 
+	 * 
+	 */ 
+	
+	//update senses might be a good function to call from outside to wake the mind state machine
 	public void _UpdateSenses() {
 		
 	}
+	
+	/*Contemplate
+	 * 
+	 * 
+	 */
+	
+	//once we have our data in hand, run the state machine controller for the mind until it makes a decision
+	
+	/*Act
+	 * 
+	 * 
+	 */
+	
+	//once decision has been made, we can output that decision to datacore, use it to complete an objective
+	//the mind can probably be put to sleep once it has made a decision, will be woken up by stimulus
+	
 }
