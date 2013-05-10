@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GUI_Interface : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class GUI_Interface : MonoBehaviour
 	
 	int bottomPanelGridSelection;
 	string[] bottomPanelGridStrings = {"Focus", "Orbit", "Goto", "LookThrough", "TakeControl"};
+	
+	int levelGridSelect = -1;
 	
 	GUILayoutOption[] bottomPanelLayoutOptions = {GUILayout.MaxWidth(300)};
 	
@@ -96,6 +99,7 @@ public class GUI_Interface : MonoBehaviour
 					_guiCore._SetTopMenuState ("_Runtime_");	
 				} else _guiCore._ResetTopMenuState();				
 			}
+			
 			switch (_guiCore._GetTopMenuStateString ()) {
 			case "_NoDisplay_":
 				break;
@@ -109,7 +113,21 @@ public class GUI_Interface : MonoBehaviour
 						
 				}
 				if (GUILayout.Button ("Load")) {
+					levelGridSelect = GUILayout.SelectionGrid(levelGridSelect, _ListOfLevels_.levels, 5);
+					GUILayout.BeginVertical();
+					//int select = 0;
+					//string[] guilevelstrings = new string[_ListOfLevels_.levels.Length];
+					for(int i = 0; i < _ListOfLevels_.levels.Length; i++) {
+//						if(GUILayout.Button(_ListOfLevels_.levels[i])) {
+//							Application.LoadLevel(_ListOfLevels_.levels[i]);
+//						}
+
+					}
 					
+					if(levelGridSelect != -1) {
+						Application.LoadLevel(levelGridSelect);
+					}
+					GUILayout.EndVertical();
 				}
 				if (GUILayout.Button ("Exit")) {
 						
