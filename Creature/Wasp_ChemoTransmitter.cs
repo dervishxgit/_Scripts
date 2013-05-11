@@ -22,7 +22,7 @@ public class Wasp_ChemoTransmitter : MonoBehaviour {
 	}
 	
 	public void _SpawnChemoBehavior(_Chemo_ chem) {
-		Debug.Log("spawning chemo");
+		//Debug.Log("spawning chemo");
 		//test of chemo transmit
 		GameObject cheminst = Instantiate(wCore.chemoBehaviorPrefab)as GameObject;
 		ChemoBehavior chembehave = cheminst.GetComponent<ChemoBehavior>();
@@ -31,7 +31,7 @@ public class Wasp_ChemoTransmitter : MonoBehaviour {
 	}
 	
 	public void _SpawnChemoBehavior(GameObject chemPrefab, _Chemo_ chem, Color col) {
-		Debug.Log("spawning chemo");
+		//Debug.Log("spawning chemo");
 		//test of chemo transmit
 		GameObject cheminst = Instantiate(chemPrefab, transform.position, transform.rotation)as GameObject;
 		ChemoBehavior chembehave = cheminst.GetComponent<ChemoBehavior>();
@@ -40,7 +40,7 @@ public class Wasp_ChemoTransmitter : MonoBehaviour {
 	}
 	
 	public void _SpawnChemoBehavior(GameObject chemPrefab, _Chemo_ chem, Color col, float lifetime ) {
-		Debug.Log("spawning chemo");
+		//Debug.Log("spawning chemo");
 		//test of chemo transmit
 		GameObject cheminst = Instantiate(chemPrefab, transform.position, transform.rotation)as GameObject;
 		ChemoBehavior chembehave = cheminst.GetComponent<ChemoBehavior>();

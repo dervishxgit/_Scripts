@@ -141,11 +141,11 @@ public class ChemoBehavior : MonoBehaviour
 	{
 		switch (iMasterState) {
 		case iStateNotReady:
-			Debug.Log ("chemobehavior not ready");
+			//Debug.Log ("chemobehavior not ready");
 			break;
 			
 		case iStateReady:
-			Debug.Log ("chemobehavior ready");
+			//Debug.Log ("chemobehavior ready");
 			//_Chemo.chemoColor = Color.red;
 		
 			_InitializeChemoSphere ();

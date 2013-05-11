@@ -4,6 +4,13 @@ using System.Collections.Generic;
 
 public class Datacore : MonoBehaviour
 {
+	//temp test section
+	float ftemp01;
+	float ftemp02;
+	List<_Condition_> listOfConditions = new List<_Condition_>();
+	_Condition_ con01;
+	_Condition_ con02;
+	
 	//Major Settings
 	public bool bDisplayAllMenus = false;
 	public float fWorldTimeScale = 2.0f;
@@ -37,6 +44,17 @@ public class Datacore : MonoBehaviour
 		//Debug.Log("calling scenes");
 		//Debug.Log(_GetAllScenes());
 		_PrintAllScenes ();
+		
+		//test of conditions creation
+		ftemp01 = 1.0f;
+		ftemp02 = 500.0f;
+		con01 = new _Condition_("first condition", ref ftemp01, ref listOfConditions);
+		con02 = new _Condition_("second condition", ref ftemp02, ref listOfConditions);
+		
+		foreach(_Condition_ con in listOfConditions) {
+			Debug.Log("con name: " + con._GetName() + "con value: " + con._GetValue());
+		}
+		
 	}
 	
 	// Update is called once per frame
@@ -44,6 +62,11 @@ public class Datacore : MonoBehaviour
 	{
 		UnityEngine.Time.timeScale = fWorldTimeScale;
 		//fWorldTimeScale += 0.1f;
+		
+		//test condition update
+		ftemp01 += 0.1f;
+		
+		Debug.Log("con01 updated: " + con01._GetValue());
 	}
 	
 	void ToggleAllMenus (bool b)
