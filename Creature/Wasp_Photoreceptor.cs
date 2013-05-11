@@ -46,15 +46,9 @@ public class Wasp_Photoreceptor : MonoBehaviour {
 	Color _GetColorFromRaycast(Vector3 pos, Vector3 dir, out RaycastHit hitInfo) {
 		Color outColor = Color.black;
 		
-		
-		
 		if(Physics.Raycast( pos, dir, out hitInfo, fVisRayDistance, _layerMask)) {
 			outColor = hitInfo.collider.transform.gameObject.renderer.material.color;
 		} 
-//		
-//		if(Physics.Raycast( pos, dir, out hitInfo, fVisRayDistance)) {
-//			outColor = hitInfo.collider.transform.gameObject.renderer.material.color;
-//		}
 		
 		return outColor;
 	}
