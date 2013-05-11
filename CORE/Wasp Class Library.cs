@@ -21,6 +21,14 @@ public class _Role_
 	List<_Action_> _lActions = new List<_Action_> ();
 };
 
+public class _Condition_ {
+	
+};
+
+public class _Question_ {
+	
+};
+
 public class _Chemo_
 {
 	public Color chemoColor = Color.black;
