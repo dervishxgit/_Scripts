@@ -22,6 +22,8 @@ public class Wasp_Photoreceptor : MonoBehaviour {
 	public RaycastHit currentHitInfo;
 	
 	public Color _cSeenColor;
+	//create and invert layer mask so that raycasts will only collide on color
+		LayerMask _layerMask;
 	
 	//Settings
 	float fVisRayDistance = 240.0f;
@@ -30,6 +32,8 @@ public class Wasp_Photoreceptor : MonoBehaviour {
 	void Start () {
 		//map to wasp core no matter where we are in hierarchy
 		wCore = transform.root.gameObject.GetComponent<Wasp_Core>();
+		
+		_layerMask = ~LayerMask.NameToLayer("Color");
 	}
 	
 	// Update is called once per frame
@@ -42,15 +46,15 @@ public class Wasp_Photoreceptor : MonoBehaviour {
 	Color _GetColorFromRaycast(Vector3 pos, Vector3 dir, out RaycastHit hitInfo) {
 		Color outColor = Color.black;
 		
-//		LayerMask mask = LayerMask.NameToLayer("Color");
-//		
-//		if(Physics.Raycast( pos, dir, out hitInfo, fVisRayDistance, mask)) {
-//			outColor = hitInfo.collider.transform.gameObject.renderer.material.color;
-//		} 
 		
-		if(Physics.Raycast( pos, dir, out hitInfo, fVisRayDistance)) {
+		
+		if(Physics.Raycast( pos, dir, out hitInfo, fVisRayDistance, _layerMask)) {
 			outColor = hitInfo.collider.transform.gameObject.renderer.material.color;
-		}
+		} 
+//		
+//		if(Physics.Raycast( pos, dir, out hitInfo, fVisRayDistance)) {
+//			outColor = hitInfo.collider.transform.gameObject.renderer.material.color;
+//		}
 		
 		return outColor;
 	}
