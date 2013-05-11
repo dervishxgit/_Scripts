@@ -32,6 +32,8 @@ public class Wasp_VirtualMind : MonoBehaviour {
 	public Datacore dCore;
 	public Wasp_Core wCore;
 	
+	public int _iReadyState = -1;
+	
 	// Use this for initialization
 	void Start () {
 		//map
