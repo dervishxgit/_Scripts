@@ -45,6 +45,16 @@ public class Wasp_Core : MonoBehaviour
 	private float fWaypointRefreshInterval = 5.0f;
 	public List<Transform> lKnownWaypoints = new List<Transform> ();
 	
+	/////////////////////////////////////////////////////////////////////////////////
+	/* SENSES
+	 */ 
+	
+	//Innate Physical
+	//-Health, Energy level (hunger, sleep)
+	//-Controller specific senses
+	
+	
+	//External
 	//ColorSense
 	public GameObject lastSeenObject;
 	public Color currentColor;
@@ -54,6 +64,7 @@ public class Wasp_Core : MonoBehaviour
 		currentColor = c;
 	}
 	
+	//External
 	//ChemoSense
 	
 	public _Chemo_ currentChemo;
@@ -82,7 +93,7 @@ public class Wasp_Core : MonoBehaviour
 			}
 		}
 	}
-	
+////////////////////////////////////////////////////////////////////////////////	
 	// Use this for initialization
 	void Start ()
 	{
