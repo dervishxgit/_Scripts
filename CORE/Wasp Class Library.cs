@@ -10,11 +10,6 @@ public static class _ListOfLevels_ {
 	};
 };
 
-public class _TestClass_
-{
-	
-};
-
 public class _Action_
 {
 		

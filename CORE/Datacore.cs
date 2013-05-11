@@ -4,11 +4,12 @@ using System.Collections.Generic;
 
 public class Datacore : MonoBehaviour
 {
-	
+	//Major Settings
 	public bool bDisplayAllMenus = false;
+	public float fWorldTimeScale = 2.0f;
 	
 	//Level list
-	public static List<string> _AllLevels_ = new List<string>();
+	public static List<string> _AllLevels_ = new List<string> ();
 	
 	//Wasp Movement calibration settings
 	
@@ -41,7 +42,8 @@ public class Datacore : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-	
+		UnityEngine.Time.timeScale = fWorldTimeScale;
+		//fWorldTimeScale += 0.1f;
 	}
 	
 	void ToggleAllMenus (bool b)
@@ -52,10 +54,10 @@ public class Datacore : MonoBehaviour
 	//Levels
 	public List<string> _GetAllScenes ()
 	{
-		List<string> strings = new List<string>();
+		List<string> strings = new List<string> ();
 		
-		for(int i = 0; i < _ListOfLevels_.levels.Length; i++) {
-			strings.Add(_ListOfLevels_.levels[i]);
+		for (int i = 0; i < _ListOfLevels_.levels.Length; i++) {
+			strings.Add (_ListOfLevels_.levels [i]);
 		}
 		
 		return strings;
@@ -74,8 +76,8 @@ public class Datacore : MonoBehaviour
 //			Debug.Log(s);
 //		}
 		
-		for(int i = 0; i < _ListOfLevels_.levels.Length; i++) {
-			Debug.Log(_ListOfLevels_.levels[i]);
+		for (int i = 0; i < _ListOfLevels_.levels.Length; i++) {
+			Debug.Log (_ListOfLevels_.levels [i]);
 		}
 	}
 	
@@ -246,11 +248,72 @@ public class Datacore : MonoBehaviour
 			fVelocity = 0.75f;
 		if (fVelocity < -0.75f)
 			fVelocity = -0.75f;
-		bot.transform.Translate (fVelocity * Vector3.forward, Space.Self);	
+		bot.transform.Translate (fVelocity * Vector3.forward, Space.Self);
+	}
+	
+	//Overloads of above orientations that adhere to the global timescale
+	static public void _RotateYaw (Component bot, float fTurnRate, bool bUseTimeScale)
+	{
+		if (fTurnRate > 6.0f)
+			fTurnRate = 6.0f;
+		if (fTurnRate < -6.0f)
+			fTurnRate = -6.0f;
+		
+		if(bUseTimeScale) {
+			bot.transform.Rotate (fTurnRate * Vector3.up * Time.deltaTime);
+		} else {
+			bot.transform.Rotate (fTurnRate * Vector3.up);
+		}
+		
+	}
+	
+	static public void _RotatePitch (Component bot, float fTurnRate, bool bUseTimeScale)
+	{
+		if (fTurnRate > 6.0f)
+			fTurnRate = 6.0f;
+		if (fTurnRate < -6.0f)
+			fTurnRate = -6.0f;
+		
+		if (bUseTimeScale) {
+			bot.transform.Rotate (fTurnRate * Vector3.right * Time.deltaTime, Space.World);		
+		} else {
+			bot.transform.Rotate (fTurnRate * Vector3.right, Space.World);	
+		}
+				
+	}
+	
+	static public void _RotateRoll (Component bot, float fTurnRate, bool bUseTimeScale)
+	{
+		if (fTurnRate > 6.0f)
+			fTurnRate = 6.0f;
+		if (fTurnRate < -6.0f)
+			fTurnRate = -6.0f;
+		
+		if (bUseTimeScale) {
+			bot.transform.Rotate (fTurnRate * Vector3.forward * Time.deltaTime, Space.Self);
+		} else {
+			bot.transform.Rotate (fTurnRate * Vector3.forward, Space.Self);
+		}
+		
+	}
+	
+	static public void _MoveForward (Component bot, float fVelocity, bool bUseTimeScale)
+	{
+		if (fVelocity > 0.75f)
+			fVelocity = 0.75f;
+		if (fVelocity < -0.75f)
+			fVelocity = -0.75f;
+		
+		if (bUseTimeScale) {
+			bot.transform.Translate (fVelocity * Vector3.forward * Time.deltaTime, Space.Self);
+		} else {
+			bot.transform.Translate (fVelocity * Vector3.forward, Space.Self);
+		}
+		
 	}
 	
 	// _SeekTarget3D : Seeks out the indicated target and returns true when reached (adjusted from original version below, uses settings supplied above)
-	static public bool _SeekTarget3D (Component bot, Vector3 target, float fMaxVelocity)
+	static public bool _SeekTarget3D (Component bot, Vector3 target, float fMaxVelocity, bool bUseTimeScale)
 	{
 		float fTargetDistance;
 		float zIsTargetBehindMe, zIsTargetInFrontOfMe, zIsTargetToMyLeft, zIsTargetToMyRight, zIsTargetAboveMe, zIsTargetBelowMe;
@@ -273,7 +336,7 @@ public class Datacore : MonoBehaviour
 				} else {
 					fTurnRate = AICORE._Defuzzify (zIsTargetToMyRight, 0.0f, 6.0f);
 				}
-				RULECORE._RotateYaw (bot, fTurnRate);
+				_RotateYaw (bot, fTurnRate, bUseTimeScale);
 			} else if (zIsTargetToMyLeft > zIsTargetToMyRight) {
 				// Turn left
 				float fTurnRate;
@@ -282,7 +345,7 @@ public class Datacore : MonoBehaviour
 				} else {
 					fTurnRate = AICORE._Defuzzify (zIsTargetToMyLeft, 0.0f, 6.0f);
 				}
-				RULECORE._RotateYaw (bot, -fTurnRate);
+				_RotateYaw (bot, -fTurnRate, bUseTimeScale);
 			}
 			
 			// Should we pitch up or down?
@@ -294,7 +357,7 @@ public class Datacore : MonoBehaviour
 				} else {
 					fPitchRate = AICORE._Defuzzify (zIsTargetAboveMe, 0.0f, 6.0f);
 				}
-				_RotatePitch (bot, fPitchRate);
+				_RotatePitch (bot, fPitchRate, bUseTimeScale);
 			} else if (zIsTargetBelowMe > zIsTargetAboveMe) {
 				//pitch down
 				float fPitchRate;
@@ -303,7 +366,7 @@ public class Datacore : MonoBehaviour
 				} else {
 					fPitchRate = AICORE._Defuzzify (zIsTargetBelowMe, 0.0f, 6.0f);
 				}
-				_RotatePitch (bot, -fPitchRate);
+				_RotatePitch (bot, -fPitchRate, bUseTimeScale);
 			}
 		}
 					
@@ -313,7 +376,7 @@ public class Datacore : MonoBehaviour
 				// Only drive forward if we're far enough from target
 				if (fTargetDistance >= 1.00f) {
 					float fVelocity = AICORE._Defuzzify (zIsTargetInFrontOfMe, 0.0f, fMaxVelocity);
-					RULECORE._MoveForward (bot, fVelocity);
+					_MoveForward (bot, fVelocity, bUseTimeScale);
 				}
 			}
 			
