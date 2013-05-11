@@ -39,6 +39,7 @@ public class Wasp_Controller : MonoBehaviour {
 	public FuzzyTarget FT;
 	
 	//Settings: Movement, Rotation, Thresholds
+	public bool bUseTimeScaleForMovement = true;
 	public float fMoveRate = 1.0f;
 	public float fRotationRate = 5.0f;
 	public float fFacingTolerance = 0.1f;
@@ -179,7 +180,7 @@ public class Wasp_Controller : MonoBehaviour {
 //				}
 				
 				//new test
-				bool reached = Datacore._SeekTarget3D( this, wCore.destinationNext.position, 2.0f, true ) ;
+				bool reached = Datacore._SeekTarget3D( this, wCore.destinationNext.position, 2.0f, bUseTimeScaleForMovement ) ;
 				//temp force state change
 				if(reached) ControllerState = stateControllerSeeking;
 					
