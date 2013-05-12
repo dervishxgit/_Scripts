@@ -180,7 +180,8 @@ public class Wasp_Controller : MonoBehaviour {
 //				}
 				
 				//new test
-				bool reached = Datacore._SeekTarget3D( this, wCore.destinationNext.position, 2.0f, bUseTimeScaleForMovement ) ;
+				bool reached = Datacore._SeekTarget3D( this, wCore.destinationNext.position, 
+					2.0f, bUseTimeScaleForMovement ) ;
 				//temp force state change
 				if(reached) ControllerState = stateControllerSeeking;
 					
