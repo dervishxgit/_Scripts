@@ -22,6 +22,10 @@ public class _Role_
 	List<_Action_> _lActions = new List<_Action_> ();
 };
 
+public class _FloatWrapper_ {
+	public float f;
+};
+
 public class _Condition_
 {
 	/*

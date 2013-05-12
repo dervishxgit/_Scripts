@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class Datacore : MonoBehaviour
 {
 	//temp test section
+	//maybe we need floatwrappers on both sides
 	float ftemp01;
 	float ftemp02;
 	List<_Condition_> listOfConditions = new List<_Condition_>();
@@ -55,6 +56,8 @@ public class Datacore : MonoBehaviour
 			Debug.Log("con name: " + con._GetName() + "con value: " + con._GetValue());
 		}
 		
+		string name  = _Condition_._GetConditionByName("second condition", listOfConditions).name;
+		Debug.Log(name);
 	}
 	
 	// Update is called once per frame
@@ -64,7 +67,7 @@ public class Datacore : MonoBehaviour
 		//fWorldTimeScale += 0.1f;
 		
 		//test condition update
-		ftemp01 += 0.1f;
+		con01.fValue += 0.1f;
 		
 		Debug.Log("con01 updated: " + con01._GetValue());
 	}
