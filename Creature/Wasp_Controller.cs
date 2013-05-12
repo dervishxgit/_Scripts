@@ -40,12 +40,12 @@ public class Wasp_Controller : MonoBehaviour {
 	
 	//Settings: Movement, Rotation, Thresholds
 	public bool bUseTimeScaleForMovement = true;
-	public float fMoveRate = 1.0f;
-	public float fRotationRate = 5.0f;
-	public float fFacingTolerance = 0.1f;
-	public float fForwardThreshold = 0.98f; //are we sufficiently towards target?
-	public float fForwardMovementSpeed = 5.0f;
-	public float fTargetDistanceThreshold = 0.5f;
+//	public float fMoveRate = 1.0f;
+//	public float fRotationRate = 5.0f;
+//	public float fFacingTolerance = 0.1f;
+//	public float fForwardThreshold = 0.98f; //are we sufficiently towards target?
+//	public float fForwardMovementSpeed = 5.0f;
+//	public float fTargetDistanceThreshold = 0.5f;
 	//States
 	public int ControllerState = 0;
 	const int stateControllerWaiting = 0;
@@ -206,64 +206,64 @@ public class Wasp_Controller : MonoBehaviour {
 	}
 	
 	//Movement Functions
-	bool _CheckFacing(Transform target) {
-		//takes target, assigns it to current fuzzytarget and outputs values
-		bool facing = false;
-		this.FT.trans = target;
-		facing = _CheckFacing(this.FT);		
-		return facing;
-	}
-	
-	bool _CheckFacing(FuzzyTarget target) {
-		
-		bool facing = false;
-		
-		AICORE._GetSpatialAwareness3D(waspRoot.transform,
-			target.trans, out target.distance,
-			out target.BehindMe, out target.InFrontMe,
-			out target.LeftMe, out target.RightMe,
-			out target.AboveMe, out target.BelowMe);
-		
-		//this.FT = target;
-		if (target.InFrontMe > fForwardThreshold) {facing = true;}
-		
-		return facing;
-	}
-	
-	public bool _ReachedTarget(Transform target) {
-		if(AICORE._GetTargetDistance(waspRoot, target.gameObject) < fTargetDistanceThreshold) {
-			return true;
-		} else return false;
-	}
-	
-	void _MoveTo(Transform target) {
-		//simple move
-		if(!_ReachedTarget(target) ) {
-			Debug.Log("should be trying to reach");
-			Datacore._MoveForward(waspRoot, Time.deltaTime * fForwardMovementSpeed);
-
-		} else {
-			Debug.Log("should set new");
-		}
-	}
-	
-	void _Face(FuzzyTarget target) {
-		//this version depends on having a fuzzy target
-		
-		if(target.RightMe > target.LeftMe)
-		{Datacore._Yaw(waspRoot, target.RightMe * Time.deltaTime * fRotationRate);}
-		else if( target.RightMe < target.LeftMe)
-		{Datacore._Yaw(waspRoot, -target.LeftMe * Time.deltaTime * fRotationRate);}
-		
-		_ElevateTo(target.trans);
-		
-		
-	}
-	
-	void _ElevateTo(Transform target) {
-		float targetY = target.transform.position.y;
-		float to  = AICORE._IsItMax(-1 * (waspRoot.transform.position.y - targetY), 0.1f, 5.0f);
-		Datacore._MoveUp(waspRoot, to * Time.deltaTime * fForwardMovementSpeed);
-	}
+//	bool _CheckFacing(Transform target) {
+//		//takes target, assigns it to current fuzzytarget and outputs values
+//		bool facing = false;
+//		this.FT.trans = target;
+//		facing = _CheckFacing(this.FT);		
+//		return facing;
+//	}
+//	
+//	bool _CheckFacing(FuzzyTarget target) {
+//		
+//		bool facing = false;
+//		
+//		AICORE._GetSpatialAwareness3D(waspRoot.transform,
+//			target.trans, out target.distance,
+//			out target.BehindMe, out target.InFrontMe,
+//			out target.LeftMe, out target.RightMe,
+//			out target.AboveMe, out target.BelowMe);
+//		
+//		//this.FT = target;
+//		if (target.InFrontMe > fForwardThreshold) {facing = true;}
+//		
+//		return facing;
+//	}
+//	
+//	public bool _ReachedTarget(Transform target) {
+//		if(AICORE._GetTargetDistance(waspRoot, target.gameObject) < fTargetDistanceThreshold) {
+//			return true;
+//		} else return false;
+//	}
+//	
+//	void _MoveTo(Transform target) {
+//		//simple move
+//		if(!_ReachedTarget(target) ) {
+//			Debug.Log("should be trying to reach");
+//			Datacore._MoveForward(waspRoot, Time.deltaTime * fForwardMovementSpeed);
+//
+//		} else {
+//			Debug.Log("should set new");
+//		}
+//	}
+//	
+//	void _Face(FuzzyTarget target) {
+//		//this version depends on having a fuzzy target
+//		
+//		if(target.RightMe > target.LeftMe)
+//		{Datacore._Yaw(waspRoot, target.RightMe * Time.deltaTime * fRotationRate);}
+//		else if( target.RightMe < target.LeftMe)
+//		{Datacore._Yaw(waspRoot, -target.LeftMe * Time.deltaTime * fRotationRate);}
+//		
+//		_ElevateTo(target.trans);
+//		
+//		
+//	}
+//	
+//	void _ElevateTo(Transform target) {
+//		float targetY = target.transform.position.y;
+//		float to  = AICORE._IsItMax(-1 * (waspRoot.transform.position.y - targetY), 0.1f, 5.0f);
+//		Datacore._MoveUp(waspRoot, to * Time.deltaTime * fForwardMovementSpeed);
+//	}
 	
 }
