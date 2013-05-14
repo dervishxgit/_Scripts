@@ -260,7 +260,90 @@ public class _Question_
 	
 	//public _BehaviorMatrix_;
 	
-	public static float _AnswerQuestion(
+//	function bool AnswerQuestion(
+//	array<float> matBehavior,
+//	optional float fCondition0,
+//	optional float fCondition1,
+//	optional float fCondition2
+//	) {
+//		local bool bAnswer;
+//		local float z;
+//		local array<float> conditions;
+//		local float arrayfloat;
+//
+//		//add values to array (MUST BE IN CORRECT ORDER! :: )
+//		conditions.AddItem(fCondition0);
+//		conditions.AddItem(fCondition1);
+//		if(fCondition2 > 0.0) {
+//		conditions.AddItem(fCondition2);
+//		}
+//		//run behavior matrix output
+//		if(matBehavior.length == 8 && conditions.length == 3) {
+//			z = AIlib.static._BehaviorMatrix_3( matBehavior, conditions ); 
+//		} else if (matBehavior.length == 4 && conditions.length == 2) {
+//			z = AIlib.static._BehaviorMatrix_2( matBehavior, conditions );
+//		} else {
+//			`log("Answer unsuccessful due to incorrectly sized behavior matrix or incorrect number of conditions for matrix");
+//			
+//			`log("behavior matrix: ");
+//			foreach matBehavior(arrayfloat) {
+//				`log(" "$arrayfloat$", ");
+//			}
+//			`log("conditions: ");
+//			foreach conditions(arrayfloat) {
+//				`log(" "$arrayfloat$", ");
+//			}
+//			return false;
+//		}
+//
+//		//return weighted random yes or no
+//		bAnswer = AIlib.static._RandomProbability( z );
+//		return bAnswer;
+//}
+	
+	//version takes array of conditions and behavior matrix, returns float
+	public static float _AnswerQuestion_f( float[] B, float[] C ) {
+		//will call ailib depending one sizes values provided
+		if( B.Length == 4 && C.Length == 2) {
+			return AICORE._BehaviorMatrix2(B, C);
+		}
+		else if ( B.Length == 8 && C.Length == 3) {
+			return AICORE._BehaviorMatrix3(B, C);
+		}
+		else {
+			Debug.Log("Improperly sized behavior matrix of number of conditions.");
+			return -1.0f;
+		}
+	}
+	
+	public static bool _AnswerQuestion_b( float[] B, float [] C ) {
+		float z;
+		
+		if( B.Length == 4 && C.Length == 2) {
+			z = AICORE._BehaviorMatrix2(B, C);
+		}
+		else if ( B.Length == 8 && C.Length == 3) {
+			z =  AICORE._BehaviorMatrix3(B, C);
+		}
+		else {
+			z = 0.0f;
+			Debug.Log("Improperly sized behavior matrix of number of conditions.");
+		}
+		
+		return AICORE._RandomProbability( z );
+		
+	}
+	
+	//version takes 2 conditions raw and answers using behavior matrix
+	public static float _AnswerQuestion_2Con(
+		
+		) {
+		//not yet formalized
+		return 0.0f;
+	}
+	
+	//version takes 3 conditions raw and answers using behavior matrix
+	public static float _AnswerQuestion_3Con(
 		
 		) {
 		//not yet formalized
