@@ -33,16 +33,40 @@ public class _Condition_
 	*/	
 	public string name;
 	public float fValue;
+	//possible calibration per condition
+	public float min, max;
+	
+	public float _FuzzOutMax() {
+		return AICORE._IsItMax(fValue, min, max);
+	}
+	
+	public float _FuzzOutMin() {
+		return AICORE._IsItMin(fValue, min, max);
+	}
 	
 	public _Condition_ (string n, ref float mapValue)
 	{
 		this._SetCondition (n, ref mapValue);
 	}
 	
+	public _Condition_ (string n, ref float mapValue, ref float minvalue, ref float maxvalue)
+	{
+		this._SetCondition (n, ref mapValue);
+		this._SetMinMax (ref minvalue, ref maxvalue);
+	}
+	
 	public _Condition_ (string n, ref float mapValue, ref List<_Condition_> lConditions)
 	{
 		//version that adds self to the list provided during build
 		this._SetCondition (n, ref mapValue);
+		lConditions.Add(this);
+	}
+	
+	public _Condition_ (string n, ref float mapValue, ref float minvalue, ref float maxvalue, ref List<_Condition_> lConditions)
+	{
+		//version that adds self to the list provided during build
+		this._SetCondition (n, ref mapValue);
+		this._SetMinMax(ref minvalue, ref maxvalue);
 		lConditions.Add(this);
 	}
 	
@@ -65,6 +89,11 @@ public class _Condition_
 	public float _GetValue ()
 	{
 		return fValue;
+	}
+	
+	public void _SetMinMax(ref float fmin, ref float fmax ) {
+		this.min = fmin;
+		this.max = fmax;
 	}
 	
 	public void _SetCondition (string n, ref float mapValue)
