@@ -11,6 +11,7 @@ public class GUI_Interface : MonoBehaviour
 	bool bDisplaySimMenu = false;
 	bool bDisplayConfigurationMenu = false;
 	bool bDisplayRuntimeMenu = false;
+	bool bDisplayTime = true;
 	
 	int bottomPanelGridSelection;
 	string[] bottomPanelGridStrings = {"Focus", "Orbit", "Goto", "LookThrough", "TakeControl"};

@@ -42,7 +42,7 @@ public class Wasp_Core : MonoBehaviour
 	public GameObject targetObject;		//if we are orienting or moving to something
 	//these lists, and functions for them, may have to be moved to the creature's core
 	private List<Transform> lPathToDestination;	//list of waypoints, ordered to our destination
-	private float fWaypointRefreshInterval = 5.0f;
+	//private float fWaypointRefreshInterval = 5.0f;
 	public List<Transform> lKnownWaypoints = new List<Transform> ();
 	
 	/////////////////////////////////////////////////////////////////////////////////
@@ -52,9 +52,11 @@ public class Wasp_Core : MonoBehaviour
 	//Innate Physical
 	//-Health, Energy level (hunger, sleep)
 	//-Controller specific senses
-	
+	//Conditions
+	_Condition_ _cEnergy, _cHunger;
 	
 	//External
+	_Condition_ _cTimeOfThisDay;
 	//ColorSense
 	public GameObject lastSeenObject;
 	public Color currentColor;

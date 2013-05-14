@@ -3,6 +3,36 @@ using System.Collections;
 
 public class GUI_Core : MonoBehaviour {
 	
+	//Time display
+	string seconds, minutes, hours, days, months, years;
+	
+	public string _DisplayTime(out string secs, 
+		out string mins, 
+		out string hours, 
+		out string days, 
+		out string months, 
+		out string years) {
+		
+		secs = 		WorldTime._GetSecondsRM().ToString();
+		mins = 		WorldTime._GetMinutesRM().ToString();
+		hours = 	WorldTime._GetHoursRM().ToString();
+		days = 		WorldTime._GetDaysRM().ToString();
+		months = 	WorldTime._GetMonthsRM().ToString();
+		years = 	WorldTime._GetYearsR().ToString();
+		
+		string rs = years 	+ "y::" +
+					months 	+ "m::" +
+					days 	+ "d::" +
+					hours 	+ "h::" +
+					mins 	+ "m::" +
+					secs 	+ "s::";
+		
+		return rs;
+		
+	}
+	
+	public GameObject clock;
+	
 	//topmenu settings
 	Vector2 topOrigin;
 	Vector2 topSize;
@@ -43,11 +73,14 @@ public class GUI_Core : MonoBehaviour {
 		bottomOrigin = new Vector2(0, Screen.height - (Screen.height* fBottomSizePercent) );
 		bottomSize = new Vector2(Screen.width, Screen.height * fBottomSizePercent);
 		
+		//clock init
+		clock.SetActive(true);
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		
 	}
 	
 	public Rect _CreateTopMenu()
@@ -60,17 +93,6 @@ public class GUI_Core : MonoBehaviour {
 	}
 	
 	public void _SetTopMenuState(string state) {
-//		switch( state ) {
-//		case "Simulation":
-//			_SetTopMenuState(1);
-//			break;
-//		case "Configuration":
-//			_SetTopMenuState(2);
-//			break;
-//		case "Runtime":
-//			_SetTopMenuState(3);
-//			break;
-//		}
 		topMenuStateString = state;
 	}
 	

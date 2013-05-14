@@ -106,13 +106,15 @@ public static class WorldTime {
 
 public class _Action_
 {
-		
+	string actionName;
+	string actionType;
 };
 	
 public class _Role_
 {
 	string sName;
 	List<_Action_> _lActions = new List<_Action_> ();
+	List<_Question_> _lQuestions = new List<_Question_>();
 };
 
 public class _FloatWrapper_ {
@@ -214,6 +216,8 @@ public class _Condition_
 
 public class _Question_
 {
+	public string q;
+	
 	public List<_Condition_> lConditions = new List<_Condition_>();
 	
 	public float _AnswerQuestion() {

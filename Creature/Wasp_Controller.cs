@@ -60,6 +60,8 @@ public class Wasp_Controller : MonoBehaviour {
 	const string stateMoveHovering = "Hovering";
 	const string stateMoveLanding = "Landing";
 	
+	
+	
 	// Use this for initialization
 	void Start () {
 		//establish connection to creature core and global datacore

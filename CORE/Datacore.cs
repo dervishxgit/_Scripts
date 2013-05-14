@@ -51,35 +51,15 @@ public class Datacore : MonoBehaviour
 		//Debug.Log("calling scenes");
 		//Debug.Log(_GetAllScenes());
 		_PrintAllScenes ();
-		
-		//test of conditions creation
-		ftemp01 = 1.0f;
-		ftemp02 = 500.0f;
-		con01 = new _Condition_ ("first condition", ref ftemp01, ref listOfConditions);
-		con02 = new _Condition_ ("second condition", ref ftemp02, ref listOfConditions);
-		
-		foreach (_Condition_ con in listOfConditions) {
-			Debug.Log ("con name: " + con._GetName () + "con value: " + con._GetValue ());
-		}
-		
-		string name = _Condition_._GetConditionByName ("second condition", listOfConditions).name;
-		Debug.Log (name);
-		
-		
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
 		UnityEngine.Time.timeScale = fWorldTimeScale;
-		//fWorldTimeScale += 0.1f;
-		
-		//test condition update
-		con01.fValue += 0.1f;
-		
-		//Debug.Log ("con01 updated: " + con01._GetValue ());
 		
 		WorldTime._UpdateTime(Time.deltaTime);
+		
 		
 //		Debug.Log(WorldTime._GetYearsR() + "y::" +
 //			WorldTime._GetMonthsR() + "m::" +
@@ -88,12 +68,12 @@ public class Datacore : MonoBehaviour
 //			WorldTime._GetMinutesR() + "m::" +
 //			WorldTime._GetSecondsR() + "s::");
 		
-		Debug.Log(WorldTime._GetYearsR() + "y::" +
-			WorldTime._GetMonthsRM() + "m::" +
-			WorldTime._GetDaysRM() + "d::" +
-			WorldTime._GetHoursRM() + "h::" +
-			WorldTime._GetMinutesRM() + "m::" +
-			WorldTime._GetSecondsRM() + "s::");
+//		Debug.Log(WorldTime._GetYearsR() + "y::" +
+//			WorldTime._GetMonthsRM() + "m::" +
+//			WorldTime._GetDaysRM() + "d::" +
+//			WorldTime._GetHoursRM() + "h::" +
+//			WorldTime._GetMinutesRM() + "m::" +
+//			WorldTime._GetSecondsRM() + "s::");
 		
 	}
 	
