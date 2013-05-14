@@ -15,7 +15,7 @@ public class Wasp_Chemoreceptor : MonoBehaviour
 	 */
 	
 	public Wasp_Core wCore;
-	public _Chemo_ currentChemo = new _Chemo_();
+	public Chemo_ currentChemo = new Chemo_();
 	public Color currentChemoColor;
 	public float fTriggered = 0.0f;
 	public bool bTriggered = false;

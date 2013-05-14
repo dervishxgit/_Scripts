@@ -12,7 +12,7 @@ public static class _ListOfLevels_
 	};
 };
 
-public static class WorldTime {
+public static class _WorldTime_ {
 	
 	public static double seconds,
 	minutes,
@@ -104,24 +104,24 @@ public static class WorldTime {
 	
 };
 
-public class _Action_
+public class Action_
 {
 	string actionName;
 	string actionType;
 };
 	
-public class _Role_
+public class Role_
 {
 	string sName;
-	List<_Action_> _lActions = new List<_Action_> ();
-	List<_Question_> _lQuestions = new List<_Question_>();
+	List<Action_> _lActions = new List<Action_> ();
+	List<Question_> _lQuestions = new List<Question_>();
 };
 
-public class _FloatWrapper_ {
+public class FloatWrapper_ {
 	public float f;
 };
 
-public class _Condition_
+public class Condition_
 {
 	/*
 	 * Conditions will exist in the wasp core, accessed by virtual mind
@@ -139,25 +139,25 @@ public class _Condition_
 		return AICORE._IsItMin(fValue, min, max);
 	}
 	
-	public _Condition_ (string n, ref float mapValue)
+	public Condition_ (string n, ref float mapValue)
 	{
 		this._SetCondition (n, ref mapValue);
 	}
 	
-	public _Condition_ (string n, ref float mapValue, ref float minvalue, ref float maxvalue)
+	public Condition_ (string n, ref float mapValue, ref float minvalue, ref float maxvalue)
 	{
 		this._SetCondition (n, ref mapValue);
 		this._SetMinMax (ref minvalue, ref maxvalue);
 	}
 	
-	public _Condition_ (string n, ref float mapValue, ref List<_Condition_> lConditions)
+	public Condition_ (string n, ref float mapValue, ref List<Condition_> lConditions)
 	{
 		//version that adds self to the list provided during build
 		this._SetCondition (n, ref mapValue);
 		lConditions.Add(this);
 	}
 	
-	public _Condition_ (string n, ref float mapValue, ref float minvalue, ref float maxvalue, ref List<_Condition_> lConditions)
+	public Condition_ (string n, ref float mapValue, ref float minvalue, ref float maxvalue, ref List<Condition_> lConditions)
 	{
 		//version that adds self to the list provided during build
 		this._SetCondition (n, ref mapValue);
@@ -197,10 +197,10 @@ public class _Condition_
 		this._MapValue (ref mapValue);
 	}
 	
-	public static _Condition_ _GetConditionByName (string n, List<_Condition_> lConditions)
+	public static Condition_ _GetConditionByName (string n, List<Condition_> lConditions)
 	{
-		_Condition_ resultCondition = lConditions.Find (
-			delegate(_Condition_ con) {
+		Condition_ resultCondition = lConditions.Find (
+			delegate(Condition_ con) {
 			return con.name == n;
 		}
 		);
@@ -214,7 +214,7 @@ public class _Condition_
 	
 };
 
-public class _BM_ {
+public class BM_ {
 	float[] mat;
 };
 
@@ -222,10 +222,10 @@ public class _BM_ {
 	
 
 
-public class _BM_2 :   _BM_ {
+public class BM_2 :   BM_ {
 	public float[] mat;
 	
-	_BM_2() {
+	BM_2() {
 		mat = new float[4] {
 			0.0f,
 			0.0f,
@@ -235,10 +235,10 @@ public class _BM_2 :   _BM_ {
 	}
 };
 
-public class _BM_3 {
+public class BM_3 {
 	public float[] mat;
 	
-	_BM_3() {
+	BM_3() {
 		mat = new float[8] {
 			0.0f,
 			0.0f,
@@ -252,11 +252,11 @@ public class _BM_3 {
 	}
 }
 
-public class _Question_
+public class Question_
 {
 	public string q;
 	
-	public List<_Condition_> lConditions = new List<_Condition_>();
+	public List<Condition_> lConditions = new List<Condition_>();
 	
 	//public _BehaviorMatrix_;
 	
@@ -351,7 +351,7 @@ public class _Question_
 	}
 };
 
-public class _Chemo_
+public class Chemo_
 {
 	public Color chemoColor = Color.black;
 	public float fInitialMemTime, fCurrentMemTime;
@@ -360,18 +360,18 @@ public class _Chemo_
 	
 	//bool bIsDecaying = true; //not using
 	
-	public _Chemo_ ()
+	public Chemo_ ()
 	{
 		fInitialMemTime = fCurrentMemTime = fDefaultInitialMemTime;
 	}
 		
-	public _Chemo_ (Color color)
+	public Chemo_ (Color color)
 	{
 		fInitialMemTime = fCurrentMemTime = fDefaultInitialMemTime;
 		chemoColor = color;
 	}
 		
-	public _Chemo_ (_Chemo_ chem)
+	public Chemo_ (Chemo_ chem)
 	{
 		chemoColor = chem.chemoColor;
 		fInitialMemTime = chem.fInitialMemTime;
@@ -405,16 +405,3 @@ public class _Chemo_
 		
 		
 };
-
-//public class WaspClassLibrary : MonoBehaviour {
-//
-//	// Use this for initialization
-//	void Start () {
-//	
-//	}
-//	
-//	// Update is called once per frame
-//	void Update () {
-//	
-//	}
-//}

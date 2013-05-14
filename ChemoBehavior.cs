@@ -24,7 +24,7 @@ public class ChemoBehavior : MonoBehaviour
 	Material sphereMaterial;
 	float sphereMaxAlpha = 0.9f;
 	float sphereMinAlpha = 0.1f;
-	public _Chemo_ _Chemo;// = new _Chemo_ ();
+	public Chemo_ _Chemo;// = new _Chemo_ ();
 	int iMasterState = 0;
 	const int iStateNotReady = 0;
 	const int iStateReady = 1;
@@ -104,18 +104,18 @@ public class ChemoBehavior : MonoBehaviour
 		} else iMasterState = iStateNotReady;
 	}
 	
-	public void _Initialize(float radius, float lifetime, _Chemo_ chem) {
+	public void _Initialize(float radius, float lifetime, Chemo_ chem) {
 		fRadius = radius;
 		fLifeTimeRemaining = fLifeTime = lifetime;
 		
-		_Chemo = new _Chemo_(chem);
+		_Chemo = new Chemo_(chem);
 	}
 	
-	public void _Initialize(float radius, float lifetime, _Chemo_ chem, Color c) {
+	public void _Initialize(float radius, float lifetime, Chemo_ chem, Color c) {
 		fRadius = radius;
 		fLifeTimeRemaining = fLifeTime = lifetime;
 		
-		_Chemo = new _Chemo_(chem);
+		_Chemo = new Chemo_(chem);
 		_Chemo.chemoColor = c;
 	}
 	

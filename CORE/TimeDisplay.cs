@@ -19,12 +19,12 @@ public class TimeDisplay : MonoBehaviour
 		out string years)
 	{
 		
-		secs = WorldTime._GetSecondsRM ().ToString ();
-		mins = WorldTime._GetMinutesRM ().ToString ();
-		hours = WorldTime._GetHoursRM ().ToString ();
-		days = WorldTime._GetDaysRM ().ToString ();
-		months = WorldTime._GetMonthsRM ().ToString ();
-		years = WorldTime._GetYearsR ().ToString ();
+		secs = _WorldTime_._GetSecondsRM ().ToString ();
+		mins = _WorldTime_._GetMinutesRM ().ToString ();
+		hours = _WorldTime_._GetHoursRM ().ToString ();
+		days = _WorldTime_._GetDaysRM ().ToString ();
+		months = _WorldTime_._GetMonthsRM ().ToString ();
+		years = _WorldTime_._GetYearsR ().ToString ();
 		
 		string rs = years + "y::" +
 					months + "m::" +
@@ -40,12 +40,12 @@ public class TimeDisplay : MonoBehaviour
 	public string _DisplayTime ()
 	{
 		
-		string secs = WorldTime._GetSecondsRM ().ToString ();
-		string mins = WorldTime._GetMinutesRM ().ToString ();
-		string hours = WorldTime._GetHoursRM ().ToString ();
-		string days = WorldTime._GetDaysRM ().ToString ();
-		string months = WorldTime._GetMonthsRM ().ToString ();
-		string years = WorldTime._GetYearsR ().ToString ();
+		string secs = _WorldTime_._GetSecondsRM ().ToString ();
+		string mins = _WorldTime_._GetMinutesRM ().ToString ();
+		string hours = _WorldTime_._GetHoursRM ().ToString ();
+		string days = _WorldTime_._GetDaysRM ().ToString ();
+		string months = _WorldTime_._GetMonthsRM ().ToString ();
+		string years = _WorldTime_._GetYearsR ().ToString ();
 		
 		string rs = years + "y::" +
 					months + "m::" +

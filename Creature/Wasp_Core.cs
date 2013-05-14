@@ -53,10 +53,10 @@ public class Wasp_Core : MonoBehaviour
 	//-Health, Energy level (hunger, sleep)
 	//-Controller specific senses
 	//Conditions
-	_Condition_ _cEnergy, _cHunger;
+	Condition_ _cEnergy, _cHunger;
 	
 	//External
-	_Condition_ _cTimeOfThisDay;
+	Condition_ _cTimeOfThisDay;
 	//ColorSense
 	public GameObject lastSeenObject;
 	public Color currentColor;
@@ -69,9 +69,9 @@ public class Wasp_Core : MonoBehaviour
 	//External
 	//ChemoSense
 	
-	public _Chemo_ currentChemo;
-	public List<_Chemo_> _lChemos = new List<_Chemo_>();
-	public void _UpdateCurrentChemo(_Chemo_ chem) {
+	public Chemo_ currentChemo;
+	public List<Chemo_> _lChemos = new List<Chemo_>();
+	public void _UpdateCurrentChemo(Chemo_ chem) {
 		//called by the chemoreceptor
 		//we will check if it is  a new chemo
 		//if new, add; else refresh
@@ -86,7 +86,7 @@ public class Wasp_Core : MonoBehaviour
 	}
 	void _RunChemos() {
 		if(_lChemos != null && _lChemos.Count > 0) {
-			foreach(_Chemo_ chem in _lChemos) {
+			foreach(Chemo_ chem in _lChemos) {
 				bool expired;
 				chem._Run(Time.deltaTime, out expired);
 				if(expired) {
@@ -116,7 +116,7 @@ public class Wasp_Core : MonoBehaviour
 		//--sensors and transmitters mapped by default in prefab
 		
 		//test of chemo transmit
-		waspChemoTransmitter._SpawnChemoBehavior(chemoBehaviorPrefab, new _Chemo_(), Color.blue, 10.0f);
+		waspChemoTransmitter._SpawnChemoBehavior(chemoBehaviorPrefab, new Chemo_(), Color.blue, 10.0f);
 		
 		
 	}

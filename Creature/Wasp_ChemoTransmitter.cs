@@ -5,12 +5,12 @@ public class Wasp_ChemoTransmitter : MonoBehaviour {
 	
 	public Wasp_Core wCore;
 	
-	public _Chemo_ chemTransmit;
+	public Chemo_ chemTransmit;
 	
 	// Use this for initialization
 	void Start () {
 		if(chemTransmit == null) {
-			chemTransmit = new _Chemo_();
+			chemTransmit = new Chemo_();
 		}
 		
 		wCore = GameObject.FindGameObjectWithTag("CORE").GetComponent<Wasp_Core>() as Wasp_Core;
@@ -21,16 +21,16 @@ public class Wasp_ChemoTransmitter : MonoBehaviour {
 	
 	}
 	
-	public void _SpawnChemoBehavior(_Chemo_ chem) {
+	public void _SpawnChemoBehavior(Chemo_ chem) {
 		//Debug.Log("spawning chemo");
 		//test of chemo transmit
 		GameObject cheminst = Instantiate(wCore.chemoBehaviorPrefab)as GameObject;
 		ChemoBehavior chembehave = cheminst.GetComponent<ChemoBehavior>();
-		chembehave._Initialize(5.0f, 10.0f, new _Chemo_(), Color.green);
+		chembehave._Initialize(5.0f, 10.0f, new Chemo_(), Color.green);
 		chembehave.SendMessage("_SetReady", true, SendMessageOptions.DontRequireReceiver);
 	}
 	
-	public void _SpawnChemoBehavior(GameObject chemPrefab, _Chemo_ chem, Color col) {
+	public void _SpawnChemoBehavior(GameObject chemPrefab, Chemo_ chem, Color col) {
 		//Debug.Log("spawning chemo");
 		//test of chemo transmit
 		GameObject cheminst = Instantiate(chemPrefab, transform.position, transform.rotation)as GameObject;
@@ -39,7 +39,7 @@ public class Wasp_ChemoTransmitter : MonoBehaviour {
 		chembehave.SendMessage("_SetReady", true, SendMessageOptions.DontRequireReceiver);
 	}
 	
-	public void _SpawnChemoBehavior(GameObject chemPrefab, _Chemo_ chem, Color col, float lifetime ) {
+	public void _SpawnChemoBehavior(GameObject chemPrefab, Chemo_ chem, Color col, float lifetime ) {
 		//Debug.Log("spawning chemo");
 		//test of chemo transmit
 		GameObject cheminst = Instantiate(chemPrefab, transform.position, transform.rotation)as GameObject;

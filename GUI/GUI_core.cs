@@ -13,12 +13,12 @@ public class GUI_Core : MonoBehaviour {
 		out string months, 
 		out string years) {
 		
-		secs = 		WorldTime._GetSecondsRM().ToString();
-		mins = 		WorldTime._GetMinutesRM().ToString();
-		hours = 	WorldTime._GetHoursRM().ToString();
-		days = 		WorldTime._GetDaysRM().ToString();
-		months = 	WorldTime._GetMonthsRM().ToString();
-		years = 	WorldTime._GetYearsR().ToString();
+		secs = 		_WorldTime_._GetSecondsRM().ToString();
+		mins = 		_WorldTime_._GetMinutesRM().ToString();
+		hours = 	_WorldTime_._GetHoursRM().ToString();
+		days = 		_WorldTime_._GetDaysRM().ToString();
+		months = 	_WorldTime_._GetMonthsRM().ToString();
+		years = 	_WorldTime_._GetYearsR().ToString();
 		
 		string rs = years 	+ "y::" +
 					months 	+ "m::" +

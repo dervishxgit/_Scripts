@@ -8,9 +8,9 @@ public class Datacore : MonoBehaviour
 	//maybe we need floatwrappers on both sides
 	float ftemp01;
 	float ftemp02;
-	List<_Condition_> listOfConditions = new List<_Condition_> ();
-	_Condition_ con01;
-	_Condition_ con02;
+	List<Condition_> listOfConditions = new List<Condition_> ();
+	Condition_ con01;
+	Condition_ con02;
 	
 	//Major Settings
 	public bool bDisplayAllMenus = false;
@@ -58,7 +58,7 @@ public class Datacore : MonoBehaviour
 	{
 		UnityEngine.Time.timeScale = fWorldTimeScale;
 		
-		WorldTime._UpdateTime(Time.deltaTime);
+		_WorldTime_._UpdateTime(Time.deltaTime);
 		
 		
 //		Debug.Log(WorldTime._GetYearsR() + "y::" +
