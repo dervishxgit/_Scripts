@@ -34,6 +34,8 @@ public class Wasp_VirtualMind : MonoBehaviour {
 	
 	public int _iReadyState = -1;
 	
+	public bool _bAwake = false;
+	
 	// Use this for initialization
 	void Start () {
 		//map
@@ -48,6 +50,13 @@ public class Wasp_VirtualMind : MonoBehaviour {
 	
 	}
 	
+	void Wake() {
+		_bAwake = true;
+	}
+	
+	void Sleep() {
+		_bAwake = false;
+	}
 	
 	/*Perceive
 	 * 
@@ -56,7 +65,7 @@ public class Wasp_VirtualMind : MonoBehaviour {
 	
 	//update senses might be a good function to call from outside to wake the mind state machine
 	public void _UpdateSenses() {
-		
+		Wake();
 	}
 	
 	/*Contemplate
