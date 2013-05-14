@@ -214,13 +214,55 @@ public class _Condition_
 	
 };
 
+public class _BM_ {
+	float[] mat;
+};
+
+//public static _BM_ operator +(_BM_ bm1, _BM_ bm2) {}
+	
+
+
+public class _BM_2 :   _BM_ {
+	public float[] mat;
+	
+	_BM_2() {
+		mat = new float[4] {
+			0.0f,
+			0.0f,
+			0.0f,
+			0.0f
+		};
+	}
+};
+
+public class _BM_3 {
+	public float[] mat;
+	
+	_BM_3() {
+		mat = new float[8] {
+			0.0f,
+			0.0f,
+			0.0f,
+			0.0f,
+			0.0f,
+			0.0f,
+			0.0f,
+			0.0f
+		};
+	}
+}
+
 public class _Question_
 {
 	public string q;
 	
 	public List<_Condition_> lConditions = new List<_Condition_>();
 	
-	public float _AnswerQuestion() {
+	//public _BehaviorMatrix_;
+	
+	public static float _AnswerQuestion(
+		
+		) {
 		//not yet formalized
 		return 0.0f;
 	}
