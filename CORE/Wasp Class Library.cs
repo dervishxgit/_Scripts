@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+
 public static class _ListOfLevels_
 {
 	//List<string> levels = new List<string>();
@@ -9,6 +10,98 @@ public static class _ListOfLevels_
 	public static string[] levels = {
 		"one", "two"	
 	};
+};
+
+public static class WorldTime {
+	
+	public static double seconds,
+	minutes,
+	hours,
+	days,
+	months,
+	years;
+	
+	public static void _UpdateTime( float time_secs ) {
+		seconds += time_secs;
+		minutes = _GetMinutes();
+		hours = _GetHours();
+		days = _GetDays();
+		months = _GetMonths();
+		years = _GetYears();
+	}
+	
+	public static double _GetSeconds() {
+		return seconds;
+	}
+	
+	public static float _GetSecondsR() {
+		return Mathf.Round( (float) seconds );
+	}
+	
+	public static float _GetSecondsRM() {
+		return Mathf.Round( (float) seconds % 60 );
+	}
+	
+	public static double _GetMinutes() {
+		return seconds * (1.0/60.0);
+	}
+	
+	public static float _GetMinutesR() {
+		return Mathf.Round( (float)seconds * (1.0f/60.0f) );
+	}
+	
+	public static float _GetMinutesRM() {
+		return Mathf.Round( (float)seconds * (1.0f/60.0f) % 60);
+	}
+	
+	public static double _GetHours() {
+		return seconds * (1.0/3600.0);
+	}
+	
+	public static float _GetHoursR() {
+		return Mathf.Round( (float)seconds * (1.0f/3600.0f) );
+	}
+	
+	public static float _GetHoursRM() {
+		return Mathf.Round( (float)seconds * (1.0f/3600.0f) % 24 );
+	}
+	
+	public static double _GetDays() {
+		return seconds * (1.0/86400.0);
+	}
+	
+	public static float _GetDaysR() {
+		return Mathf.Round( (float)seconds * (1.0f/86400.0f) );
+	}
+	
+	public static float _GetDaysRM() {
+		return Mathf.Round( (float)seconds * (1.0f/86400.0f) % 30 );
+	}
+	
+	public static double _GetMonths() {
+		return seconds * (1.0/2592000.0);
+	}
+	
+	public static float _GetMonthsR() {
+		return Mathf.Round( (float)seconds * (1.0f/2592000.0f) );
+	}
+	
+	public static float _GetMonthsRM() {
+		return Mathf.Round( (float)seconds * (1.0f/2592000.0f) % 12 );
+	}
+	
+	public static double _GetYears() {
+		return seconds * (1.0/31104000.0);
+	}
+	
+	public static float _GetYearsR() {
+		return Mathf.Round( (float)seconds * (1.0f/31104000.0f) );
+	}
+	
+	public static float _ReturnTotalTime() {
+		return 0.0f;
+	}
+	
 };
 
 public class _Action_
@@ -121,7 +214,12 @@ public class _Condition_
 
 public class _Question_
 {
+	public List<_Condition_> lConditions = new List<_Condition_>();
 	
+	public float _AnswerQuestion() {
+		//not yet formalized
+		return 0.0f;
+	}
 };
 
 public class _Chemo_
@@ -129,7 +227,7 @@ public class _Chemo_
 	public Color chemoColor = Color.black;
 	public float fInitialMemTime, fCurrentMemTime;
 	float fMemDecayRate = 1.0f;
-	float fDefaultInitialMemTime = 3.0f; //default seconds for Chemo to persist in memory
+	float fDefaultInitialMemTime = 30.0f; //default seconds for Chemo to persist in memory
 	
 	//bool bIsDecaying = true; //not using
 	

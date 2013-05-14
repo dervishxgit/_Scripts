@@ -64,6 +64,8 @@ public class Datacore : MonoBehaviour
 		
 		string name = _Condition_._GetConditionByName ("second condition", listOfConditions).name;
 		Debug.Log (name);
+		
+		
 	}
 	
 	// Update is called once per frame
@@ -75,7 +77,24 @@ public class Datacore : MonoBehaviour
 		//test condition update
 		con01.fValue += 0.1f;
 		
-		Debug.Log ("con01 updated: " + con01._GetValue ());
+		//Debug.Log ("con01 updated: " + con01._GetValue ());
+		
+		WorldTime._UpdateTime(Time.deltaTime);
+		
+//		Debug.Log(WorldTime._GetYearsR() + "y::" +
+//			WorldTime._GetMonthsR() + "m::" +
+//			WorldTime._GetDaysR() + "d::" +
+//			WorldTime._GetHoursR() + "h::" +
+//			WorldTime._GetMinutesR() + "m::" +
+//			WorldTime._GetSecondsR() + "s::");
+		
+		Debug.Log(WorldTime._GetYearsR() + "y::" +
+			WorldTime._GetMonthsRM() + "m::" +
+			WorldTime._GetDaysRM() + "d::" +
+			WorldTime._GetHoursRM() + "h::" +
+			WorldTime._GetMinutesRM() + "m::" +
+			WorldTime._GetSecondsRM() + "s::");
+		
 	}
 	
 	void ToggleAllMenus (bool b)
