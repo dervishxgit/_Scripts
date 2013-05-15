@@ -63,7 +63,7 @@ public class Wasp_Controller : MonoBehaviour {
 	
 	
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		//establish connection to creature core and global datacore
 		dCore = GameObject.FindGameObjectWithTag("CORE").GetComponent<Datacore>() as Datacore;
 		wCore = gameObject.GetComponent<Wasp_Core>() as Wasp_Core;
@@ -72,6 +72,17 @@ public class Wasp_Controller : MonoBehaviour {
 		
 		//create fuzzytarget
 		this.FT = new FuzzyTarget();
+	}
+	
+	void Start () {
+//		//establish connection to creature core and global datacore
+//		dCore = GameObject.FindGameObjectWithTag("CORE").GetComponent<Datacore>() as Datacore;
+//		wCore = gameObject.GetComponent<Wasp_Core>() as Wasp_Core;
+//		waspRoot = wCore.waspRoot;
+//		waspGeo = wCore.waspGeo;
+//		
+//		//create fuzzytarget
+//		this.FT = new FuzzyTarget();
 	}
 	
 	// Update is called once per frame

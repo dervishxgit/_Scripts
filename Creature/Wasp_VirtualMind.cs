@@ -42,13 +42,13 @@ public class Wasp_VirtualMind : MonoBehaviour {
 	
 	Question_ shouldIFindFood;
 	
-	
-	
 	// Use this for initialization
 	void Start () {
 		//map
 		dCore = GameObject.FindGameObjectWithTag("CORE").GetComponent<Datacore>();
 		wCore = gameObject.GetComponent<Wasp_Core>();
+		
+		//BuildConditions();
 		
 		BuildQuestions();
 		BuildRecommendations();
@@ -89,6 +89,11 @@ public class Wasp_VirtualMind : MonoBehaviour {
 	public void _UpdateSenses() {
 		Wake();
 	}
+	
+//	void BuildConditions() {
+//		//Manually
+//		
+//	}
 	
 	/*Contemplate
 	 * 

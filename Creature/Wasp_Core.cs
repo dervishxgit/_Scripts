@@ -33,6 +33,23 @@ public class Wasp_Core : MonoBehaviour
 	
 	public GameObject chemoBehaviorPrefab;
 	
+	/*
+	 * Presets (settings to be compiled in to conditions and other calibrations)
+	 */
+	//-remember that CONDITIONS will be accessed at runtime, these values are not intented to be used except to set conditions
+	//Energy (real)
+	float fEnergy 	= 	100.0f,
+	fEnergyMin 		= 	10.0f,
+	fEnergyMax		=	100.0f;
+	//Hunger (fuzz)
+	float ffHunger	=	0.0f,
+	ffHungerMin		=	0.0f,
+	ffHungerMax		=	1.0f;
+	//HiveFood
+	float fLastKnownHiveFoodAvg = 1.0f,
+	fLastKnownHiveFoodMin = 0.0f,
+	fLastKnownHiveFoodMax = 1.0f;
+	
 	//State of mind (from Virtual Mind)
 	public string stateOfMind;
 	
@@ -51,15 +68,22 @@ public class Wasp_Core : MonoBehaviour
 	/////////////////////////////////////////////////////////////////////////////////
 	/* SENSES
 	 */ 
-	
+	public List<Condition_> _lAllConditions = new List<Condition_>();
 	//Innate Physical
 	//-Health, Energy level (hunger, sleep)
 	//-Controller specific senses
 	//Conditions
 	Condition_ _cEnergy, _cHunger;
 	
+	//TODO: conditions here are used elementally. we will refine the organization soon
+	
 	//External
 	Condition_ _cTimeOfThisDay;
+	Condition_ _cKnownFoodNearby;
+	
+	//Hive
+	Condition_ _cHiveFood;
+	
 	//ColorSense
 	public GameObject lastSeenObject;
 	public Color currentColor;
@@ -100,20 +124,31 @@ public class Wasp_Core : MonoBehaviour
 	}
 ////////////////////////////////////////////////////////////////////////////////	
 	// Use this for initialization
-	void Start ()
-	{
+	
+	void Awake () {
 		//establish connection to creature core and global datacore
 		dCore = GameObject.FindGameObjectWithTag ("CORE").GetComponent<Datacore> () as Datacore;
 		
 		//Register our wasp
 		dCore._RegisterWasp (this);
-		
+		//FOR NOW- self register with first hive found in area
+		myHive = GameObject.FindGameObjectWithTag("Hive").GetComponent<Hive_>();
+		myHive._WaspJoin(this);
+	}
+	
+	void Start ()
+	{
 		//for now, we will just get our known waypoints at startup, for testing
 		foreach (Transform i in dCore._lAllWaypoints) {
 			_AddKnownWaypoint (i);
 		}
 		
 		destinationNext = _ReturnRandomKnownWaypoint ();
+		
+		//Build Conditions
+		BuildConditions();
+		
+		
 		
 		//map sensors
 		//--sensors and transmitters mapped by default in prefab
@@ -169,5 +204,30 @@ public class Wasp_Core : MonoBehaviour
 	{
 		destinationNext = _ReturnRandomKnownWaypoint ();
 	}
+	
+	public void _JoinHive(Hive_ hive) {
+		hive._WaspJoin(this);
+		myHive = hive;
+	}
+	
+	//Conditions
+	void BuildConditions() {
+		//Energy
+		_cEnergy = new Condition_("Energy",  ref fEnergy,  ref fEnergyMin,
+			ref fEnergyMax,  ref _lAllConditions);
+		//Hunger
+		_cHunger = new Condition_("Hunger", ref ffHunger, ref ffHungerMin,
+			ref ffHungerMax, ref _lAllConditions);
+		//Hive Food
+		fLastKnownHiveFoodAvg = myHive._GetHiveFoodAvg();
+		fLastKnownHiveFoodMin = myHive._GetHiveFoodMin();
+		fLastKnownHiveFoodMax = myHive._GetHiveFoodMax();
+		_cHiveFood = new Condition_("HiveFood", ref fLastKnownHiveFoodAvg,
+			ref fLastKnownHiveFoodMin, ref fLastKnownHiveFoodMax, ref _lAllConditions);
+		
+		Debug.Log("en: " + _cEnergy.fValue + "hun: " + _cHunger.fValue + "hvf: " + _cHiveFood.fValue);
+	}
+	
+	
 	
 }

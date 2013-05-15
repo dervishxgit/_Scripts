@@ -112,15 +112,120 @@ public class Action_
 	
 public class Role_
 {
+	/*
+	 * Role should contain differing behavior matrices that will define behavior
+	 * ideally, these matrices will be standardized by name so they can be 'expected' to be called
+	 */ 
 	string sName;
+	
+	
+	
 	List<Action_> _lActions = new List<Action_> ();
 	List<Question_> _lQuestions = new List<Question_>();
 };
 
 public class FloatWrapper_ {
-	public float f;
+	public float f {
+		get {return f;}
+		set {f = value;}
+	}
+	
 };
 
+//public class Condition_
+//{
+//	/*
+//	 * Conditions will exist in the wasp core, accessed by virtual mind
+//	*/	
+//	public string name;
+//	public float fValue;
+//	//possible calibration per condition
+//	public float min, max;
+//	
+//	public float _FuzzOutMax() {
+//		return AICORE._IsItMax(fValue, min, max);
+//	}
+//	
+//	public float _FuzzOutMin() {
+//		return AICORE._IsItMin(fValue, min, max);
+//	}
+//	
+//	public Condition_ (string n, float mapValue)
+//	{
+//		this._SetCondition (n, mapValue);
+//	}
+//	
+//	public Condition_ (string n, float mapValue, float minvalue, float maxvalue)
+//	{
+//		this._SetCondition (n, mapValue);
+//		this._SetMinMax (minvalue, maxvalue);
+//	}
+//	
+//	public Condition_ (string n, float mapValue, List<Condition_> lConditions)
+//	{
+//		//version that adds self to the list provided during build
+//		this._SetCondition (n, mapValue);
+//		lConditions.Add(this);
+//	}
+//	
+//	public Condition_ (string n, float mapValue, float minvalue, float maxvalue, List<Condition_> lConditions)
+//	{
+//		//version that adds self to the list provided during build
+//		this._SetCondition (n, mapValue);
+//		this._SetMinMax(minvalue, maxvalue);
+//		lConditions.Add(this);
+//	}
+//	
+//	public void _SetName (string n)
+//	{
+//		this.name = n;
+//	}
+//	
+//	public string _GetName ()
+//	{
+//		return this.name;
+//	}
+//	
+//	public void _MapValue (float mapValue)
+//	{
+//		//should associate this value to watch another
+//		this.fValue = mapValue;
+//	}
+//	
+//	public float _GetValue ()
+//	{
+//		return fValue;
+//	}
+//	
+//	public void _SetMinMax(float fmin, float fmax ) {
+//		this.min = fmin;
+//		this.max = fmax;
+//	}
+//	
+//	public void _SetCondition (string n, float mapValue)
+//	{
+//		this._SetName (n);
+//		this._MapValue (mapValue);
+//	}
+//	
+//	public static Condition_ _GetConditionByName (string n, List<Condition_> lConditions)
+//	{
+//		Condition_ resultCondition = lConditions.Find (
+//			delegate(Condition_ con) {
+//			return con.name == n;
+//		}
+//		);
+//		
+//		if (resultCondition != null) {
+//			return resultCondition;
+//		} else {
+//			return null;
+//		}
+//	}
+//	
+//};
+
+//backup of Condition class
 public class Condition_
 {
 	/*
@@ -158,6 +263,14 @@ public class Condition_
 	}
 	
 	public Condition_ (string n, ref float mapValue, ref float minvalue, ref float maxvalue, ref List<Condition_> lConditions)
+	{
+		//version that adds self to the list provided during build
+		this._SetCondition (n, ref mapValue);
+		this._SetMinMax(ref minvalue, ref maxvalue);
+		lConditions.Add(this);
+	}
+	
+	public Condition_ (string n,  float mapValue,  float minvalue,  float maxvalue, ref List<Condition_> lConditions)
 	{
 		//version that adds self to the list provided during build
 		this._SetCondition (n, ref mapValue);
