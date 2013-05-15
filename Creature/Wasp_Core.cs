@@ -49,6 +49,10 @@ public class Wasp_Core : MonoBehaviour
 	float fLastKnownHiveFoodAvg = 1.0f,
 	fLastKnownHiveFoodMin = 0.0f,
 	fLastKnownHiveFoodMax = 1.0f;
+	//TimeOfDay(real)
+	float fCurrentTimeHours = 0.0f,
+	fStartDayHours = 0.0f, //dawn
+	fEndDayHours = 16.0f;  //dusk
 	
 	//State of mind (from Virtual Mind)
 	public string stateOfMind;
@@ -225,7 +229,13 @@ public class Wasp_Core : MonoBehaviour
 		_cHiveFood = new Condition_("HiveFood", ref fLastKnownHiveFoodAvg,
 			ref fLastKnownHiveFoodMin, ref fLastKnownHiveFoodMax, ref _lAllConditions);
 		
-		Debug.Log("en: " + _cEnergy.fValue + "hun: " + _cHunger.fValue + "hvf: " + _cHiveFood.fValue);
+		//Debug.Log("en: " + _cEnergy.fValue + "hun: " + _cHunger.fValue + "hvf: " + _cHiveFood.fValue);
+		
+		//Time of Day
+		//TODO: change this to use light from day. for now we will judge the hours
+		fCurrentTimeHours = _WorldTime_._GetHoursRM();
+		_cTimeOfThisDay = new Condition_("TimeOfDay", ref fCurrentTimeHours, ref fStartDayHours,
+			ref fEndDayHours, ref _lAllConditions);
 	}
 	
 	
