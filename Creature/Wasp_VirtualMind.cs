@@ -99,7 +99,7 @@ public class Wasp_VirtualMind : MonoBehaviour {
 	IEnumerator _Contemplate() {
 		BeginContemplate();
 		yield return null;
-		RunMindController();
+		StartCoroutine(RunMindController());
 		yield return null;
 		EndContemplate();
 	}
@@ -135,8 +135,8 @@ public class Wasp_VirtualMind : MonoBehaviour {
 		_bContemplating = false;
 	}
 	
-	void RunMindController() {
-		
+	IEnumerator RunMindController() {
+		yield return null;
 	}
 	
 	/*Act
