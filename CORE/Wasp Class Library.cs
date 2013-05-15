@@ -252,11 +252,32 @@ public class BM_3 {
 	}
 }
 
+
+
+public class Answer_ {
+	public float fAns; //fuzzy out
+	public bool bThresh; //did fAns exceed the threshold we provided?
+	public bool bRand; //result of coin flip
+	
+	public delegate Answer_ _Get();
+	
+};
+
+public class Recommendation_ {
+	public float testfloat;
+	public Question_ quest;
+	public Answer_ ans;
+	
+	public delegate Answer_ _Get();
+};
+
 public class Question_
 {
 	public string q;
 	
 	public List<Condition_> lConditions = new List<Condition_>();
+	
+	public Condition_[] aConditions;
 	
 	//public _BehaviorMatrix_;
 	
@@ -348,6 +369,12 @@ public class Question_
 		) {
 		//not yet formalized
 		return 0.0f;
+	}
+	
+	public static Answer_ _AnswerQuestion(Wasp_Core wasp, Question_ quest, float threshold) {
+		Answer_ rAns = new Answer_();
+		
+		return rAns;
 	}
 };
 

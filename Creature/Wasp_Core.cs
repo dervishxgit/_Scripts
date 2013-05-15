@@ -24,6 +24,7 @@ public class Wasp_Core : MonoBehaviour
 	public Datacore dCore;
 	//private Wasp_Core wCore;
 	public GameObject waspRoot;
+	public Wasp_VirtualMind wMind;
 	public GameObject waspGeo;
 	public GameObject waspColorSensor;
 	public GameObject waspChemoSensor;
@@ -36,6 +37,8 @@ public class Wasp_Core : MonoBehaviour
 	public string stateOfMind;
 	
 	//Waypoints
+	public Hive_ myHive;
+	
 	public Transform destinationFinal; 	//final destination
 	public Transform destinationNext;		//next waypoint
 	public Transform destinationPrev;		//previous waypoint
