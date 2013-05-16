@@ -8,7 +8,7 @@ public static class _ListOfLevels_
 	//List<string> levels = new List<string>();
 	
 	public static string[] levels = {
-		"one", "two"	
+		"one", "testCreatureMany"	
 	};
 };
 

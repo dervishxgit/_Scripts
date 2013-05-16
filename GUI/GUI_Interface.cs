@@ -17,6 +17,7 @@ public class GUI_Interface : MonoBehaviour
 	string[] bottomPanelGridStrings = {"Focus", "Orbit", "Goto", "LookThrough", "TakeControl"};
 	
 	int levelGridSelect = -1;
+	public GameObject levelmenu;
 	
 	GUILayoutOption[] bottomPanelLayoutOptions = {GUILayout.MaxWidth(300)};
 	
@@ -105,6 +106,7 @@ public class GUI_Interface : MonoBehaviour
 			case "_NoDisplay_":
 				break;
 			case "_Simulation_":
+//				
 				GUILayout.BeginArea (new Rect (5, 30, 600, 600));
 				GUILayout.BeginVertical (GUILayout.MaxWidth (50));
 				if (GUILayout.Button ("New")) {
@@ -114,19 +116,21 @@ public class GUI_Interface : MonoBehaviour
 						
 				}
 				if (GUILayout.Button ("Load")) {
-					levelGridSelect = GUILayout.SelectionGrid(levelGridSelect, _ListOfLevels_.levels, 5);
+					Component levels = gameObject.AddComponent("GUI_LevelSelect");
+					levelGridSelect = levels.GetComponent<GUI_LevelSelect>().levelGridSelect;
 					GUILayout.BeginVertical();
+					
 					//int select = 0;
 					//string[] guilevelstrings = new string[_ListOfLevels_.levels.Length];
-					for(int i = 0; i < _ListOfLevels_.levels.Length; i++) {
+					//for(int i = 0; i < _ListOfLevels_.levels.Length; i++) {
 //						if(GUILayout.Button(_ListOfLevels_.levels[i])) {
 //							Application.LoadLevel(_ListOfLevels_.levels[i]);
 //						}
 
-					}
+					//}
 					
 					if(levelGridSelect != -1) {
-						Application.LoadLevel(levelGridSelect);
+						Application.LoadLevel(_ListOfLevels_.levels[levelGridSelect]);
 					}
 					GUILayout.EndVertical();
 				}
