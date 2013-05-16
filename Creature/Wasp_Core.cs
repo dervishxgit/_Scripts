@@ -59,7 +59,8 @@ public class Wasp_Core : MonoBehaviour
 	//TimeOfDay(real)
 	float fCurrentTimeHours = 0.0f,
 	fStartDayHours = 0.0f, //dawn
-	fEndDayHours = 16.0f;  //dusk
+	//fEndDayHours = 16.0f;  //dusk
+	fEndDayHours = 1.0f;
 	public static string
 		_cTimeOfDayString = "TimeOfDay";
 	
@@ -184,7 +185,7 @@ public class Wasp_Core : MonoBehaviour
 		//_RunChemos();
 		
 		//test state of mind
-		Debug.Log(stateOfMind);
+		//Debug.Log(stateOfMind);
 		
 		if(!wMind._bAwake) {
 			wMind._UpdateSenses();
@@ -195,7 +196,11 @@ public class Wasp_Core : MonoBehaviour
 		if(stateOfMind == "FindFood") {
 			//wController.ControllerState = 2;
 			wController.MoveState = "Flying";
+		} else {
+			//wController.ControllerState = 0;
 		}
+		
+		_cTimeOfThisDay.fValue = (float)_WorldTime_._GetMinutesRM();
 	}
 	
 	//Waypoints
