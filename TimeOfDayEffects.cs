@@ -36,15 +36,20 @@ public class TimeOfDayEffects : MonoBehaviour {
 	
 	IEnumerator CalcTimeOfDayColor() {
 		yield return null;
-		Debug.Log ("should see this once a minute");
-		Color defaultColor = Color.blue;
+		//Debug.Log ("should see this once a minute");
+		//142 185 255
+		Color defaultColor = new Color((142.0f/255.0f), (185.0f/255.0f), 1.0f);
 		
 //		defaultColor *= AICORE._IsItMax(_WorldTime_._GetMinutesR(), 0.0f, _WorldTime_.numMinutesPerDay);
+		if(_WorldTime_._GetHoursRM() < 1.0f) {
+			defaultColor *= AICORE._IsItMax(_WorldTime_._GetHoursRM(), 0.0f, 1.0f);
+		} else if (_WorldTime_._GetHoursRM() > 12.0f) {
+			defaultColor *= AICORE._IsItMin(_WorldTime_._GetHoursRM(), 12.0f, 16.0f);
+		}
 		
-		defaultColor *= AICORE._IsItMax(_WorldTime_._GetMinutesRM(), 0.0f, 60.0f);
 		
 		_SetBackGroundColor(defaultColor);
-		yield return new WaitForSeconds(60.0f);
+		yield return null;
 		
 	}
 }
