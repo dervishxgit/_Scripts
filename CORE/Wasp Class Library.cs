@@ -21,8 +21,11 @@ public static class _WorldTime_ {
 	months,
 	years;
 	
+	public const float
+		numMinutesPerDay = 1440.0f;
+	
 	public static void _UpdateTime( float time_secs ) {
-		seconds += time_secs;
+		seconds += (double)time_secs;
 		minutes = _GetMinutes();
 		hours = _GetHours();
 		days = _GetDays();
