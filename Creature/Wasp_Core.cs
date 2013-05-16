@@ -25,6 +25,7 @@ public class Wasp_Core : MonoBehaviour
 	//private Wasp_Core wCore;
 	public GameObject waspRoot;
 	public Wasp_VirtualMind wMind;
+	public Wasp_Controller wController;
 	public GameObject waspGeo;
 	public GameObject waspColorSensor;
 	public GameObject waspChemoSensor;
@@ -140,7 +141,7 @@ public class Wasp_Core : MonoBehaviour
 	void Awake () {
 		//establish connection to creature core and global datacore
 		dCore = GameObject.FindGameObjectWithTag ("CORE").GetComponent<Datacore> () as Datacore;
-		
+		//wController = gameObject.GetComponent<Wasp_Controller>();
 		//Register our wasp
 		dCore._RegisterWasp (this);
 		//FOR NOW- self register with first hive found in area
@@ -184,6 +185,17 @@ public class Wasp_Core : MonoBehaviour
 		
 		//test state of mind
 		Debug.Log(stateOfMind);
+		
+		if(!wMind._bAwake) {
+			wMind._UpdateSenses();
+		}
+		
+		
+		//test of propogation to controller
+		if(stateOfMind == "FindFood") {
+			//wController.ControllerState = 2;
+			wController.MoveState = "Flying";
+		}
 	}
 	
 	//Waypoints
@@ -226,6 +238,14 @@ public class Wasp_Core : MonoBehaviour
 	public void _JoinHive(Hive_ hive) {
 		hive._WaspJoin(this);
 		myHive = hive;
+	}
+	
+	public bool _AtHive(Hive_ hive) {
+		bool r;
+		Vector3 vecToHive  = hive.transform.root.transform.position - gameObject.transform.root.transform.position;
+		float dist = vecToHive.magnitude;
+		r = dist < 2.5f;
+		return r;
 	}
 	
 	//From mind

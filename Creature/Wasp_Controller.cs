@@ -151,11 +151,18 @@ public class Wasp_Controller : MonoBehaviour {
 		}
 		else if (ControllerState == stateControllerSeeking) {
 			//looking for next
+			if(wCore.stateOfMind == "FindFood") {
+				//test for now, just pick a new
+				if( wCore._AtHive(wCore.myHive) ) {
+					wCore._GetNextRandomWaypoint();
+				} else {
+					wCore.destinationNext = wCore.myHive.transform;
+				}
+				
 			
-			//test for now, just pick a new
-			wCore._GetNextRandomWaypoint();
+				ControllerState = stateControllerMoving;
+			}
 			
-			ControllerState = stateControllerMoving;
 			
 			return;
 		}
