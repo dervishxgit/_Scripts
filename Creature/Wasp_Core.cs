@@ -41,18 +41,26 @@ public class Wasp_Core : MonoBehaviour
 	float fEnergy 	= 	100.0f,
 	fEnergyMin 		= 	10.0f,
 	fEnergyMax		=	100.0f;
+	public static string 
+		_cEnergyString = "Energy";
 	//Hunger (fuzz)
 	float ffHunger	=	0.0f,
 	ffHungerMin		=	0.0f,
 	ffHungerMax		=	1.0f;
+	public static string
+		_cHungerString = "Hunger";
 	//HiveFood
 	float fLastKnownHiveFoodAvg = 1.0f,
 	fLastKnownHiveFoodMin = 0.0f,
 	fLastKnownHiveFoodMax = 1.0f;
+	public static string
+		_cHiveFoodString = "HiveFood";
 	//TimeOfDay(real)
 	float fCurrentTimeHours = 0.0f,
 	fStartDayHours = 0.0f, //dawn
 	fEndDayHours = 16.0f;  //dusk
+	public static string
+		_cTimeOfDayString = "TimeOfDay";
 	
 	//State of mind (from Virtual Mind)
 	public string stateOfMind;
@@ -77,16 +85,16 @@ public class Wasp_Core : MonoBehaviour
 	//-Health, Energy level (hunger, sleep)
 	//-Controller specific senses
 	//Conditions
-	Condition_ _cEnergy, _cHunger;
+	public Condition_ _cEnergy, _cHunger;
 	
 	//TODO: conditions here are used elementally. we will refine the organization soon
 	
 	//External
-	Condition_ _cTimeOfThisDay;
-	Condition_ _cKnownFoodNearby;
+	public Condition_ _cTimeOfThisDay;
+	public Condition_ _cKnownFoodNearby;
 	
 	//Hive
-	Condition_ _cHiveFood;
+	public Condition_ _cHiveFood;
 	
 	//ColorSense
 	public GameObject lastSeenObject;
@@ -138,6 +146,9 @@ public class Wasp_Core : MonoBehaviour
 		//FOR NOW- self register with first hive found in area
 		myHive = GameObject.FindGameObjectWithTag("Hive").GetComponent<Hive_>();
 		myHive._WaspJoin(this);
+		
+		//Build Conditions
+		BuildConditions();
 	}
 	
 	void Start ()
@@ -149,8 +160,8 @@ public class Wasp_Core : MonoBehaviour
 		
 		destinationNext = _ReturnRandomKnownWaypoint ();
 		
-		//Build Conditions
-		BuildConditions();
+//		//Build Conditions
+//		BuildConditions();
 		
 		
 		
@@ -217,7 +228,7 @@ public class Wasp_Core : MonoBehaviour
 	//Conditions
 	void BuildConditions() {
 		//Energy
-		_cEnergy = new Condition_("Energy",  ref fEnergy,  ref fEnergyMin,
+		_cEnergy = new Condition_(_cEnergyString,  ref fEnergy,  ref fEnergyMin,
 			ref fEnergyMax,  ref _lAllConditions);
 		//Hunger
 		_cHunger = new Condition_("Hunger", ref ffHunger, ref ffHungerMin,

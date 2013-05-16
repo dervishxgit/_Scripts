@@ -473,8 +473,10 @@ public class Question_
 	
 	//version takes 2 conditions raw and answers using behavior matrix
 	public static float _AnswerQuestion_2Con(
-		
+		float[] B, Condition_[] C
 		) {
+		
+		
 		//not yet formalized
 		return 0.0f;
 	}
