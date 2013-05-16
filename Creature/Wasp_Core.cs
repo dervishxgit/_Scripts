@@ -63,7 +63,7 @@ public class Wasp_Core : MonoBehaviour
 		_cTimeOfDayString = "TimeOfDay";
 	
 	//State of mind (from Virtual Mind)
-	public string stateOfMind;
+	public string stateOfMind = "none";
 	
 	//Waypoints
 	public Hive_ myHive;
@@ -181,6 +181,9 @@ public class Wasp_Core : MonoBehaviour
 		
 		//Chemos
 		//_RunChemos();
+		
+		//test state of mind
+		Debug.Log(stateOfMind);
 	}
 	
 	//Waypoints
@@ -223,6 +226,11 @@ public class Wasp_Core : MonoBehaviour
 	public void _JoinHive(Hive_ hive) {
 		hive._WaspJoin(this);
 		myHive = hive;
+	}
+	
+	//From mind
+	void SetMindOutString(string s) {
+		stateOfMind = s;
 	}
 	
 	//Conditions

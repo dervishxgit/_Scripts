@@ -37,6 +37,10 @@ public class Wasp_VirtualMind : MonoBehaviour {
 	public bool _bAwake = false;
 	public bool _bContemplating = false;
 	
+	//OUTS
+	string sOutString = "none";
+	const string sOut_FindFood = "FindFood";
+	
 	public List<Recommendation_> lRecommendations = new List<Recommendation_>();
 	Recommendation_ findFood = new Recommendation_();
 	
@@ -179,7 +183,16 @@ public class Wasp_VirtualMind : MonoBehaviour {
 	}
 	
 	void RunMindController() {
+		if( AICORE._RandomProbability(findFood.ans.fAns) ) {
+			sOutString = sOut_FindFood;
+		}
 		
+		SendOutStringToWaspCore();
+	}
+	
+	void SendOutStringToWaspCore() {
+		//Debug.Log(sOutString);
+		wCore.SendMessage("SetMindOutString", sOutString, SendMessageOptions.DontRequireReceiver);
 	}
 	
 	/*Act
