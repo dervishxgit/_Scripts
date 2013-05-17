@@ -5,6 +5,8 @@ public class Waypoint_Behavior : MonoBehaviour {
 	
 	public Datacore dCore;
 	
+
+	
 	// Use this for initialization
 	void Awake () {
 		dCore = GameObject.FindGameObjectWithTag("CORE").GetComponent<Datacore>() as Datacore;
@@ -25,4 +27,6 @@ public class Waypoint_Behavior : MonoBehaviour {
 		dCore._RemoveWaypoint(gameObject.transform);
 		Destroy(gameObject, 1);
 	}
+	
+	
 }
