@@ -178,6 +178,7 @@ public class Wasp_Core : MonoBehaviour
 		//test of chemo transmit
 		waspChemoTransmitter._SpawnChemoBehavior(chemoBehaviorPrefab, new Chemo_(), Color.blue, 10.0f);
 		
+		wController.MoveState = "Flying";
 		
 	}
 	
@@ -200,7 +201,7 @@ public class Wasp_Core : MonoBehaviour
 		//test of propogation to controller
 		if(stateOfMind == "FindFood") {
 			//wController.ControllerState = 2;
-			wController.MoveState = "Flying";
+			//
 		} else {
 			//wController.ControllerState = 0;
 		}

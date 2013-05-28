@@ -60,6 +60,7 @@ public class Wasp_Controller : MonoBehaviour {
 	const string stateMoveHovering = "Hovering";
 	const string stateMoveLanding = "Landing";
 	
+	bool bLanded = false, bLanding = false;
 	
 	
 	// Use this for initialization
@@ -159,7 +160,6 @@ public class Wasp_Controller : MonoBehaviour {
 					wCore.destinationNext = wCore.myHive.transform;
 				}
 				
-			
 				ControllerState = stateControllerMoving;
 			}
 			
@@ -177,8 +177,23 @@ public class Wasp_Controller : MonoBehaviour {
 			case "Standing":
 				break;
 			case "TakeOff":
+				Debug.Log("takeoff hit");
+				MoveState = stateMoveFlying;
+				ControllerState = stateControllerSeeking;
 				break;
 			case "Landing":
+				//StartCoroutine(_LandOnTarget(this.wCore, this.wCore.destinationNext));
+				Debug.Log("landing hit");
+				bool bFinished = _LandOnTarget(this.wCore, this.wCore.destinationNext);
+				if(bFinished) {
+					MoveState = stateMoveTakeOff;
+				}
+//				if(!bLanded && !bLanding) {
+//					StartCoroutine(_LandOnTarget_CO(this.wCore, this.wCore.destinationNext) );
+//				} else {
+//					MoveState = stateMoveTakeOff;
+//				}
+				
 				break;
 			case "Walking":
 				break;
@@ -204,8 +219,11 @@ public class Wasp_Controller : MonoBehaviour {
 					2.0f, bUseTimeScaleForMovement ) ;
 				//temp force state change
 				if(reached) {
-					wCore.destinationNext.transform.root.gameObject.BroadcastMessage("tempEat", SendMessageOptions.DontRequireReceiver);
+					Debug.Log("reached");
+					//wCore.destinationNext.transform.root.gameObject.BroadcastMessage("tempEat", SendMessageOptions.DontRequireReceiver);
+					MoveState = stateMoveLanding;
 					ControllerState = stateControllerSeeking;
+					
 				}
 					
 				break;
@@ -229,64 +247,105 @@ public class Wasp_Controller : MonoBehaviour {
 	}
 	
 	//Movement Functions
-//	bool _CheckFacing(Transform target) {
-//		//takes target, assigns it to current fuzzytarget and outputs values
-//		bool facing = false;
-//		this.FT.trans = target;
-//		facing = _CheckFacing(this.FT);		
-//		return facing;
-//	}
-//	
-//	bool _CheckFacing(FuzzyTarget target) {
-//		
-//		bool facing = false;
-//		
-//		AICORE._GetSpatialAwareness3D(waspRoot.transform,
-//			target.trans, out target.distance,
-//			out target.BehindMe, out target.InFrontMe,
-//			out target.LeftMe, out target.RightMe,
-//			out target.AboveMe, out target.BelowMe);
-//		
-//		//this.FT = target;
-//		if (target.InFrontMe > fForwardThreshold) {facing = true;}
-//		
-//		return facing;
-//	}
-//	
-//	public bool _ReachedTarget(Transform target) {
-//		if(AICORE._GetTargetDistance(waspRoot, target.gameObject) < fTargetDistanceThreshold) {
-//			return true;
-//		} else return false;
-//	}
-//	
-//	void _MoveTo(Transform target) {
-//		//simple move
-//		if(!_ReachedTarget(target) ) {
-//			Debug.Log("should be trying to reach");
-//			Datacore._MoveForward(waspRoot, Time.deltaTime * fForwardMovementSpeed);
-//
-//		} else {
-//			Debug.Log("should set new");
-//		}
-//	}
-//	
-//	void _Face(FuzzyTarget target) {
-//		//this version depends on having a fuzzy target
-//		
-//		if(target.RightMe > target.LeftMe)
-//		{Datacore._Yaw(waspRoot, target.RightMe * Time.deltaTime * fRotationRate);}
-//		else if( target.RightMe < target.LeftMe)
-//		{Datacore._Yaw(waspRoot, -target.LeftMe * Time.deltaTime * fRotationRate);}
-//		
-//		_ElevateTo(target.trans);
-//		
-//		
-//	}
-//	
-//	void _ElevateTo(Transform target) {
-//		float targetY = target.transform.position.y;
-//		float to  = AICORE._IsItMax(-1 * (waspRoot.transform.position.y - targetY), 0.1f, 5.0f);
-//		Datacore._MoveUp(waspRoot, to * Time.deltaTime * fForwardMovementSpeed);
-//	}
+	
+	//Landing and Takeoff
+	public static float fLandDistance, fTakeOffDistance, fLandSpeed, fTakeOffSpeed;
+	public static float fUpVectorDotTolerance = 0.8f;
+	public static float fDelayAfterLand = 1.0f;
+	
+		public static bool _LandOnTarget(Wasp_Core wasp, Transform target) {
+		//check and set landing target
+		bool bFinished = false;
+		if(wasp != null && target != null) {
+			//can we ask for the best triangle and land on that?
+			Vector3 closestnorm;
+			Mesh mesh = target.root.GetComponent<MeshFilter>().mesh;
+			Vector3[] normals = mesh.normals;
+			//get most upright normal
+			int i = 0;
+			Vector3 oldnorm = new Vector3(0.0f,0.0f,0.0f), newnorm;
+			closestnorm = oldnorm;
+//			while( i < normals.Length) {
+//				newnorm = normals[i];
+//				if(Vector3.Dot(newnorm, Vector3.up) > fUpVectorDotTolerance){
+//					if( Vector3.Dot(newnorm, Vector3.up) > Vector3.Dot(oldnorm, Vector3.up) ) {
+//						oldnorm = newnorm;
+//						closestnorm = newnorm;
+//					}
+//				}
+//			}
+			
+			//approach location and orient to normal
+			FuzzyTarget landingTarget = new FuzzyTarget();
+			landingTarget.trans = target;
+			landingTarget.gObject = target.gameObject;
+			
+			if( !Datacore._SeekTarget3D(wasp, landingTarget.trans.position, fLandSpeed, true) ) {
+				bFinished = false;
+			}
+			//yield return new WaitForSeconds(fDelayAfterLand);
+			bFinished = true;
+			return bFinished;
+			
+		} else {
+			Debug.Log("wasp could not begin landing operation: " + wasp.ToString() + "+target: " + target.ToString());
+			//yield return null;
+			return false;
+		}
+		
+		
+		//final descent and stop
+		
+	}
+	
+	public static IEnumerator _LandOnTarget_CO(Wasp_Core wasp, Transform target) {
+		//check and set landing target
+		//bFinished = false;
+		wasp.wController.bLanding = true;
+		if(wasp != null && target != null) {
+			//can we ask for the best triangle and land on that?
+			Vector3 closestnorm;
+			Mesh mesh = target.root.GetComponent<MeshFilter>().mesh;
+			Vector3[] normals = mesh.normals;
+			//get most upright normal
+			int i = 0;
+			Vector3 oldnorm = new Vector3(0.0f,0.0f,0.0f), newnorm;
+			closestnorm = oldnorm;
+			while( i < normals.Length) {
+				newnorm = normals[i];
+				if(Vector3.Dot(newnorm, Vector3.up) > fUpVectorDotTolerance){
+					if( Vector3.Dot(newnorm, Vector3.up) > Vector3.Dot(oldnorm, Vector3.up) ) {
+						oldnorm = newnorm;
+						closestnorm = newnorm;
+					}
+				}
+			}
+			
+			//approach location and orient to normal
+			FuzzyTarget landingTarget = new FuzzyTarget();
+			landingTarget.trans = target;
+			landingTarget.gObject = target.gameObject;
+			
+			if( !Datacore._SeekTarget3D(wasp, landingTarget.trans.position, fLandSpeed, true) ) {
+				//bFinished = false;
+			}
+			yield return new WaitForSeconds(fDelayAfterLand);
+			wasp.wController.bLanded = true;
+			
+			
+		} else {
+			Debug.Log("wasp could not begin landing operation: " + wasp.ToString() + "+target: " + target.ToString());
+			yield return null;
+		}
+		
+		
+		//final descent and stop
+		
+	}
+	
+	public static void _TakeOff(Wasp_Core wasp) {
+		
+	}
+
 	
 }

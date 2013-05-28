@@ -176,10 +176,6 @@ public class Wasp_VirtualMind : MonoBehaviour {
 		float[] tempcon01 = new float[2];
 		tempcon01[0] = wasp.shouldIFindFood.aConditions[0]._FuzzOutMax();
 		tempcon01[1] = wasp.shouldIFindFood.aConditions[1]._FuzzOutMin();
-//		Debug.Log(shouldIFindFood.aConditions[1].min);
-//		Debug.Log(shouldIFindFood.aConditions[1].max);
-//		Debug.Log(shouldIFindFood.aConditions[1].fValue);
-//		Debug.Log(shouldIFindFood.aConditions[1]._FuzzOutMin());
 		//Debug.Log(tempcon01[1]);
 		float answer01TimeEnergy = Question_._AnswerQuestion_f(Wasp_VirtualMind.waspRoleBasic.bmFindFood_Time_Energy(),
 			tempcon01);
