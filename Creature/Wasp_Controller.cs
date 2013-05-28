@@ -177,13 +177,13 @@ public class Wasp_Controller : MonoBehaviour {
 			case "Standing":
 				break;
 			case "TakeOff":
-				Debug.Log("takeoff hit");
+				//Debug.Log("takeoff hit");
 				MoveState = stateMoveFlying;
 				ControllerState = stateControllerSeeking;
 				break;
 			case "Landing":
 				//StartCoroutine(_LandOnTarget(this.wCore, this.wCore.destinationNext));
-				Debug.Log("landing hit");
+				//Debug.Log("landing hit");
 				bool bFinished = _LandOnTarget(this.wCore, this.wCore.destinationNext);
 				if(bFinished) {
 					MoveState = stateMoveTakeOff;
@@ -219,7 +219,7 @@ public class Wasp_Controller : MonoBehaviour {
 					2.0f, bUseTimeScaleForMovement ) ;
 				//temp force state change
 				if(reached) {
-					Debug.Log("reached");
+					//Debug.Log("reached");
 					//wCore.destinationNext.transform.root.gameObject.BroadcastMessage("tempEat", SendMessageOptions.DontRequireReceiver);
 					MoveState = stateMoveLanding;
 					ControllerState = stateControllerSeeking;
