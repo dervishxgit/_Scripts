@@ -59,8 +59,8 @@ public class Wasp_Core : MonoBehaviour
 	//TimeOfDay(real)
 	float fCurrentTimeHours = 0.0f,
 	fStartDayHours = 0.0f, //dawn
-	//fEndDayHours = 16.0f;  //dusk
-	fEndDayHours = 1.0f;
+	fEndDayHours = 16.0f;  //dusk
+	//fEndDayHours = 1.0f;
 	public static string
 		_cTimeOfDayString = "TimeOfDay";
 	
