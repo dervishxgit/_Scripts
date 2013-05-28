@@ -41,10 +41,10 @@ public class Wasp_VirtualMind : MonoBehaviour {
 	string sOutString = "none";
 	const string sOut_FindFood = "FindFood";
 	
-	public List<Recommendation_> lRecommendations = new List<Recommendation_>();
-	Recommendation_ findFood = new Recommendation_();
-	
-	Question_ shouldIFindFood; //use answer to inform recommendation
+//	public List<Recommendation_> lRecommendations = new List<Recommendation_>();
+//	public Recommendation_ findFood = new Recommendation_();
+//	
+//	Question_ shouldIFindFood; //use answer to inform recommendation
 	
 	// Use this for initialization
 	void Start () {
@@ -54,8 +54,8 @@ public class Wasp_VirtualMind : MonoBehaviour {
 		
 		//BuildConditions();
 		
-		BuildQuestions();
-		BuildRecommendations();
+		BuildQuestions(this.wCore);
+		BuildRecommendations(this.wCore);
 	}
 	
 	// Update is called once per frame
@@ -109,56 +109,49 @@ public class Wasp_VirtualMind : MonoBehaviour {
 		BeginContemplate();
 		yield return null;
 		//StartCoroutine(RunMindController());
-		RunMindController();
+		RunMindController(this);
 		yield return null;
 		EndContemplate();
 	}
 	
 	void BeginContemplate() {
 		_bContemplating = true;
-		GetRecommendations();
+		GetRecommendations(this.wCore);
 	}
 	
-	void BuildQuestions() {
+	void BuildQuestions(Wasp_Core wasp) {
 		//Food
-		shouldIFindFood = new Question_();
+		wasp.shouldIFindFood = new Question_();
 		
 		
 	}
 	
-	void BuildRecommendations() {
-//			Recommendation_ rtest = new Recommendation_();
-//		rtest.testfloat = 2;
-//		lRecommendations.Add(rtest);
+	static void BuildRecommendations(Wasp_Core wasp) {
 		
 		//FOOD
-		findFood.quest = shouldIFindFood;
-		findFood.ans = new Answer_();
-		lRecommendations.Add(findFood);
+		wasp.findFood.quest = wasp.shouldIFindFood;
+		wasp.findFood.ans = new Answer_();
+		wasp.lRecommendations.Add(wasp.findFood);
 		
 		//answer food question
 		//compute anser for time and energy
-		shouldIFindFood.aConditions = new Condition_[2];
-		shouldIFindFood.aConditions[0] = Condition_._GetConditionByName(Wasp_Core._cEnergyString, wCore._lAllConditions);
-		shouldIFindFood.aConditions[1] = Condition_._GetConditionByName(Wasp_Core._cTimeOfDayString, wCore._lAllConditions);
+		wasp.shouldIFindFood.aConditions = new Condition_[2];
+		wasp.shouldIFindFood.aConditions[0] = Condition_._GetConditionByName(Wasp_Core._cEnergyString, wasp._lAllConditions);
+		wasp.shouldIFindFood.aConditions[1] = Condition_._GetConditionByName(Wasp_Core._cTimeOfDayString, wasp._lAllConditions);
 		float[] tempcon01 = new float[2];
-		tempcon01[0] = shouldIFindFood.aConditions[0]._FuzzOutMax();
-		tempcon01[1] = shouldIFindFood.aConditions[1]._FuzzOutMin();
-//		Debug.Log(shouldIFindFood.aConditions[1].min);
-//		Debug.Log(shouldIFindFood.aConditions[1].max);
-//		Debug.Log(shouldIFindFood.aConditions[1].fValue);
-//		Debug.Log(shouldIFindFood.aConditions[1]._FuzzOutMin());
+		tempcon01[0] = wasp.shouldIFindFood.aConditions[0]._FuzzOutMax();
+		tempcon01[1] = wasp.shouldIFindFood.aConditions[1]._FuzzOutMin();
 		float answer01TimeEnergy = Question_._AnswerQuestion_f(Wasp_VirtualMind.waspRoleBasic.bmFindFood_Time_Energy(),
 			tempcon01);
 		//Debug.Log(answer01TimeEnergy);
 		
 		//compute answer for hivefood and hunger
-		shouldIFindFood.aConditions = new Condition_[2];
-		shouldIFindFood.aConditions[1] = Condition_._GetConditionByName(Wasp_Core._cHiveFoodString, wCore._lAllConditions);
-		shouldIFindFood.aConditions[0] = Condition_._GetConditionByName(Wasp_Core._cHungerString, wCore._lAllConditions);
+		wasp.shouldIFindFood.aConditions = new Condition_[2];
+		wasp.shouldIFindFood.aConditions[1] = Condition_._GetConditionByName(Wasp_Core._cHiveFoodString, wasp._lAllConditions);
+		wasp.shouldIFindFood.aConditions[0] = Condition_._GetConditionByName(Wasp_Core._cHungerString, wasp._lAllConditions);
 		float[] tempcon02 = new float[2];
-		tempcon02[1] = shouldIFindFood.aConditions[1]._FuzzOutMax();
-		tempcon02[0] = shouldIFindFood.aConditions[0]._FuzzOutMax();
+		tempcon02[1] = wasp.shouldIFindFood.aConditions[1]._FuzzOutMax();
+		tempcon02[0] = wasp.shouldIFindFood.aConditions[0]._FuzzOutMax();
 		float answer02HiveFoodHunger = Question_._AnswerQuestion_f(waspRoleBasic.bmFindFood_HiveFood_Hunger(),
 			tempcon02);
 		//Debug.Log(answer02HiveFoodHunger);
@@ -167,22 +160,22 @@ public class Wasp_VirtualMind : MonoBehaviour {
 		float[] tempcon03 = new float[2];
 		tempcon03[1] = answer02HiveFoodHunger;
 		tempcon03[0] = answer01TimeEnergy;
-		findFood.ans.fAns = Question_._AnswerQuestion_f(waspRoleBasic.bmFindFoodFinal_HiveFoodHunger_TimeEnergy(),
+		wasp.findFood.ans.fAns = Question_._AnswerQuestion_f(waspRoleBasic.bmFindFoodFinal_HiveFoodHunger_TimeEnergy(),
 			tempcon03);
 		//Debug.Log(findFood.ans.fAns);
 	}
 	
-	void GetRecommendations() {
+	void GetRecommendations(Wasp_Core wasp) {
 		//Food
 		//crude and inefficient recompute
 		//answer food question
 		//compute anser for time and energy
-		shouldIFindFood.aConditions = new Condition_[2];
-		shouldIFindFood.aConditions[0] = Condition_._GetConditionByName(Wasp_Core._cEnergyString, wCore._lAllConditions);
-		shouldIFindFood.aConditions[1] = Condition_._GetConditionByName(Wasp_Core._cTimeOfDayString, wCore._lAllConditions);
+		wasp.shouldIFindFood.aConditions = new Condition_[2];
+		wasp.shouldIFindFood.aConditions[0] = Condition_._GetConditionByName(Wasp_Core._cEnergyString, wasp._lAllConditions);
+		wasp.shouldIFindFood.aConditions[1] = Condition_._GetConditionByName(Wasp_Core._cTimeOfDayString, wasp._lAllConditions);
 		float[] tempcon01 = new float[2];
-		tempcon01[0] = shouldIFindFood.aConditions[0]._FuzzOutMax();
-		tempcon01[1] = shouldIFindFood.aConditions[1]._FuzzOutMin();
+		tempcon01[0] = wasp.shouldIFindFood.aConditions[0]._FuzzOutMax();
+		tempcon01[1] = wasp.shouldIFindFood.aConditions[1]._FuzzOutMin();
 //		Debug.Log(shouldIFindFood.aConditions[1].min);
 //		Debug.Log(shouldIFindFood.aConditions[1].max);
 //		Debug.Log(shouldIFindFood.aConditions[1].fValue);
@@ -193,12 +186,12 @@ public class Wasp_VirtualMind : MonoBehaviour {
 		//Debug.Log(answer01TimeEnergy);
 		
 		//compute answer for hivefood and hunger
-		shouldIFindFood.aConditions = new Condition_[2];
-		shouldIFindFood.aConditions[1] = Condition_._GetConditionByName(Wasp_Core._cHiveFoodString, wCore._lAllConditions);
-		shouldIFindFood.aConditions[0] = Condition_._GetConditionByName(Wasp_Core._cHungerString, wCore._lAllConditions);
+		wasp.shouldIFindFood.aConditions = new Condition_[2];
+		wasp.shouldIFindFood.aConditions[1] = Condition_._GetConditionByName(Wasp_Core._cHiveFoodString, wasp._lAllConditions);
+		wasp.shouldIFindFood.aConditions[0] = Condition_._GetConditionByName(Wasp_Core._cHungerString, wasp._lAllConditions);
 		float[] tempcon02 = new float[2];
-		tempcon02[1] = shouldIFindFood.aConditions[1]._FuzzOutMax();
-		tempcon02[0] = shouldIFindFood.aConditions[0]._FuzzOutMax();
+		tempcon02[1] = wasp.shouldIFindFood.aConditions[1]._FuzzOutMax();
+		tempcon02[0] = wasp.shouldIFindFood.aConditions[0]._FuzzOutMax();
 		float answer02HiveFoodHunger = Question_._AnswerQuestion_f(waspRoleBasic.bmFindFood_HiveFood_Hunger(),
 			tempcon02);
 		//Debug.Log(answer02HiveFoodHunger);
@@ -207,7 +200,7 @@ public class Wasp_VirtualMind : MonoBehaviour {
 		float[] tempcon03 = new float[2];
 		tempcon03[1] = answer02HiveFoodHunger;
 		tempcon03[0] = answer01TimeEnergy;
-		findFood.ans.fAns = Question_._AnswerQuestion_f(waspRoleBasic.bmFindFoodFinal_HiveFoodHunger_TimeEnergy(),
+		wasp.findFood.ans.fAns = Question_._AnswerQuestion_f(waspRoleBasic.bmFindFoodFinal_HiveFoodHunger_TimeEnergy(),
 			tempcon03);
 		//Debug.Log(findFood.ans.fAns);
 	}
@@ -221,15 +214,15 @@ public class Wasp_VirtualMind : MonoBehaviour {
 		yield return null;
 	}
 	
-	void RunMindController() {
-		if( AICORE._RandomProbability(findFood.ans.fAns) ) {
-			sOutString = sOut_FindFood;
+	static void RunMindController(Wasp_VirtualMind mind) {
+		if( AICORE._RandomProbability(mind.wCore.findFood.ans.fAns) ) {
+			mind.sOutString = sOut_FindFood;
 		} else {
 			//set null for now
-			sOutString = "none";
+			mind.sOutString = "none";
 		}
 		
-		SendOutStringToWaspCore();
+		mind.SendOutStringToWaspCore();
 	}
 	
 	void SendOutStringToWaspCore() {

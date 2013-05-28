@@ -107,6 +107,11 @@ public class Wasp_Core : MonoBehaviour
 		currentColor = c;
 	}
 	
+	public List<Recommendation_> lRecommendations = new List<Recommendation_>();
+	public Recommendation_ findFood = new Recommendation_();
+	
+	public Question_ shouldIFindFood; //use answer to inform recommendation
+	
 	//External
 	//ChemoSense
 	
