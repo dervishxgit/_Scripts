@@ -18,11 +18,11 @@ public class UserMotorBehaviour : MonoBehaviour {
 	void Update () {
 		if ( Input.GetButton("Shift") ) {
 			Datacore.fUserControlMult += Datacore.fUserControlMultStep * Time.deltaTime;
-			Debug.Log(Datacore.fUserControlMult);
+//			Debug.Log(Datacore.fUserControlMult);
 		} else {
 			
 			Datacore.fUserControlMult = 1.0f;
-			Debug.Log (Datacore.fUserControlMult);
+//			Debug.Log (Datacore.fUserControlMult);
 		}
 		
 		zspeed = Datacore.fUserControlNavZ * Input.GetAxis("NavZ")* Datacore.fUserControlMult * Time.deltaTime;

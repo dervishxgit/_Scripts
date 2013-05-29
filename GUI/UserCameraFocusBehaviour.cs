@@ -16,17 +16,19 @@ public class UserCameraFocusBehaviour : MonoBehaviour {
 		
 		if(Datacore.goFocusTarget != null) {
 			//make my focus and track
-			Datacore._SetMouseLookState(Datacore.stateMouseOrbit);
+			
 			if( Input.GetButton("AddFocus") ) {
+				Datacore._SetMouseLookState(Datacore.stateMouseOrbit);
 				Vector3 vCamToTarget = Datacore.goFocusTarget.transform.position - gameObject.transform.root.position;
 				vCamToTarget *= Datacore.fFocusDistanceMult;
 				transform.Translate(vCamToTarget);
-			} else if( Input.GetButton("RemoveFocus") ) {
+			} else if( Input.GetButtonDown("RemoveFocus") ) {
 				Datacore._UnFocusTarget();
+				Datacore._SetMouseLookState(Datacore.stateMouseLook);
 			}
 			
 		} else {
-			Datacore._SetMouseLookState(Datacore.stateMouseLook);
+			//Datacore._SetMouseLookState(Datacore.stateMouseLook);
 			return;
 		}
 		

@@ -13,7 +13,7 @@ public class Datacore : MonoBehaviour
 	Condition_ con02;
 	
 	//Major Settings
-	public bool bDisplayAllMenus = false;
+	public static bool bDisplayAllMenus = false;
 	public float fWorldTimeScale = 1.0f;
 	
 	//Level list
@@ -30,6 +30,8 @@ public class Datacore : MonoBehaviour
 	static int stateMouse = 0;
 	public const int stateMouseLook = 0;
 	public const int stateMouseOrbit = 1;
+	public const int stateMouseMenu = 2;
+	static int stateMouseLast;
 	
 	public static int _GetMouseLookState() {
 		return stateMouse;
@@ -43,10 +45,17 @@ public class Datacore : MonoBehaviour
 		case 1:
 			stateMouse = stateMouseOrbit;
 			break;
+		case 2:
+			stateMouse = stateMouseMenu;
+			break;
 		default:
 			stateMouse = stateMouseLook;
 			break;
 		}
+	}
+	
+	static void _SetLastMouseState(int state){
+		stateMouseLast = state;
 	}
 	
 	//Focus for camera
@@ -123,11 +132,25 @@ public class Datacore : MonoBehaviour
 //			WorldTime._GetMinutesRM() + "m::" +
 //			WorldTime._GetSecondsRM() + "s::");
 		
+		
 	}
 	
-	void ToggleAllMenus (bool b)
+	public static void ToggleAllMenus (bool b)
 	{
 		bDisplayAllMenus = b;	
+	}
+	
+	public static void ToggleAllMenus ()
+	{
+		bDisplayAllMenus = !bDisplayAllMenus;
+		if (bDisplayAllMenus) {
+			_SetLastMouseState(stateMouse);
+			_SetMouseLookState(Datacore.stateMouseMenu);
+		} else {
+			_SetMouseLookState(stateMouseLast);
+		}
+		//_SetMouseLookState(2);
+		Debug.Log (_GetMouseLookState());
 	}
 	
 	//Levels

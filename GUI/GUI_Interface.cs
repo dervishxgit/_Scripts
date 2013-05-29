@@ -7,7 +7,7 @@ public class GUI_Interface : MonoBehaviour
 	
 	public GUISkin _myGUISkin;
 	public GUI_Core _guiCore;
-	bool bDisplayAllMenus = false;
+	//bool bDisplayAllMenus = false;
 	bool bDisplaySimMenu = false;
 	bool bDisplayConfigurationMenu = false;
 	bool bDisplayRuntimeMenu = false;
@@ -33,7 +33,8 @@ public class GUI_Interface : MonoBehaviour
 		//toggle for main menu
 		if (Input.GetButtonUp ("ToggleMainMenu")) {
 			//Debug.Log ("space");
-			bDisplayAllMenus = !bDisplayAllMenus;
+			//Datacore.bDisplayAllMenus = !Datacore.bDisplayAllMenus;
+			Datacore.ToggleAllMenus();
 		}
 		
 		
@@ -44,7 +45,10 @@ public class GUI_Interface : MonoBehaviour
 		//set custom skin
 		GUI.skin = _myGUISkin;
 		
-		if (bDisplayAllMenus) {
+		if (Datacore.bDisplayAllMenus) {
+			//test for datacore to set mousemenu
+			//Datacore._SetMouseLookState(Datacore.stateMouseMenu);
+			
 			//following are examples of fixed layout
 			
 //			//initial test

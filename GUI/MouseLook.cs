@@ -93,6 +93,10 @@ public class MouseLook : MonoBehaviour {
 			
 
 			break;
+			
+		case Datacore.stateMouseMenu:
+			
+			break;
 		}
 	}
 	

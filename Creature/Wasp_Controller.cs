@@ -258,13 +258,13 @@ public class Wasp_Controller : MonoBehaviour {
 		bool bFinished = false;
 		if(wasp != null && target != null) {
 			//can we ask for the best triangle and land on that?
-			Vector3 closestnorm;
-			Mesh mesh = target.root.GetComponent<MeshFilter>().mesh;
-			Vector3[] normals = mesh.normals;
+			//Vector3 closestnorm;
+			//Mesh mesh = target.root.GetComponent<MeshFilter>().mesh;
+			//Vector3[] normals = mesh.normals;
 			//get most upright normal
-			int i = 0;
-			Vector3 oldnorm = new Vector3(0.0f,0.0f,0.0f), newnorm;
-			closestnorm = oldnorm;
+			//int i = 0;
+			//Vector3 oldnorm = new Vector3(0.0f,0.0f,0.0f), newnorm;
+			//closestnorm = oldnorm;
 //			while( i < normals.Length) {
 //				newnorm = normals[i];
 //				if(Vector3.Dot(newnorm, Vector3.up) > fUpVectorDotTolerance){
