@@ -19,6 +19,13 @@ public class Datacore : MonoBehaviour
 	//Level list
 	public static List<string> _AllLevels_ = new List<string> ();
 	
+	//User Movement calibration
+	public static float fUserControlNavDefault = 50.0f;
+	public static float fUserControlNavZ;
+	public static float fUserControlNavX;
+	public static float fUserControlNavY;
+	
+	
 	//Wasp Movement calibration settings
 	//when ignoring timescale:
 	// 1/8
@@ -45,6 +52,11 @@ public class Datacore : MonoBehaviour
 	}
 	
 	// Use this for initialization
+	void Awake () {
+		//set user move
+		fUserControlNavX=fUserControlNavY=fUserControlNavZ=fUserControlNavDefault;
+	}
+	
 	void Start ()
 	{
 		//test levels list
