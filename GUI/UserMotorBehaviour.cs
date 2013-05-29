@@ -16,9 +16,20 @@ public class UserMotorBehaviour : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		zspeed = Datacore.fUserControlNavZ * Input.GetAxis("NavZ") * Time.deltaTime;
-		yspeed = Datacore.fUserControlNavY * Input.GetAxis("NavY") * Time.deltaTime;
-		xspeed = Datacore.fUserControlNavX * Input.GetAxis("NavX") * Time.deltaTime;
+		if ( Input.GetButton("Shift") ) {
+			Datacore.fUserControlMult += Datacore.fUserControlMultStep * Time.deltaTime;
+			Debug.Log(Datacore.fUserControlMult);
+		} else {
+			
+			Datacore.fUserControlMult = 1.0f;
+			Debug.Log (Datacore.fUserControlMult);
+		}
+		
+		zspeed = Datacore.fUserControlNavZ * Input.GetAxis("NavZ")* Datacore.fUserControlMult * Time.deltaTime;
+		yspeed = Datacore.fUserControlNavY * Input.GetAxis("NavY")* Datacore.fUserControlMult * Time.deltaTime;
+		xspeed = Datacore.fUserControlNavX * Input.GetAxis("NavX")* Datacore.fUserControlMult * Time.deltaTime;
+		
+		
 		
 		
 		

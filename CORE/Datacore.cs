@@ -24,8 +24,44 @@ public class Datacore : MonoBehaviour
 	public static float fUserControlNavZ;
 	public static float fUserControlNavX;
 	public static float fUserControlNavY;
+	public static float fUserControlMult = 1.0f;
+	public static float fUserControlMultStep = 3.0f;
 	
+	static int stateMouse = 0;
+	public const int stateMouseLook = 0;
+	public const int stateMouseOrbit = 1;
 	
+	public static int _GetMouseLookState() {
+		return stateMouse;
+	}
+	
+	public static void _SetMouseLookState(int state) {
+		switch(state) {
+		case 0:
+			stateMouse = stateMouseLook;
+			break;
+		case 1:
+			stateMouse = stateMouseOrbit;
+			break;
+		default:
+			stateMouse = stateMouseLook;
+			break;
+		}
+	}
+	
+	//Focus for camera
+	//(eventually use a list here, single target for now)
+	//public static List<GameObject> goFocusTarget = new List<GameObject>();
+	public static GameObject goFocusTarget;
+	public static float fFocusDistanceMult = 0.1f;
+	
+	public static void _SetFocusTarget(GameObject go) {
+		goFocusTarget = go;
+	}
+	
+	public static void _UnFocusTarget() {
+		goFocusTarget = null;
+	}
 	//Wasp Movement calibration settings
 	//when ignoring timescale:
 	// 1/8
