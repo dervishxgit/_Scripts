@@ -28,7 +28,7 @@ public class ResourceBasic_Behavior : MonoBehaviour {
 	}
 	
 	public void _selfDestroy() {
-		//gameObject.SendMessage("_selfDestroy");
-		Destroy(this, 1);
+		gameObject.SendMessage("_selfDestroy");
+		//Destroy(this, 1);
 	}
 }
