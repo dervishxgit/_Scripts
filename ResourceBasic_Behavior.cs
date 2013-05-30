@@ -23,8 +23,9 @@ public class ResourceBasic_Behavior : MonoBehaviour {
 	}
 	
 	public void tempEat() {
-		resourceLevel -= 0.1f;
-		if (resourceLevel <= 0) _selfDestroy();
+//		resourceLevel -= 0.1f;
+//		if (resourceLevel <= 0) _selfDestroy();
+		//_selfDestroy();
 	}
 	
 	public void _selfDestroy() {
