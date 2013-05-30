@@ -181,7 +181,24 @@ public class GUI_Interface : MonoBehaviour
 			//create bottommenu group
 			GUILayout.BeginArea (_guiCore._CreateBottomMenu ());
 			//GUILayout.Box (new GUIContent ());
+			//string[] bottomPanelGridStrings = {"Focus", "Orbit", "Goto", "LookThrough", "TakeControl"};
 			bottomPanelGridSelection = GUILayout.SelectionGrid(bottomPanelGridSelection, bottomPanelGridStrings, 3, bottomPanelLayoutOptions);  
+			switch(bottomPanelGridSelection) {
+			case 0: //Focus
+				//UserCameraFocusBehaviour._SimulateRemoveFocus();
+				break;
+			case 1:	//Orbit (not used yet)
+				
+				break;
+			case 2: //Goto (same as addfocus right now)
+				if(Datacore.goFocusTarget != null) {
+					UserCameraFocusBehaviour._SimulateAddFocus();
+				}
+				break;
+			case 5:	//
+				
+				break;
+			}
 			GUILayout.EndArea ();
 			//end bottommenu
 			
