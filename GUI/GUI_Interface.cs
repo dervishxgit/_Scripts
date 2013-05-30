@@ -114,7 +114,7 @@ public class GUI_Interface : MonoBehaviour
 				GUILayout.BeginArea (new Rect (5, 30, 600, 600));
 				GUILayout.BeginVertical (GUILayout.MaxWidth (50));
 				if (GUILayout.Button ("New")) {
-						
+					Application.LoadLevel("testEnv");	
 				}
 				if (GUILayout.Button ("Save")) {
 						
@@ -139,7 +139,7 @@ public class GUI_Interface : MonoBehaviour
 					GUILayout.EndVertical();
 				}
 				if (GUILayout.Button ("Exit")) {
-						
+					Application.Quit();	
 				}
 				GUILayout.EndVertical ();
 				GUILayout.EndArea ();

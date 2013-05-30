@@ -6,14 +6,15 @@ public class Datacore : MonoBehaviour
 {
 	//temp test section
 	//maybe we need floatwrappers on both sides
-	float ftemp01;
-	float ftemp02;
-	List<Condition_> listOfConditions = new List<Condition_> ();
-	Condition_ con01;
-	Condition_ con02;
+//	float ftemp01;
+//	float ftemp02;
+//	List<Condition_> listOfConditions = new List<Condition_> ();
+//	Condition_ con01;
+//	Condition_ con02;
 	
 	//Major Settings
 	public static bool bDisplayAllMenus = false;
+	public const string sToggleMainMenuButton = "SPACEBAR";
 	//Time
 	public static float fWorldTimeScale = 1.0f;
 	public const float fWorldTimeScaleDefault = 1.0f;

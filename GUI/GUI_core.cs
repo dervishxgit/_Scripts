@@ -3,6 +3,8 @@ using System.Collections;
 
 public class GUI_Core : MonoBehaviour {
 	
+	//changed name of file to match class, for some reason unity keeps forgetting
+	
 	//Time display
 	string seconds, minutes, hours, days, months, years;
 	
