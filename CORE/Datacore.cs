@@ -14,7 +14,24 @@ public class Datacore : MonoBehaviour
 	
 	//Major Settings
 	public static bool bDisplayAllMenus = false;
-	public float fWorldTimeScale = 1.0f;
+	//Time
+	public static float fWorldTimeScale = 1.0f;
+	public const float fWorldTimeScaleDefault = 1.0f;
+	static float fWorldTimeScaleLast = 1.0f;
+	public const float fMenuTimeScale = 0.025f;
+	
+	static void _SetTimeScale(float newscale) {
+		fWorldTimeScale = newscale;
+		UnityEngine.Time.timeScale = fWorldTimeScale;
+	}
+	
+	static void _SaveTimeScale() {
+		fWorldTimeScaleLast = fWorldTimeScale;
+	}
+	
+	static void _RestoreTimeScale() {
+		fWorldTimeScale = fWorldTimeScaleLast;
+	}
 	
 	//Level list
 	public static List<string> _AllLevels_ = new List<string> ();
@@ -142,15 +159,20 @@ public class Datacore : MonoBehaviour
 	
 	public static void ToggleAllMenus ()
 	{
+		//Toggle menu system on and off, and return to last mouse state
 		bDisplayAllMenus = !bDisplayAllMenus;
 		if (bDisplayAllMenus) {
+			//Save current timescale, Slow time to amount while menu is open
+			_SaveTimeScale();
+			_SetTimeScale(fMenuTimeScale);
+			//save mouse state and set menu state
 			_SetLastMouseState(stateMouse);
 			_SetMouseLookState(Datacore.stateMouseMenu);
 		} else {
+			_RestoreTimeScale();
 			_SetMouseLookState(stateMouseLast);
 		}
-		//_SetMouseLookState(2);
-		Debug.Log (_GetMouseLookState());
+		//Debug.Log (_GetMouseLookState());
 	}
 	
 	//Levels

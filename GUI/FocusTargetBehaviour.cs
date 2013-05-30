@@ -1,19 +1,30 @@
 using UnityEngine;
 using System.Collections;
 
-public class FocusTargetBehaviour : MonoBehaviour {
+public class FocusTargetBehaviour : MonoBehaviour
+{
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
 	
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
 	
 	}
 	
-	void OnMouseDown() {
-		Datacore._SetFocusTarget(gameObject);
+	void OnMouseDown ()
+	{
+		if (gameObject.layer.ToString() == "Wasp") {
+			//if wasp, make sure we get the root
+			Debug.Log ("clicked wasp");
+			Datacore._SetFocusTarget (gameObject.transform.root.gameObject);
+		} else {
+			Debug.Log ("clicked focus object");
+			Datacore._SetFocusTarget (gameObject);
+		}
 	}
 }
