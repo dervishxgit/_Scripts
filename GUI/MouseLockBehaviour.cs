@@ -3,11 +3,11 @@ using System.Collections;
 
 public class MouseLockBehaviour : MonoBehaviour {
     void DidLockCursor() {
-        Debug.Log("Locking cursor");
+        //Debug.Log("Locking cursor");
         //guiTexture.enabled = false;
     }
     void DidUnlockCursor() {
-        Debug.Log("Unlocking cursor");
+        //Debug.Log("Unlocking cursor");
         //guiTexture.enabled = true;
     }
     void OnMouseDown() {
@@ -20,10 +20,10 @@ public class MouseLockBehaviour : MonoBehaviour {
         
 		if(Datacore.bDisplayAllMenus && wasLocked) {
 			Screen.lockCursor = false;
-			Debug.Log("unlocked mouse cursor");
+			//Debug.Log("unlocked mouse cursor");
 		} else if (!Datacore.bDisplayAllMenus && !wasLocked) {
 			Screen.lockCursor = true;
-			Debug.Log("locked mouse cursor");
+			//Debug.Log("locked mouse cursor");
 		}
 		
         if (!Screen.lockCursor && wasLocked) {
