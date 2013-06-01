@@ -34,6 +34,26 @@ public class Datacore : MonoBehaviour
 		fWorldTimeScale = fWorldTimeScaleLast;
 	}
 	
+	//World(?)
+	static Transform _WorldTransform;
+//	static Transform _GetWorldTransform () {
+//		Transform rtrans;
+//		rtrans.up = Vector3.up;
+//		rtrans.right = Vector3.right;
+//		rtrans.forward = Vector3.forward;
+//		
+//		return rtrans;
+//	}
+	
+	static Vector3 _GetWorldVector3() {
+		Vector3 rvec;
+		rvec.up = Vector3.up;
+		rvec.forward = Vector3.forward;
+		rvec.right = Vector3.right;
+		
+		return rvec;
+	}
+	
 	//Level list
 	public static List<string> _AllLevels_ = new List<string> ();
 	
@@ -461,7 +481,12 @@ public class Datacore : MonoBehaviour
 	}
 	
 	// _SeekTarget3D : Seeks out the indicated target and returns true when reached (adjusted from original version below, uses settings supplied above)
-	static public bool _SeekTarget3D (Component bot, Vector3 target, float fMaxVelocity, bool bUseTimeScale)
+	/*
+	 * notes: considering adding parameters to function:
+	 * 		-min/max distance to seek
+	 * 		-roll boolean (orient to world up?)
+	 */ 
+	static public bool _SeekTarget3D (Component bot, Vector3 target, float fMaxVelocity, bool bOrientToWorldUp, bool bUseTimeScale)
 	{
 		float fTargetDistance;
 		float zIsTargetBehindMe, zIsTargetInFrontOfMe, zIsTargetToMyLeft, zIsTargetToMyRight, zIsTargetAboveMe, zIsTargetBelowMe;
@@ -469,6 +494,21 @@ public class Datacore : MonoBehaviour
 			out zIsTargetBehindMe, out zIsTargetInFrontOfMe, 
 			out zIsTargetToMyLeft, out zIsTargetToMyRight, 
 			out zIsTargetAboveMe, out zIsTargetBelowMe);
+		
+//		public static void _GetOrientationAwareness3D(
+//		Component source, Component target,
+//		out float zSameForward, out bool bRollRight,
+//		out float zSameRight, out bool bPitchUp,
+//		out float zSameUp, out bool bYawRight
+//		)
+		
+		//For orientation (if needed)
+		float zSameForward, zSameRight, zSameUp;
+		bool bRollRight, bPitchUp, bYawRight;
+		AICORE._GetOrientationAwareness3D( bot, UnityEngine.Transform, out zSameForward, out bRollRight,
+			out zSameRight, out bPitchUp, out zSameUp, out bYawRight);
+		
+		
 		
 		// Detect whether TARGET is sufficiently in front
 		if (zIsTargetInFrontOfMe > 0.99) {
@@ -569,7 +609,8 @@ public class Datacore : MonoBehaviour
 		if (fMaxVelocity > 0.0f) {
 			// Only drive forward when facing nearly toward target	
 			if (zIsTargetInFrontOfMe > 0.7) {
-				// Only drive forward if we're far enough from target
+				// Only drive forward if we're far enough from target,
+				//roll if applicable
 				if (fTargetDistance >= 1.00f) {
 					if(bUseTimeScale) {
 						float fVelocity = AICORE._Defuzzify (zIsTargetInFrontOfMe, 0.0f, fVelocity_useTime);
