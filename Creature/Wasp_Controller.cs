@@ -62,7 +62,7 @@ public class Wasp_Controller : MonoBehaviour {
 	
 	bool bLanded = false, bLanding = false;
 	
-	bool bGoToNext = false;
+	bool bGoToNext = true;
 	public void _SetGoToNext(bool go) {
 		bGoToNext = go;
 	}
@@ -168,7 +168,7 @@ public class Wasp_Controller : MonoBehaviour {
 //			}
 			
 			if(wCore.destinationNext != null && bGoToNext) {
-				
+				ControllerState = stateControllerMoving;
 			}
 			
 			
