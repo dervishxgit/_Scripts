@@ -328,7 +328,8 @@ public class Wasp_Controller : MonoBehaviour {
 			landingTarget.trans = target;
 			landingTarget.gObject = target.gameObject;
 			
-			if( !Datacore._SeekTarget3D(wasp, landingTarget.trans.position, fLandSpeed, wasp.wController.bWaspOrientToWorldUp, wasp.wController.bUseTimeScaleForMovement) ) {
+			if( !Datacore._SeekTarget3D(wasp, landingTarget.trans.position, fLandSpeed, 
+				wasp.wController.bWaspOrientToWorldUp, wasp.wController.bUseTimeScaleForMovement) ) {
 				//bFinished = false;
 			}
 			yield return new WaitForSeconds(fDelayAfterLand);
