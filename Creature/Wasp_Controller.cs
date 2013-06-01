@@ -39,7 +39,7 @@ public class Wasp_Controller : MonoBehaviour {
 	public FuzzyTarget FT;
 	
 	//Settings: Movement, Rotation, Thresholds
-	public bool bWaspOrientToWorldUp = false;
+	public bool bWaspOrientToWorldUp = true;
 	
 	public bool bUseTimeScaleForMovement = true;
 //	public float fMoveRate = 1.0f;
