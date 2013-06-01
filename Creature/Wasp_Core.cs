@@ -202,7 +202,7 @@ public class Wasp_Core : MonoBehaviour
 		//test of propogation to controller
 		if(stateOfMind == "FindFood") {
 			//wController.ControllerState = 2;
-			//
+			wController._SetGoToNext(true);
 		} else {
 			//wController.ControllerState = 0;
 		}
@@ -245,6 +245,19 @@ public class Wasp_Core : MonoBehaviour
 	public void _GetNextRandomWaypoint ()
 	{
 		destinationNext = _ReturnRandomKnownWaypoint ();
+	}
+	
+	public void _NotifyReachedTarget(bool reached) {
+		//when we reached the target, ask for a new target
+		Debug.Log("notify reached target");
+		//for now, test for at hive, get next random if so
+		if( _AtHive(myHive) ) {
+			Debug.Log("notify reached target set next random");
+			_GetNextRandomWaypoint();
+		} else {
+			Debug.Log("notify reached target set next hive");
+			_SetDestinationNext(myHive.transform);
+		} 
 	}
 	
 	public void _JoinHive(Hive_ hive) {

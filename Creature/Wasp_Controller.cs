@@ -62,7 +62,8 @@ public class Wasp_Controller : MonoBehaviour {
 	
 	bool bLanded = false, bLanding = false;
 	
-	bool bGoToNext = true;
+	public bool bAtTarget = false;
+	bool bGoToNext = false;
 	public void _SetGoToNext(bool go) {
 		bGoToNext = go;
 	}
@@ -167,9 +168,9 @@ public class Wasp_Controller : MonoBehaviour {
 //				ControllerState = stateControllerMoving;
 //			}
 			
-			if(wCore.destinationNext != null && bGoToNext) {
-				ControllerState = stateControllerMoving;
-			}
+//			if(wCore.destinationNext != null && bGoToNext) {
+//				ControllerState = stateControllerMoving;
+//			}
 			
 			
 			return;
@@ -186,16 +187,16 @@ public class Wasp_Controller : MonoBehaviour {
 				break;
 			case "TakeOff":
 				//Debug.Log("takeoff hit");
-				MoveState = stateMoveFlying;
-				ControllerState = stateControllerSeeking;
+//				MoveState = stateMoveFlying;
+//				ControllerState = stateControllerSeeking;
 				break;
 			case "Landing":
 				//StartCoroutine(_LandOnTarget(this.wCore, this.wCore.destinationNext));
 				//Debug.Log("landing hit");
-				bool bFinished = _LandOnTarget(this.wCore, this.wCore.destinationNext);
-				if(bFinished) {
-					MoveState = stateMoveTakeOff;
-				}
+//				bool bFinished = _LandOnTarget(this.wCore, this.wCore.destinationNext);
+//				if(bFinished) {
+//					MoveState = stateMoveTakeOff;
+//				}
 //				if(!bLanded && !bLanding) {
 //					StartCoroutine(_LandOnTarget_CO(this.wCore, this.wCore.destinationNext) );
 //				} else {
@@ -223,14 +224,16 @@ public class Wasp_Controller : MonoBehaviour {
 //				}
 				
 				//new test
-				bool reached = Datacore._SeekTarget3D( this, wCore.destinationNext.position, 
+				bAtTarget = Datacore._SeekTarget3D( this, wCore.destinationNext.position, 
 					2.0f, bUseTimeScaleForMovement ) ;
 				//temp force state change
-				if(reached) {
+				if(bAtTarget) {
 					//Debug.Log("reached");
 					wCore.destinationNext.transform.root.gameObject.BroadcastMessage("tempEat", SendMessageOptions.DontRequireReceiver);
+					wCore.SendMessage("_NotifyReachedTarget", true, SendMessageOptions.DontRequireReceiver);
 					//MoveState = stateMoveLanding;
-					ControllerState = stateControllerSeeking;
+					Debug.Log("wasp at target");
+					//ControllerState = stateControllerSeeking;
 					
 				}
 					
@@ -247,6 +250,20 @@ public class Wasp_Controller : MonoBehaviour {
 //		} else if( _CheckValidWaypoint(wCore.destinationNext) ) {
 //			ControllerState = stateControllerMoving;
 //		}
+		switch(ControllerState) {
+		case stateControllerSeeking:
+			if(wCore.destinationNext != null && bGoToNext) {
+				Debug.Log("controller should go to next state");
+				ControllerState = stateControllerMoving;
+			}
+			break;
+		case stateControllerMoving:
+			if(bGoToNext) {
+				
+			} else if(bAtTarget) ControllerState = stateControllerSeeking;
+			break;
+		}
+		
 	}
 	
 	//state functions

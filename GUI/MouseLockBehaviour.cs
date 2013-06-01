@@ -20,10 +20,10 @@ public class MouseLockBehaviour : MonoBehaviour {
         
 		if(Datacore.bDisplayAllMenus && wasLocked) {
 			Screen.lockCursor = false;
-			Debug.Log("unlocked mouse cursor");
+//			Debug.Log("unlocked mouse cursor");
 		} else if (!Datacore.bDisplayAllMenus && !wasLocked) {
 			Screen.lockCursor = true;
-			Debug.Log("locked mouse cursor");
+//			Debug.Log("locked mouse cursor");
 		}
 		
         if (!Screen.lockCursor && wasLocked) {
