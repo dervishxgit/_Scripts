@@ -179,12 +179,7 @@ public class AICORE : MonoBehaviour {
 		// Answer the question: Is it best to yaw rightward?
 		float dot4 = Vector3.Dot(s_fwd, t_rgt);
 		bYawRight = dot4 < 0.0f;
-		
-		//Should I roll?
-		float dot5 = Vector3.Dot(s_up, t_rgt);
-		bRollRight = dot5 < 0.0f;
 	}
-	
 
 	// _GetSpatialAwareness3D : Answers the fuzzy questions "Is target in front?" and
 	// all other directions (back, right, left). Also returns distance to target.
