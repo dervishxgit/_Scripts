@@ -221,7 +221,7 @@ public class Wasp_Controller : MonoBehaviour {
 				if(reached) {
 					//Debug.Log("reached");
 					wCore.destinationNext.transform.root.gameObject.BroadcastMessage("tempEat", SendMessageOptions.DontRequireReceiver);
-					MoveState = stateMoveLanding;
+					//MoveState = stateMoveLanding;
 					ControllerState = stateControllerSeeking;
 					
 				}
