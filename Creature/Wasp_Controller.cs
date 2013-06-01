@@ -39,8 +39,6 @@ public class Wasp_Controller : MonoBehaviour {
 	public FuzzyTarget FT;
 	
 	//Settings: Movement, Rotation, Thresholds
-	public bool bWaspOrientToWorldUp = true;
-	
 	public bool bUseTimeScaleForMovement = true;
 //	public float fMoveRate = 1.0f;
 //	public float fRotationRate = 5.0f;
@@ -218,7 +216,7 @@ public class Wasp_Controller : MonoBehaviour {
 				
 				//new test
 				bool reached = Datacore._SeekTarget3D( this, wCore.destinationNext.position, 
-					2.0f, bWaspOrientToWorldUp, bUseTimeScaleForMovement ) ;
+					2.0f, bUseTimeScaleForMovement ) ;
 				//temp force state change
 				if(reached) {
 					//Debug.Log("reached");
@@ -282,7 +280,7 @@ public class Wasp_Controller : MonoBehaviour {
 			landingTarget.trans = target;
 			landingTarget.gObject = target.gameObject;
 			
-			if( !Datacore._SeekTarget3D(wasp, landingTarget.trans.position, fLandSpeed, wasp.wController.bWaspOrientToWorldUp, wasp.wController.bUseTimeScaleForMovement) ) {
+			if( !Datacore._SeekTarget3D(wasp, landingTarget.trans.position, fLandSpeed, true) ) {
 				bFinished = false;
 			}
 			//yield return new WaitForSeconds(fDelayAfterLand);
@@ -328,7 +326,7 @@ public class Wasp_Controller : MonoBehaviour {
 			landingTarget.trans = target;
 			landingTarget.gObject = target.gameObject;
 			
-			if( !Datacore._SeekTarget3D(wasp, landingTarget.trans.position, fLandSpeed, wasp.wController.bWaspOrientToWorldUp, wasp.wController.bUseTimeScaleForMovement) ) {
+			if( !Datacore._SeekTarget3D(wasp, landingTarget.trans.position, fLandSpeed, true) ) {
 				//bFinished = false;
 			}
 			yield return new WaitForSeconds(fDelayAfterLand);
