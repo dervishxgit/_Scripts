@@ -252,7 +252,7 @@ public class Wasp_Controller : MonoBehaviour {
 //		}
 		switch(ControllerState) {
 		case stateControllerSeeking:
-			if(wCore.destinationNext != null && bGoToNext) {
+			if(_CheckValidWaypoint(wCore.destinationNext) && bGoToNext) {
 				Debug.Log("controller should go to next state");
 				ControllerState = stateControllerMoving;
 			}
