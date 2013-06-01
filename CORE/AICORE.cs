@@ -180,55 +180,9 @@ public class AICORE : MonoBehaviour {
 		float dot4 = Vector3.Dot(s_fwd, t_rgt);
 		bYawRight = dot4 < 0.0f;
 		
-//		//Should I roll?
-//		float dot5 = Vector3.Dot(s_up, t_rgt);
-//		bRollRight = dot5 < 0.0f;
-	}
-	
-	public static void _GetOrientationToWorldUp(
-		Component source, out float zSameForward, out float zSameUp, out float zSameRight,
-		out bool bRollRight)
-	{
-		zSameForward = 0.0f;
-		zSameRight = 0.0f;
-		zSameUp = 0.0f;
-		bRollRight = false;
-		if(source == null) return;
-
-		// Determine our orientation vectors
-		Vector3 s_fwd = source.transform.TransformDirection(Vector3.forward);
-		Vector3 s_rgt = source.transform.TransformDirection(Vector3.right);
-		Vector3 s_up = source.transform.TransformDirection(Vector3.up);
-		
-		// Determine target orientation vectors
-		Vector3 t_fwd = Vector3.forward;
-		Vector3 t_rgt = Vector3.right;
-		Vector3 t_up = Vector3.up;
-
-		// Need to normalize the vectors
-		s_fwd.Normalize();
-		s_rgt.Normalize();
-		s_up.Normalize();
-		t_fwd.Normalize();
-		t_rgt.Normalize();
-		t_up.Normalize();
-		
-		// Answer the question: Am I looking in same forward direction?
-		float dot1 = Vector3.Dot(s_fwd, t_fwd);
-		zSameForward = AICORE._IsItMax(dot1, -1.0f, 1.0f);
-		
-		// Answer the question: Am I oriented in the same rightward direction?
-		float dot2 = Vector3.Dot(s_rgt, t_rgt);
-		zSameRight = AICORE._IsItMax(dot2, -1.0f, 1.0f);
-		
-		// Answer the question: Am I oriented in the same upward direction?
-		float dot3 = Vector3.Dot(s_up, t_up);
-		zSameUp = AICORE._IsItMax(dot3, -1.0f, 1.0f);
-		
 		//Should I roll?
-		float dot_roll = Vector3.Dot(s_up, t_rgt);
-		bRollRight = dot_roll < 0.0f;
-		
+		float dot5 = Vector3.Dot(s_up, t_rgt);
+		bRollRight = dot5 < 0.0f;
 	}
 
 	// _GetSpatialAwareness3D : Answers the fuzzy questions "Is target in front?" and
