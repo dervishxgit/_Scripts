@@ -38,12 +38,15 @@ public class Datacore : MonoBehaviour
 	public static List<string> _AllLevels_ = new List<string> ();
 	
 	//User Movement calibration
+	public static Vector3 _VEC_WORLD = new Vector3(1, 1, 1);
+	
 	public static float fUserControlNavDefault = 50.0f;
 	public static float fUserControlNavZ;
 	public static float fUserControlNavX;
 	public static float fUserControlNavY;
 	public static float fUserControlMult = 1.0f;
 	public static float fUserControlMultStep = 3.0f;
+	
 	
 	static int stateMouse = 0;
 	public const int stateMouseLook = 0;
@@ -578,6 +581,160 @@ public class Datacore : MonoBehaviour
 					else if (!bUseTimeScale) {
 						float fVelocity = AICORE._Defuzzify (zIsTargetInFrontOfMe, 0.0f, fVelocity_noTime);
 						_MoveForward (bot, fVelocity, bUseTimeScale);
+					}
+					
+				}
+			}
+			
+			// Return whether target is reached
+			return fTargetDistance < 3.00f;
+		} else {
+			// Return whether we're facing the target
+			// Also include whether target is reached because when
+			// we're very close to the target we get weird look at information
+			return zIsTargetInFrontOfMe > 0.9f || fTargetDistance < 2.00f;
+		}
+		
+	}
+	
+	//SeekTarget3D - maintain world up orientation
+	static public bool _SeekTarget3D (Component bot, Vector3 target, float fMaxVelocity, bool bOrientToWorld, bool bUseTimeScale)
+	{
+		float fTargetDistance;
+		float zIsTargetBehindMe, zIsTargetInFrontOfMe, zIsTargetToMyLeft, zIsTargetToMyRight, zIsTargetAboveMe, zIsTargetBelowMe;
+		AICORE._GetSpatialAwareness3D (bot, target, out fTargetDistance, 
+			out zIsTargetBehindMe, out zIsTargetInFrontOfMe, 
+			out zIsTargetToMyLeft, out zIsTargetToMyRight, 
+			out zIsTargetAboveMe, out zIsTargetBelowMe);
+		
+		float zSameForward, zSameUp, zSameRight;
+		bool bRollRight = false, bPitchUp, bYawRight;
+		
+		
+		if(bOrientToWorld) {			
+			AICORE._GetOrientationAwareness3D(bot, _VEC_WORLD,
+				out zSameForward, out bRollRight,
+				out zSameRight, out bPitchUp, 
+				out zSameUp, out bYawRight);
+		}
+		
+		// Detect whether TARGET is sufficiently in front
+		if (zIsTargetInFrontOfMe > 0.99) {
+			// Satisfactally facing target	
+			// No need to turn
+		} else {
+			if (bUseTimeScale) {
+				////////////////UseTimeScale for turning
+				// Should we turn right or left?
+				if (zIsTargetToMyRight > zIsTargetToMyLeft) {
+					// Turn right
+					float fTurnRate;
+					if (zIsTargetBehindMe > zIsTargetToMyRight) {
+						fTurnRate = AICORE._Defuzzify (zIsTargetBehindMe, 0.0f, fTurnRate_useTime);					
+					} else {
+						fTurnRate = AICORE._Defuzzify (zIsTargetToMyRight, 0.0f, fTurnRate_useTime);
+					}
+					_RotateYaw (bot, fTurnRate, bUseTimeScale);
+				} else if (zIsTargetToMyLeft > zIsTargetToMyRight) {
+					// Turn left
+					float fTurnRate;
+					if (zIsTargetBehindMe > zIsTargetToMyLeft) {
+						fTurnRate = AICORE._Defuzzify (zIsTargetBehindMe, 0.0f, fTurnRate_useTime);					
+					} else {
+						fTurnRate = AICORE._Defuzzify (zIsTargetToMyLeft, 0.0f, fTurnRate_useTime);
+					}
+					_RotateYaw (bot, -fTurnRate, bUseTimeScale);
+				}
+			
+				// Should we pitch up or down?
+				if (zIsTargetAboveMe > zIsTargetBelowMe) {
+					//pitch up
+					float fPitchRate;
+					if (zIsTargetBehindMe > zIsTargetAboveMe) {
+						fPitchRate = AICORE._Defuzzify (zIsTargetBehindMe, 0.0f, fTurnRate_useTime);
+					} else {
+						fPitchRate = AICORE._Defuzzify (zIsTargetAboveMe, 0.0f, fTurnRate_useTime);
+					}
+					_RotatePitch (bot, fPitchRate, bUseTimeScale);
+				} else if (zIsTargetBelowMe > zIsTargetAboveMe) {
+					//pitch down
+					float fPitchRate;
+					if (zIsTargetBehindMe > zIsTargetBelowMe) {
+						fPitchRate = AICORE._Defuzzify (zIsTargetBehindMe, 0.0f, fTurnRate_useTime);
+					} else {
+						fPitchRate = AICORE._Defuzzify (zIsTargetBelowMe, 0.0f, fTurnRate_useTime);
+					}
+					_RotatePitch (bot, -fPitchRate, bUseTimeScale);
+				}
+				//////////////////////////////End UseTimeScale for turning
+			} else if (!bUseTimeScale) {
+				/////////////////////////////Begin !UseTimeScale for turning
+				// Should we turn right or left?
+				if (zIsTargetToMyRight > zIsTargetToMyLeft) {
+					// Turn right
+					float fTurnRate;
+					if (zIsTargetBehindMe > zIsTargetToMyRight) {
+						fTurnRate = AICORE._Defuzzify (zIsTargetBehindMe, 0.0f, fTurnRate_noTime);					
+					} else {
+						fTurnRate = AICORE._Defuzzify (zIsTargetToMyRight, 0.0f, fTurnRate_noTime);
+					}
+					_RotateYaw (bot, fTurnRate, bUseTimeScale);
+				} else if (zIsTargetToMyLeft > zIsTargetToMyRight) {
+					// Turn left
+					float fTurnRate;
+					if (zIsTargetBehindMe > zIsTargetToMyLeft) {
+						fTurnRate = AICORE._Defuzzify (zIsTargetBehindMe, 0.0f, fTurnRate_noTime);					
+					} else {
+						fTurnRate = AICORE._Defuzzify (zIsTargetToMyLeft, 0.0f, fTurnRate_noTime);
+					}
+					_RotateYaw (bot, -fTurnRate, bUseTimeScale);
+				}
+			
+				// Should we pitch up or down?
+				if (zIsTargetAboveMe > zIsTargetBelowMe) {
+					//pitch up
+					float fPitchRate;
+					if (zIsTargetBehindMe > zIsTargetAboveMe) {
+						fPitchRate = AICORE._Defuzzify (zIsTargetBehindMe, 0.0f, fTurnRate_noTime);
+					} else {
+						fPitchRate = AICORE._Defuzzify (zIsTargetAboveMe, 0.0f, fTurnRate_noTime);
+					}
+					_RotatePitch (bot, fPitchRate, bUseTimeScale);
+				} else if (zIsTargetBelowMe > zIsTargetAboveMe) {
+					//pitch down
+					float fPitchRate;
+					if (zIsTargetBehindMe > zIsTargetBelowMe) {
+						fPitchRate = AICORE._Defuzzify (zIsTargetBehindMe, 0.0f, fTurnRate_noTime);
+					} else {
+						fPitchRate = AICORE._Defuzzify (zIsTargetBelowMe, 0.0f, fTurnRate_noTime);
+					}
+					_RotatePitch (bot, -fPitchRate, bUseTimeScale);
+				}
+			}
+			///////////////////////////////End !UseTimeScale for turning
+		}
+					
+		if (fMaxVelocity > 0.0f) {
+			// Only drive forward when facing nearly toward target	
+			if (zIsTargetInFrontOfMe > 0.7) {
+				// Only drive forward if we're far enough from target
+				if (fTargetDistance >= 1.00f) {
+					if(bUseTimeScale) {
+						float fVelocity = AICORE._Defuzzify (zIsTargetInFrontOfMe, 0.0f, fVelocity_useTime);
+						_MoveForward (bot, fVelocity, bUseTimeScale);
+						
+						//hack: use lookat function to orient up we'll see if breaks
+						//if(bOrientToWorld && bRollRight) {
+							bot.transform.LookAt(target, Vector3.up);
+						//}
+					}
+					else if (!bUseTimeScale) {
+						float fVelocity = AICORE._Defuzzify (zIsTargetInFrontOfMe, 0.0f, fVelocity_noTime);
+						_MoveForward (bot, fVelocity, bUseTimeScale);
+						//if(bOrientToWorld && bRollRight) {
+							bot.transform.LookAt(target, Vector3.up);
+						//}
+						
 					}
 					
 				}
