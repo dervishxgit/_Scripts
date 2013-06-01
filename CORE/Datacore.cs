@@ -45,14 +45,14 @@ public class Datacore : MonoBehaviour
 //		return rtrans;
 //	}
 	
-	static Vector3 _GetWorldVector3() {
-		Vector3 rvec;
-		rvec.up = Vector3.up;
-		rvec.forward = Vector3.forward;
-		rvec.right = Vector3.right;
-		
-		return rvec;
-	}
+//	static Vector3 _GetWorldVector3() {
+//		Vector3 rvec;
+//		rvec.up = Vector3.up;
+//		rvec.forward = Vector3.forward;
+//		rvec.right = Vector3.right;
+//		
+//		return rvec;
+//	}
 	
 	//Level list
 	public static List<string> _AllLevels_ = new List<string> ();
@@ -505,8 +505,8 @@ public class Datacore : MonoBehaviour
 		//For orientation (if needed)
 		float zSameForward, zSameRight, zSameUp;
 		bool bRollRight, bPitchUp, bYawRight;
-		AICORE._GetOrientationAwareness3D( bot, UnityEngine.Transform, out zSameForward, out bRollRight,
-			out zSameRight, out bPitchUp, out zSameUp, out bYawRight);
+//		AICORE._GetOrientationAwareness3D( bot, target.transform, out zSameForward, out bRollRight,
+//			out zSameRight, out bPitchUp, out zSameUp, out bYawRight);
 		
 		
 		
