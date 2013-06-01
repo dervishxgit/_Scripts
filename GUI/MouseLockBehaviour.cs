@@ -3,11 +3,11 @@ using System.Collections;
 
 public class MouseLockBehaviour : MonoBehaviour {
     void DidLockCursor() {
-        Debug.Log("Locking cursor");
+        //Debug.Log("Locking cursor");
         //guiTexture.enabled = false;
     }
     void DidUnlockCursor() {
-        Debug.Log("Unlocking cursor");
+        //Debug.Log("Unlocking cursor");
         //guiTexture.enabled = true;
     }
     void OnMouseDown() {
