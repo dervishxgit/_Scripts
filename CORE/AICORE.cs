@@ -184,6 +184,7 @@ public class AICORE : MonoBehaviour {
 		float dot5 = Vector3.Dot(s_up, t_rgt);
 		bRollRight = dot5 < 0.0f;
 	}
+	
 
 	// _GetSpatialAwareness3D : Answers the fuzzy questions "Is target in front?" and
 	// all other directions (back, right, left). Also returns distance to target.
