@@ -167,6 +167,7 @@ public class Wasp_Core : MonoBehaviour
 		
 		destinationNext = _ReturnRandomKnownWaypoint ();
 		
+		wController._SetGoToNext(true);
 //		//Build Conditions
 //		BuildConditions();
 		
