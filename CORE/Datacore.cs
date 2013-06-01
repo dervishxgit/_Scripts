@@ -504,10 +504,12 @@ public class Datacore : MonoBehaviour
 		
 		//For orientation (if needed)
 		float zSameForward, zSameRight, zSameUp;
-		bool bRollRight, bPitchUp, bYawRight;
+		bool bRollRight = false, bPitchUp = false, bYawRight = false;
 //		AICORE._GetOrientationAwareness3D( bot, target.transform, out zSameForward, out bRollRight,
 //			out zSameRight, out bPitchUp, out zSameUp, out bYawRight);
-		
+		if(bOrientToWorldUp) {
+			AICORE._GetOrientationToWorldUp( bot, out zSameForward, out zSameUp, out zSameRight, out bRollRight);
+		}
 		
 		
 		// Detect whether TARGET is sufficiently in front
@@ -615,10 +617,16 @@ public class Datacore : MonoBehaviour
 					if(bUseTimeScale) {
 						float fVelocity = AICORE._Defuzzify (zIsTargetInFrontOfMe, 0.0f, fVelocity_useTime);
 						_MoveForward (bot, fVelocity, bUseTimeScale);
+						if(bOrientToWorldUp && bRollRight) {
+							_RotateRoll(bot, fVelocity, bUseTimeScale);
+						}
 					}
 					else if (!bUseTimeScale) {
 						float fVelocity = AICORE._Defuzzify (zIsTargetInFrontOfMe, 0.0f, fVelocity_noTime);
 						_MoveForward (bot, fVelocity, bUseTimeScale);
+						if(bOrientToWorldUp && bRollRight) {
+							_RotateRoll(bot, fVelocity, bUseTimeScale);
+						}
 					}
 					
 				}
