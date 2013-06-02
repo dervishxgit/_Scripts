@@ -128,12 +128,19 @@ public class Datacore : MonoBehaviour
 		_lAllPlants.Remove(plant);
 	}
 	
+	IEnumerator _RainAllPlants() {
+		foreach(PlantBehaviour plant in _lAllPlants) {
+			plant.SendMessage("_Rain", SendMessageOptions.DontRequireReceiver);
+			yield return null;
+		}
+	}
+	
 	//World Functions
 	static RainBehaviour Rain;
 	public void _Rain() {
-		foreach(PlantBehaviour plant in _lAllPlants) {
-			plant.SendMessage("_Rain", SendMessageOptions.DontRequireReceiver);
-		}
+		
+		StartCoroutine( _RainAllPlants() );
+
 		Debug.Log("datacore received _rain");
 	}
 	

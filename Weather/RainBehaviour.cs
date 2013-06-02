@@ -32,9 +32,9 @@ public class RainBehaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//test
-		if(bTestRain) {
+		//if(bTestRain) {
 			_Rain();
-		}
+		//}
 	}
 	
 	void _RunCycle() {
