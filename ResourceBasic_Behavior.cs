@@ -32,4 +32,8 @@ public class ResourceBasic_Behavior : MonoBehaviour {
 		gameObject.SendMessage("_selfDestroy");
 		//Destroy(this, 1);
 	}
+	
+	public void _DepleteResource() {
+		BroadcastMessage("_DepleteResource", SendMessageOptions.DontRequireReceiver);
+	}
 }
