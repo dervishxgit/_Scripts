@@ -117,6 +117,13 @@ public class Datacore : MonoBehaviour
 		_lAllWasps.Remove (wasp);
 	}
 	
+	IEnumerator _RainAllWasps() {
+		foreach(Wasp_Core wasp in _lAllWasps) {
+			wasp._Rain();
+			yield return null;
+		}
+	}
+	
 	//Plants in World
 	public static List<PlantBehaviour> _lAllPlants = new List<PlantBehaviour>();
 	
@@ -140,6 +147,8 @@ public class Datacore : MonoBehaviour
 	public void _Rain() {
 		
 		StartCoroutine( _RainAllPlants() );
+		
+		StartCoroutine( _RainAllWasps() );
 
 		Debug.Log("datacore received _rain");
 	}

@@ -4,29 +4,36 @@ using System.Collections;
 public class RainBehaviour : MonoBehaviour {
 	
 	//Settings
-	float fRainDropAmount = 1.0f; //amount delivered per plant per cycle
+	public float fRainDropAmount = 1.0f; //amount delivered per plant per cycle
 	
-	float fRainInterval = 1.0f;
+	public float fRainInterval = 1.0f;
 	
-	float fRainTotalThisCycle = 100.0f,
+	public float fRainTotalThisCycle = 100.0f,
+		 fRainAmountThreshold = 100.0f,
 		  fRainUnitPerSecond = 1.0f;
 	
-	int stateRainCycle = 0;
+	public int stateRainCycle = 0;
 	const int rainStateWaiting = 0,
 			  rainStateRaining = 1;
 	
-	bool bTestRain = true;
+	public bool bTestRain = true;
+	
+	public Skybox skybox;
+	
+	public Material skymat_overcast01,
+					skymat_sunny01;
 	
 	Datacore dCore;
 	
 	void Awake () {
 		Datacore._RegisterRain(this);
 		dCore = GameObject.FindGameObjectWithTag("CORE").GetComponent<Datacore>();
+		skybox = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Skybox>();
 	}
 	
 	// Use this for initialization
 	void Start () {
-	
+		
 	}
 	
 	// Update is called once per frame
@@ -38,8 +45,51 @@ public class RainBehaviour : MonoBehaviour {
 	}
 	
 	void _RunCycle() {
-		//test
-		_Rain();
+		
+		switch(stateRainCycle) {
+		case rainStateRaining:
+			fRainTotalThisCycle -= fRainUnitPerSecond * Time.deltaTime;
+			break;
+			
+		case rainStateWaiting:
+			fRainTotalThisCycle += fRainUnitPerSecond * Time.deltaTime;
+			break;
+		}
+	}
+	
+	void RunStateController() {
+		
+		switch(stateRainCycle) {
+		case rainStateRaining:
+			
+			//is rain depleted?
+			//if so go to wait
+			if(fRainTotalThisCycle <= 0.0f) {
+				transitionToWaiting();
+			}
+			break;
+			
+		case rainStateWaiting:
+			
+			break;
+		}
+	}
+	
+	void transitionToWaiting() {
+		//set new state
+		stateRainCycle = rainStateWaiting;
+		//manip weather bonus
+		
+		skybox.material = skymat_sunny01;
+	}
+	
+	void transitionToRaining() {
+		stateRainCycle = rainStateRaining;
+		
+		skybox.material = skymat_overcast01;
+		
+		//spawn rain particles
+		
 	}
 	
 	void _Rain() {

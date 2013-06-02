@@ -273,6 +273,10 @@ public class Wasp_Core : MonoBehaviour
 		return r;
 	}
 	
+	public void _Rain() {
+		//TODO rain notify
+	}
+	
 	//From mind
 	void SetMindOutString(string s) {
 		stateOfMind = s;
