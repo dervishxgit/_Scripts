@@ -99,7 +99,7 @@ public class RainBehaviour : MonoBehaviour {
 	}
 	
 	void _Rain() {
-		Debug.Log("Rain broadcasting");
+//		Debug.Log("Rain broadcasting");
 		//BroadcastMessage("_Rain", SendMessageOptions.DontRequireReceiver);
 		dCore._Rain();
 		bTestRain = false;

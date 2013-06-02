@@ -233,7 +233,7 @@ public class Wasp_Controller : MonoBehaviour {
 					wCore.destinationNext.transform.root.gameObject.BroadcastMessage("tempEat", SendMessageOptions.DontRequireReceiver);
 					wCore.SendMessage("_NotifyReachedTarget", true, SendMessageOptions.DontRequireReceiver);
 					//MoveState = stateMoveLanding;
-					Debug.Log("wasp at target");
+					//Debug.Log("wasp at target");
 					//ControllerState = stateControllerSeeking;
 					
 				}
@@ -254,7 +254,7 @@ public class Wasp_Controller : MonoBehaviour {
 		switch(ControllerState) {
 		case stateControllerSeeking:
 			if(_CheckValidWaypoint(wCore.destinationNext) && bGoToNext) {
-				Debug.Log("controller should go to next state");
+				//Debug.Log("controller should go to next state");
 				ControllerState = stateControllerMoving;
 			}
 			break;

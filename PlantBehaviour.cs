@@ -36,7 +36,7 @@ public class PlantBehaviour : MonoBehaviour {
 	
 	//Rain is an event called by message
 	public void _Rain() {
-		Debug.Log(this.ToString() + "plant received rain");
+		//Debug.Log(this.ToString() + "plant received rain");
 		//Rain gives energy
 		
 	}

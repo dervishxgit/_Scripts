@@ -249,13 +249,13 @@ public class Wasp_Core : MonoBehaviour
 	
 	public void _NotifyReachedTarget(bool reached) {
 		//when we reached the target, ask for a new target
-		Debug.Log("notify reached target");
+//		Debug.Log("notify reached target");
 		//for now, test for at hive, get next random if so
 		if( _AtHive(myHive) ) {
-			Debug.Log("notify reached target set next random");
+			//Debug.Log("notify reached target set next random");
 			_GetNextRandomWaypoint();
 		} else {
-			Debug.Log("notify reached target set next hive");
+			//Debug.Log("notify reached target set next hive");
 			_SetDestinationNext(myHive.transform);
 		} 
 	}

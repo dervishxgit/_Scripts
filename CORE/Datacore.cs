@@ -150,7 +150,7 @@ public class Datacore : MonoBehaviour
 		
 		StartCoroutine( _RainAllWasps() );
 
-		Debug.Log("datacore received _rain");
+//		Debug.Log("datacore received _rain");
 	}
 	
 	public static void _RegisterRain(RainBehaviour rain) {
