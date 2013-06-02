@@ -16,6 +16,10 @@ public class RainBehaviour : MonoBehaviour {
 			  rainStateRaining = 1;
 	
 	
+	void Awake () {
+		Datacore._RegisterRain(this);
+	}
+	
 	// Use this for initialization
 	void Start () {
 	
@@ -32,6 +36,6 @@ public class RainBehaviour : MonoBehaviour {
 	}
 	
 	void _Rain() {
-		BroadcastMessage("Rain");
+		BroadcastMessage("_Rain", SendMessageOptions.DontRequireReceiver);
 	}
 }
