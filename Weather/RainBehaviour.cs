@@ -15,6 +15,7 @@ public class RainBehaviour : MonoBehaviour {
 	const int rainStateWaiting = 0,
 			  rainStateRaining = 1;
 	
+	bool bTestRain = true;
 	
 	void Awake () {
 		Datacore._RegisterRain(this);
@@ -27,7 +28,10 @@ public class RainBehaviour : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		_RunCycle();
+		//test
+		if(bTestRain) {
+			_Rain();
+		}
 	}
 	
 	void _RunCycle() {
@@ -38,5 +42,6 @@ public class RainBehaviour : MonoBehaviour {
 	void _Rain() {
 		Debug.Log("Rain broadcasting");
 		BroadcastMessage("_Rain", SendMessageOptions.DontRequireReceiver);
+		bTestRain = false;
 	}
 }
