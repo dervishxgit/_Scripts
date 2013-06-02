@@ -3,6 +3,13 @@ using System.Collections;
 
 public class PlantBehaviour : MonoBehaviour {
 	
+	public int statePlant = 0;
+	const int statePlantSeed	= 1,
+			  statePlantGrowing	= 2,
+			  statePlantWaiting = 3,
+			  statePlantBlooming= 4,
+			  statePlantDying 	= 5;
+	
 	void Awake() {
 		_RegisterPlant(this);
 	}
@@ -30,5 +37,7 @@ public class PlantBehaviour : MonoBehaviour {
 	//Rain is an event called by message
 	public void _Rain() {
 		Debug.Log(this.ToString() + "plant received rain");
+		//Rain gives energy
+		
 	}
 }
