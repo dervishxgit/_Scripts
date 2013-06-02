@@ -8,8 +8,8 @@ public class RainBehaviour : MonoBehaviour {
 	
 	public float fRainInterval = 1.0f;
 	
-	public float fRainTotalThisCycle = 100.0f,
-		 fRainAmountThreshold = 100.0f,
+	public float fRainTotalThisCycle = 10.0f,
+		 fRainAmountThreshold = 10.0f,
 		  fRainUnitPerSecond = 1.0f;
 	
 	public int stateRainCycle = 0;
@@ -40,8 +40,11 @@ public class RainBehaviour : MonoBehaviour {
 	void Update () {
 		//test
 		//if(bTestRain) {
-			_Rain();
+			//_Rain();
 		//}
+		
+		RunStateController();
+		_RunCycle();
 	}
 	
 	void _RunCycle() {
@@ -49,6 +52,7 @@ public class RainBehaviour : MonoBehaviour {
 		switch(stateRainCycle) {
 		case rainStateRaining:
 			fRainTotalThisCycle -= fRainUnitPerSecond * Time.deltaTime;
+			_Rain();
 			break;
 			
 		case rainStateWaiting:
@@ -70,7 +74,9 @@ public class RainBehaviour : MonoBehaviour {
 			break;
 			
 		case rainStateWaiting:
-			
+			if(fRainTotalThisCycle >= fRainAmountThreshold) {
+				transitionToRaining();
+			}
 			break;
 		}
 	}
