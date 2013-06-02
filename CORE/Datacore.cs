@@ -131,9 +131,10 @@ public class Datacore : MonoBehaviour
 	//World Functions
 	static RainBehaviour Rain;
 	public void _Rain() {
-//		foreach(PlantBehaviour plant in _lAllPlants) {
-//			plant.SendMessage("_Rain", SendMessageOptions.DontRequireReceiver);
-//		}
+		foreach(PlantBehaviour plant in _lAllPlants) {
+			plant.SendMessage("_Rain", SendMessageOptions.DontRequireReceiver);
+		}
+		Debug.Log("datacore received _rain");
 	}
 	
 	public static void _RegisterRain(RainBehaviour rain) {

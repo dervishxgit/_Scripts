@@ -17,8 +17,11 @@ public class RainBehaviour : MonoBehaviour {
 	
 	bool bTestRain = true;
 	
+	Datacore dCore;
+	
 	void Awake () {
 		Datacore._RegisterRain(this);
+		dCore = GameObject.FindGameObjectWithTag("CORE").GetComponent<Datacore>();
 	}
 	
 	// Use this for initialization
@@ -41,7 +44,8 @@ public class RainBehaviour : MonoBehaviour {
 	
 	void _Rain() {
 		Debug.Log("Rain broadcasting");
-		BroadcastMessage("_Rain", SendMessageOptions.DontRequireReceiver);
+		//BroadcastMessage("_Rain", SendMessageOptions.DontRequireReceiver);
+		dCore._Rain();
 		bTestRain = false;
 	}
 }
