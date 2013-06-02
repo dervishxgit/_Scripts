@@ -117,6 +117,17 @@ public class Datacore : MonoBehaviour
 		_lAllWasps.Remove (wasp);
 	}
 	
+	//Plants in World
+	public static List<PlantBehaviour> _lAllPlants = new List<PlantBehaviour>();
+	
+	public static void _RegisterPlant(PlantBehaviour plant) {
+		_lAllPlants.Add(plant);
+	}
+	
+	public static void _UnregisterPlant(PlantBehaviour plant) {
+		_lAllPlants.Remove(plant);
+	}
+	
 	// Use this for initialization
 	void Awake () {
 		//set user move

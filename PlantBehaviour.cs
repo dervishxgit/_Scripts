@@ -1,11 +1,15 @@
 using UnityEngine;
 using System.Collections;
 
-public class FlowerBehaviour : MonoBehaviour {
-
+public class PlantBehaviour : MonoBehaviour {
+	
+	void Awake() {
+		_RegisterPlant(this);
+	}
+	
 	// Use this for initialization
 	void Start () {
-	
+		
 	}
 	
 	// Update is called once per frame
@@ -14,8 +18,8 @@ public class FlowerBehaviour : MonoBehaviour {
 	}
 	
 	//Register
-	static void _RegisterFlower(FlowerBehaviour flower) {
-		
+	static void _RegisterPlant(PlantBehaviour plant) {
+		Datacore._RegisterPlant(plant);
 	}
 	
 	//received message from resource behaviour
@@ -25,6 +29,6 @@ public class FlowerBehaviour : MonoBehaviour {
 	
 	//Rain is an event called by message
 	public void _Rain() {
-		
+		Debug.Log(this.ToString() + "plant received rain");
 	}
 }
