@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 public class RainBehaviour : MonoBehaviour {
-	
+
 	//Settings
 	public float fRainDropAmount = 1.0f; //amount delivered per plant per cycle
 	

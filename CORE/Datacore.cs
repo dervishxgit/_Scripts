@@ -144,6 +144,7 @@ public class Datacore : MonoBehaviour
 	
 	//World Functions
 	static RainBehaviour Rain;
+
 	public void _Rain() {
 		
 		StartCoroutine( _RainAllPlants() );
