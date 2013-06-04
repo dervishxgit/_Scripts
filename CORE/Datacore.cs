@@ -92,6 +92,19 @@ public class Datacore : MonoBehaviour
 	public static void _UnFocusTarget() {
 		goFocusTarget = null;
 	}
+
+    //Inspector
+    public static GameObject inspectObject;
+
+    public static void _SetInspectObject(GameObject inspect) {
+        GameObject.FindGameObjectWithTag("CORE").GetComponent<InspectorMenuBehaviour>()._Refresh();
+        inspectObject = inspect;
+    }
+
+    public static void _UnSetInspectObject() {
+        inspectObject = null;
+    }
+
 	//Wasp Movement calibration settings
 	//when ignoring timescale:
 	// 1/8

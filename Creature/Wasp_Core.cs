@@ -181,7 +181,7 @@ public class Wasp_Core : MonoBehaviour
 		//--sensors and transmitters mapped by default in prefab
 		
 		//test of chemo transmit
-		waspChemoTransmitter._SpawnChemoBehavior(chemoBehaviorPrefab, new Chemo_(), Color.blue, 10.0f);
+		//waspChemoTransmitter._SpawnChemoBehavior(chemoBehaviorPrefab, new Chemo_(), Color.blue, 10.0f);
 		
 		wController.MoveState = "Flying";
 		

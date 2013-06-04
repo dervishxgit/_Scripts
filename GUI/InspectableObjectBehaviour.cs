@@ -48,7 +48,7 @@ public class InspectableObjectBehaviour : MonoBehaviour {
             case typeWasp:
                 _stins.v_name = gameObject.name;
                 _stins.v_type = "WASP";
-                _stins.v_state = gameObject.GetComponent<Wasp_Core>().stateOfMind.ToString();
+                //_stins.v_state = gameObject.GetComponent<Wasp_Core>().stateOfMind.ToString();
                 break;
         }
 
@@ -67,6 +67,11 @@ public class InspectableObjectBehaviour : MonoBehaviour {
         }
 	}
 
+    void OnMouseDown() {
+        Datacore._SetInspectObject(gameObject);
+        Debug.Log("set inspect" + gameObject.transform.root.gameObject.ToString());
+    }
+
     IEnumerator UpdateStrings() {
         bUpdatingStrings = true;
 
@@ -81,7 +86,7 @@ public class InspectableObjectBehaviour : MonoBehaviour {
             case typeWasp:
                 _stins.v_name = gameObject.name;
                 _stins.v_type = "WASP";
-                _stins.v_state = gameObject.GetComponent<Wasp_Core>().stateOfMind.ToString();
+                //_stins.v_state = gameObject.GetComponent<Wasp_Core>().stateOfMind.ToString();
                 break;
         }
 

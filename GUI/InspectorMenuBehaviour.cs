@@ -6,10 +6,10 @@ public class InspectorMenuBehaviour : MonoBehaviour {
 
     public GUIText inspectorGUIText;
 
-    InspectableObjectBehaviour inspectableObject;
+    static InspectableObjectBehaviour inspectableObject;
 
     public bool bDisplay = true;
-    bool btest = false;
+    bool bRedraw = false;
 
     const int inspectorX = 300;
     const int inspectorY = 400;
@@ -29,7 +29,7 @@ public class InspectorMenuBehaviour : MonoBehaviour {
     string inspectorWindowText;
 
     void Awake () {
-        inspectableObject = gameObject.GetComponent<InspectableObjectBehaviour>();
+        //inspectableObject = gameObject.GetComponent<InspectableObjectBehaviour>();
     }
 
 	// Use this for initialization
@@ -71,9 +71,15 @@ public class InspectorMenuBehaviour : MonoBehaviour {
             //{
             //    StartCoroutine(DisplayInspectorText());
             //} while (false);
-            if (!btest) {
+        if (!bRedraw)
+        {
                 ClearInspectorText();
-                StartCoroutine(DisplayInspectorText(inspectableObject));
+                if (Datacore.inspectObject != null) {
+                    StartCoroutine(DisplayInspectorText(
+                        Datacore.inspectObject.GetComponent<InspectableObjectBehaviour>()
+                        ));
+                }
+                
             }
       //  }
 	}
@@ -109,7 +115,7 @@ public class InspectorMenuBehaviour : MonoBehaviour {
         //string[] sprops = new string[lsProperties.Count];
         //string[] svals = new string[lsValues.Count];
 
-        btest = true;
+        bRedraw = true;
 
         string[] sprops = inspect.lsProperties.ToArray();
         string[] svals = inspect.lsValues.ToArray();
@@ -120,7 +126,7 @@ public class InspectorMenuBehaviour : MonoBehaviour {
         }
 
         yield return new WaitForSeconds(5.0f);
-        btest = false;
+        bRedraw = false;
     }
 
     void ClearInspectorText() {
@@ -150,5 +156,12 @@ public class InspectorMenuBehaviour : MonoBehaviour {
 
     void OnMouseDown() {
         bDisplay = true;
+    }
+
+    public void _Refresh() {
+        //wtf does this do?
+        //flags for redraw (bad i know)
+        StopCoroutine("DisplayInspectorText");
+        bRedraw = false;
     }
 }
