@@ -61,7 +61,12 @@ public class InspectorMenuBehaviour : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (bDisplay) {
+        if(Input.GetButtonDown("Inspector") ) {
+            bDisplay = !bDisplay;
+            //ClearInspectorText();
+        }
+
+       // if (bDisplay) {
             //do
             //{
             //    StartCoroutine(DisplayInspectorText());
@@ -70,7 +75,7 @@ public class InspectorMenuBehaviour : MonoBehaviour {
                 ClearInspectorText();
                 StartCoroutine(DisplayInspectorText(inspectableObject));
             }
-        }
+      //  }
 	}
 
     void OnEnable()
@@ -132,15 +137,18 @@ public class InspectorMenuBehaviour : MonoBehaviour {
 
     void OnGUI()
     {
-        GUILayout.BeginArea(inspectorWindowRect);
-        GUILayout.Box(inspectorWindowText);
-        //GUILayout.BeginHorizontal();
-        //GUILayout.EndHorizontal();
-        GUILayout.EndArea();
-        //GUILayout.te
+        if (bDisplay) {
+            GUILayout.BeginArea(inspectorWindowRect);
+            GUILayout.Box(inspectorWindowText);
+            //GUILayout.BeginHorizontal();
+            //GUILayout.EndHorizontal();
+            GUILayout.EndArea();
+            //GUILayout.te
+        }
+
     }
 
-    void OnMouseDown() { 
-        
+    void OnMouseDown() {
+        bDisplay = true;
     }
 }

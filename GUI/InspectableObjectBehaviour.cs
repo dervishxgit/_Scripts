@@ -36,7 +36,8 @@ public class InspectableObjectBehaviour : MonoBehaviour {
     public stInspectorStrings _stins;
 
     void Awake() {
-        BuildPropertiesList();
+        BuildPropertiesList(_stins);
+        BuildValuesList(_stins);
         switch(inspectableObjectType) {
             case typeTest:
                 _stins.v_name = gameObject.name;
@@ -69,6 +70,12 @@ public class InspectableObjectBehaviour : MonoBehaviour {
 
         switch (inspectableObjectType)
         {
+            case typeTest:
+                _stins.v_name = gameObject.name;
+                _stins.v_type = "TEST";
+                _stins.v_state = "testing...";
+                break;
+
             case typeWasp:
                 _stins.v_name = gameObject.name;
                 _stins.v_type = "WASP";
@@ -80,7 +87,17 @@ public class InspectableObjectBehaviour : MonoBehaviour {
         bUpdatingStrings = false;
     }
 
-    void BuildPropertiesList() {
-        
+    void BuildPropertiesList(stInspectorStrings st) {
+        lsProperties.Add(stInspectorStrings.p_name);
+        lsProperties.Add(stInspectorStrings.p_type);
+        lsProperties.Add(stInspectorStrings.p_state);
+
+    }
+
+    void BuildValuesList(stInspectorStrings st) {
+        lsValues.Add(st.v_name);
+        lsValues.Add(st.v_type);
+        lsValues.Add(st.v_state);
+
     }
 }
