@@ -151,8 +151,12 @@ public class Wasp_Core : MonoBehaviour
 		//Register our wasp
 		dCore._RegisterWasp (this);
 		//FOR NOW- self register with first hive found in area
-		myHive = GameObject.FindGameObjectWithTag("Hive").GetComponent<Hive_>();
-		myHive._WaspJoin(this);
+        if (GameObject.FindGameObjectWithTag("Hive").GetComponent<Hive_>() != null) {
+            myHive = GameObject.FindGameObjectWithTag("Hive").GetComponent<Hive_>();
+            myHive._WaspJoin(this);
+        }
+		
+		
 		
 		//Build Conditions
 		BuildConditions();

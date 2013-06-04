@@ -37,7 +37,7 @@ public class InspectableObjectBehaviour : MonoBehaviour {
 
     void Awake() {
         BuildPropertiesList(_stins);
-        BuildValuesList(_stins);
+        
         switch(inspectableObjectType) {
             case typeTest:
                 _stins.v_name = gameObject.name;
@@ -51,6 +51,8 @@ public class InspectableObjectBehaviour : MonoBehaviour {
                 _stins.v_state = gameObject.GetComponent<Wasp_Core>().stateOfMind.ToString();
                 break;
         }
+
+        BuildValuesList(_stins);
     }
 
 	// Use this for initialization
