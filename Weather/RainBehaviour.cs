@@ -16,7 +16,7 @@ public class RainBehaviour : MonoBehaviour {
 	const int rainStateWaiting = 0,
 			  rainStateRaining = 1;
 	
-	public bool bTestRain = true;
+	public bool bOutRainMessage = false; //did rain send a message
 	
 	public Skybox skybox;
 	
@@ -53,11 +53,17 @@ public class RainBehaviour : MonoBehaviour {
 		switch(stateRainCycle) {
 		case rainStateRaining:
 			fRainTotalThisCycle -= fRainUnitPerSecond * Time.deltaTime;
-			_Rain();
+			if(!bOutRainMessage) {
+				_Rain(true);
+			}
+			
 			break;
 			
 		case rainStateWaiting:
 			fRainTotalThisCycle += fRainUnitPerSecond * Time.deltaTime;
+			if(!bOutRainMessage) {
+				_Rain(false);
+			}
 			break;
 		}
 	}
@@ -93,7 +99,8 @@ public class RainBehaviour : MonoBehaviour {
 		GameObject maincam = GameObject.FindGameObjectWithTag("MainCamera");
 		maincam.SendMessage("_DestroyRainEffect",SendMessageOptions.DontRequireReceiver);
 		
-		
+		//when we transition state, reset the message flag
+		bOutRainMessage = false;
 	}
 	
 	void transitionToRaining() {
@@ -104,12 +111,18 @@ public class RainBehaviour : MonoBehaviour {
 		//spawn rain particles
 		GameObject maincam = GameObject.FindGameObjectWithTag("MainCamera");
 		maincam.SendMessage("_SpawnRainEffect", SendMessageOptions.DontRequireReceiver);
+		
+		//when we transition state, reset the message flag
+		bOutRainMessage = false;
 	}
 	
-	void _Rain() {
+	void _Rain(bool bRaining) {
 //		Debug.Log("Rain broadcasting");
 		//BroadcastMessage("_Rain", SendMessageOptions.DontRequireReceiver);
-		dCore._Rain();
-		bTestRain = false;
+		if( bRaining) {
+			dCore._Rain();
+		}
+		
+		//bTestRain = false;
 	}
 }

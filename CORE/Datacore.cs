@@ -149,10 +149,13 @@ public class Datacore : MonoBehaviour
 	}
 	
 	IEnumerator _RainAllPlants() {
-		foreach(PlantBehaviour plant in _lAllPlants) {
-			plant.SendMessage("_Rain", SendMessageOptions.DontRequireReceiver);
-			yield return null;
+		if(_lAllPlants.Count > 0) {
+				foreach(PlantBehaviour plant in _lAllPlants) {
+				plant.SendMessage("_Rain", SendMessageOptions.DontRequireReceiver);
+				yield return null;
+			}
 		}
+		
 	}
 	
 	//World Functions

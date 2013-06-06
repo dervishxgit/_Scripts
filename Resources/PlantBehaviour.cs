@@ -44,6 +44,10 @@ public class PlantBehaviour : MonoBehaviour {
 		Datacore._RegisterPlant(plant);
 	}
 	
+	static void _UnRegisterPlant(PlantBehaviour plant) {
+		Datacore._UnregisterPlant(plant);
+	}
+	
 	//received message from resource behaviour
 	public void _DepleteResource() {
 		
@@ -116,5 +120,9 @@ public class PlantBehaviour : MonoBehaviour {
 		//Debug.Log(this.ToString() + "plant received rain");
 		//Rain gives energy
 		
+	}
+	
+	void OnDestroy() {
+		_UnRegisterPlant(this);
 	}
 }

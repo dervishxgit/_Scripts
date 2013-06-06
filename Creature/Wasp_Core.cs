@@ -279,6 +279,7 @@ public class Wasp_Core : MonoBehaviour
 	
 	public void _Rain() {
 		//TODO rain notify
+		
 	}
 	
 	//From mind
