@@ -23,6 +23,7 @@ public class RainBehaviour : MonoBehaviour {
 	public Material skymat_overcast01,
 					skymat_sunny01;
 	
+	
 	Datacore dCore;
 	
 	void Awake () {
@@ -87,6 +88,12 @@ public class RainBehaviour : MonoBehaviour {
 		//manip weather bonus
 		
 		skybox.material = skymat_sunny01;
+		
+		//remove rain effect if present
+		GameObject maincam = GameObject.FindGameObjectWithTag("MainCamera");
+		maincam.SendMessage("_DestroyRainEffect",SendMessageOptions.DontRequireReceiver);
+		
+		
 	}
 	
 	void transitionToRaining() {
@@ -95,7 +102,8 @@ public class RainBehaviour : MonoBehaviour {
 		skybox.material = skymat_overcast01;
 		
 		//spawn rain particles
-		
+		GameObject maincam = GameObject.FindGameObjectWithTag("MainCamera");
+		maincam.SendMessage("_SpawnRainEffect", SendMessageOptions.DontRequireReceiver);
 	}
 	
 	void _Rain() {
