@@ -124,6 +124,9 @@ public class Wasp_VirtualMind : MonoBehaviour {
 		//Food
 		wasp.shouldIFindFood = new Question_();
 		
+		//Shelter
+		wasp.shouldISeekShelter = new Question_();
+		
 		
 	}
 	
@@ -214,7 +217,7 @@ public class Wasp_VirtualMind : MonoBehaviour {
 		tempcon03[0] = answer01TimeEnergy;
 		wasp.findFood.ans.fAns = Question_._AnswerQuestion_f(waspRoleBasic.bmFindFoodFinal_HiveFoodHunger_TimeEnergy(),
 			tempcon03);
-		//Debug.Log(findFood.ans.fAns);
+		//Debug.Log(wasp.findFood.ans.fAns);
 		
 		//SHELTER///////////////////////////////////////////////////////////
 		wasp.seekShelter.quest = wasp.shouldISeekShelter;
@@ -228,6 +231,7 @@ public class Wasp_VirtualMind : MonoBehaviour {
 		tempcon01[0] = wasp.shouldISeekShelter.aConditions[0]._FuzzOutMax();
 		//not even needing behavior matrix if we only have ONE condition, so right now map directly to answer
 		wasp.seekShelter.ans.fAns = tempcon01[0];
+		Debug.Log(wasp.seekShelter.ans.fAns);
 	}
 	
 	void EndContemplate() {

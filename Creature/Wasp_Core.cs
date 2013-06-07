@@ -67,6 +67,8 @@ public class Wasp_Core : MonoBehaviour
 	public float fRain = 0.0f; //this is an exception (BAD!), will be accessed for assessing amount of rain
 	float fMinRain = 0.0f;
 	float fMaxRain = 5.0f; //tolerates rain for this amount of time
+	float fTimeSinceRain = 0.0f;
+	float fRainDecayStart = 3.0f;
 	public static string
 		_cRainString = "Rain";
 	
@@ -216,7 +218,13 @@ public class Wasp_Core : MonoBehaviour
 		if(stateOfMind == "FindFood") {
 			//wController.ControllerState = 2;
 			wController._SetGoToNext(true);
-		} else {
+		} 
+		else if(stateOfMind == "SeekShelter") {
+			_SetDestinationNext(myHive.transform);
+			//wController._SetGoToNext(true);
+		}
+		
+		else {
 			//wController.ControllerState = 0;
 		}
 		
@@ -293,14 +301,29 @@ public class Wasp_Core : MonoBehaviour
 		//mind will know what to do if there is rain
 		//core should just increase the impression of rain
 		fRain += 1.0f;
-		Debug.Log("wasp rain counter" + fRain);
+		//Debug.Log("wasp rain counter" + fRain);
 		if(fRain > fMaxRain) fRain = fMaxRain;
+		
+		_cRain.fValue = fRain;
+		
+		fTimeSinceRain = 0.0f;
 		
 	}
 	
 	void DecayRain(float amount) {
-		fRain -= amount;
-		if(fRain < fMinRain) fRain = fMinRain;
+		TimeSinceRain();
+		//fTimeSinceRain += Time.deltaTime;
+		
+		if(fTimeSinceRain > fRainDecayStart) {
+			fRain -= amount;
+			if(fRain < fMinRain) fRain = fMinRain;
+		}
+		
+		_cRain.fValue = fRain;
+	}
+	
+	void TimeSinceRain () {
+		fTimeSinceRain += Time.deltaTime;
 	}
 	
 	//From mind
@@ -334,7 +357,6 @@ public class Wasp_Core : MonoBehaviour
 		//Rain
 		_cRain = new Condition_(_cRainString, ref fRain, ref fMinRain, ref fMaxRain,
 			ref _lAllConditions);
-		
 	}
 	
 	
