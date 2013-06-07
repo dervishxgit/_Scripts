@@ -63,6 +63,12 @@ public class Wasp_Core : MonoBehaviour
 	//fEndDayHours = 1.0f;
 	public static string
 		_cTimeOfDayString = "TimeOfDay";
+	//Rain
+	public float fRain = 0.0f; //this is an exception (BAD!), will be accessed for assessing amount of rain
+	float fMinRain = 0.0f;
+	float fMaxRain = 5.0f; //tolerates rain for this amount of time
+	public static string
+		_cRainString = "Rain";
 	
 	//State of mind (from Virtual Mind)
 	public string stateOfMind = "none";
@@ -94,6 +100,7 @@ public class Wasp_Core : MonoBehaviour
 	//External
 	public Condition_ _cTimeOfThisDay;
 	public Condition_ _cKnownFoodNearby;
+	public Condition_ _cRain;
 	
 	//Hive
 	public Condition_ _cHiveFood;
@@ -109,8 +116,10 @@ public class Wasp_Core : MonoBehaviour
 	
 	public List<Recommendation_> lRecommendations = new List<Recommendation_>();
 	public Recommendation_ findFood = new Recommendation_();
+	public Recommendation_ seekShelter = new Recommendation_();
 	
 	public Question_ shouldIFindFood; //use answer to inform recommendation
+	public Question_ shouldISeekShelter;
 	
 	//External
 	//ChemoSense
@@ -212,6 +221,8 @@ public class Wasp_Core : MonoBehaviour
 		}
 		
 		_cTimeOfThisDay.fValue = (float)_WorldTime_._GetMinutesRM();
+		
+		DecayRain(Time.deltaTime);
 	}
 	
 	//Waypoints
@@ -279,7 +290,17 @@ public class Wasp_Core : MonoBehaviour
 	
 	public void _Rain() {
 		//TODO rain notify
+		//mind will know what to do if there is rain
+		//core should just increase the impression of rain
+		fRain += 1.0f;
+		Debug.Log("wasp rain counter" + fRain);
+		if(fRain > fMaxRain) fRain = fMaxRain;
 		
+	}
+	
+	void DecayRain(float amount) {
+		fRain -= amount;
+		if(fRain < fMinRain) fRain = fMinRain;
 	}
 	
 	//From mind
@@ -309,6 +330,11 @@ public class Wasp_Core : MonoBehaviour
 		fCurrentTimeHours = _WorldTime_._GetHoursRM();
 		_cTimeOfThisDay = new Condition_("TimeOfDay", ref fCurrentTimeHours, ref fStartDayHours,
 			ref fEndDayHours, ref _lAllConditions);
+		
+		//Rain
+		_cRain = new Condition_(_cRainString, ref fRain, ref fMinRain, ref fMaxRain,
+			ref _lAllConditions);
+		
 	}
 	
 	

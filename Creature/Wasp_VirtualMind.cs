@@ -40,6 +40,7 @@ public class Wasp_VirtualMind : MonoBehaviour {
 	//OUTS
 	string sOutString = "none";
 	const string sOut_FindFood = "FindFood";
+	const string sOut_SeekShelter = "SeekShelter";
 	
 //	public List<Recommendation_> lRecommendations = new List<Recommendation_>();
 //	public Recommendation_ findFood = new Recommendation_();
@@ -128,7 +129,7 @@ public class Wasp_VirtualMind : MonoBehaviour {
 	
 	static void BuildRecommendations(Wasp_Core wasp) {
 		
-		//FOOD
+		//FOOD////////////////////////////////////////////////
 		wasp.findFood.quest = wasp.shouldIFindFood;
 		wasp.findFood.ans = new Answer_();
 		wasp.lRecommendations.Add(wasp.findFood);
@@ -163,6 +164,21 @@ public class Wasp_VirtualMind : MonoBehaviour {
 		wasp.findFood.ans.fAns = Question_._AnswerQuestion_f(waspRoleBasic.bmFindFoodFinal_HiveFoodHunger_TimeEnergy(),
 			tempcon03);
 		//Debug.Log(findFood.ans.fAns);
+		
+		//SHELTER///////////////////////////////////////////////////////////
+		wasp.seekShelter.quest = wasp.shouldISeekShelter;
+		wasp.seekShelter.ans = new Answer_();
+		wasp.lRecommendations.Add(wasp.findFood);
+		
+		//simple, right now just depends on rain amount
+		wasp.shouldISeekShelter.aConditions = new Condition_[1];
+		wasp.shouldISeekShelter.aConditions[0] = Condition_._GetConditionByName(Wasp_Core._cRainString, wasp._lAllConditions);
+		tempcon01 = new float[1];
+		tempcon01[0] = wasp.shouldISeekShelter.aConditions[0]._FuzzOutMax();
+		//not even needing behavior matrix if we only have ONE condition, so right now map directly to answer
+		wasp.seekShelter.ans.fAns = tempcon01[0];
+		
+		
 	}
 	
 	void GetRecommendations(Wasp_Core wasp) {
@@ -199,6 +215,19 @@ public class Wasp_VirtualMind : MonoBehaviour {
 		wasp.findFood.ans.fAns = Question_._AnswerQuestion_f(waspRoleBasic.bmFindFoodFinal_HiveFoodHunger_TimeEnergy(),
 			tempcon03);
 		//Debug.Log(findFood.ans.fAns);
+		
+		//SHELTER///////////////////////////////////////////////////////////
+		wasp.seekShelter.quest = wasp.shouldISeekShelter;
+		wasp.seekShelter.ans = new Answer_();
+		wasp.lRecommendations.Add(wasp.findFood);
+		
+		//simple, right now just depends on rain amount
+		wasp.shouldISeekShelter.aConditions = new Condition_[1];
+		wasp.shouldISeekShelter.aConditions[0] = Condition_._GetConditionByName(Wasp_Core._cRainString, wasp._lAllConditions);
+		tempcon01 = new float[1];
+		tempcon01[0] = wasp.shouldISeekShelter.aConditions[0]._FuzzOutMax();
+		//not even needing behavior matrix if we only have ONE condition, so right now map directly to answer
+		wasp.seekShelter.ans.fAns = tempcon01[0];
 	}
 	
 	void EndContemplate() {
@@ -213,7 +242,12 @@ public class Wasp_VirtualMind : MonoBehaviour {
 	static void RunMindController(Wasp_VirtualMind mind) {
 		if( AICORE._RandomProbability(mind.wCore.findFood.ans.fAns) ) {
 			mind.sOutString = sOut_FindFood;
-		} else {
+		} 
+		else if( AICORE._RandomProbability(mind.wCore.seekShelter.ans.fAns) ) {
+			mind.sOutString = sOut_SeekShelter;
+		}
+		
+		else {
 			//set null for now
 			mind.sOutString = "none";
 		}

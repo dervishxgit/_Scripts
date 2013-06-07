@@ -54,7 +54,8 @@ public class RainBehaviour : MonoBehaviour {
 		case rainStateRaining:
 			fRainTotalThisCycle -= fRainUnitPerSecond * Time.deltaTime;
 			if(!bOutRainMessage) {
-				_Rain(true);
+				//Debug.Log("about to call rain on interval");
+				StartCoroutine(RainOnInterval(fRainInterval));
 			}
 			
 			break;
@@ -63,6 +64,7 @@ public class RainBehaviour : MonoBehaviour {
 			fRainTotalThisCycle += fRainUnitPerSecond * Time.deltaTime;
 			if(!bOutRainMessage) {
 				_Rain(false);
+				bOutRainMessage = true;
 			}
 			break;
 		}
@@ -121,8 +123,20 @@ public class RainBehaviour : MonoBehaviour {
 		//BroadcastMessage("_Rain", SendMessageOptions.DontRequireReceiver);
 		if( bRaining) {
 			dCore._Rain();
+			//bOutRainMessage = true;
+		}
+		else if ( !bRaining ) {
+			//bOutRainMessage = true;
 		}
 		
 		//bTestRain = false;
+	}
+	
+	IEnumerator RainOnInterval(float seconds) {
+		//will rain, wait, then reset message send
+		_Rain(true);
+		bOutRainMessage = true;
+		yield return new WaitForSeconds(seconds);
+		bOutRainMessage = false;
 	}
 }

@@ -132,6 +132,7 @@ public class Datacore : MonoBehaviour
 	
 	IEnumerator _RainAllWasps() {
 		foreach(Wasp_Core wasp in _lAllWasps) {
+			//Debug.Log("datacore raining a wasp");
 			wasp._Rain();
 			yield return null;
 		}
