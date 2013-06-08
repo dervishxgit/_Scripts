@@ -29,6 +29,29 @@ public class Wasp_Controller : MonoBehaviour {
 	public GameObject waspRoot;				//creature's root object
 	public GameObject waspGeo;				//creature's root geometry
 	
+	public GameObject sensorElevation;
+	
+	public class Sensor_ {
+		//set
+		public float fRayDistance,
+					fMinDistance,
+					fMaxDistance;
+		
+		public RaycastHit hitInfo;
+		
+		public bool bHitting;
+		
+		static public void _InitializeSensor(Sensor_ sensor,
+			float raydistance, float mindistance, float maxdistance
+			) {
+			sensor.fRayDistance = raydistance;
+			sensor.fMinDistance = mindistance;
+			sensor.fMaxDistance = maxdistance;
+			sensor.hitInfo = new RaycastHit();
+			sensor.bHitting = false;
+		}
+	};
+	
 	public class FuzzyTarget {
 		public	GameObject gObject;
 		public Transform trans;
@@ -60,6 +83,7 @@ public class Wasp_Controller : MonoBehaviour {
 	const string stateMoveFlying = "Flying";
 	const string stateMoveHovering = "Hovering";
 	const string stateMoveLanding = "Landing";
+	const string stateMoveAvoiding = "Avoiding";
 	
 	bool bLanded = false, bLanding = false;
 	
@@ -228,11 +252,18 @@ public class Wasp_Controller : MonoBehaviour {
 					
 				break;
 				
+			case "Avoiding":
+				
+				break;
+				
 			}
 		}
 	}
 	
 	private void RunControllerStateMachine() {
+		//test short-circuit elevation test to go to avoiding state
+		
+		
 		switch(ControllerState) {
 		case stateControllerSeeking:
 			if(_CheckValidWaypoint(wCore.destinationNext) && bGoToNext) {
