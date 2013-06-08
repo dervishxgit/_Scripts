@@ -246,6 +246,8 @@ public class Wasp_VirtualMind : MonoBehaviour {
 	static void RunMindController(Wasp_VirtualMind mind) {
 		// TODO: collect all the answers and wieght, then select
 		
+		
+		
 		if( AICORE._RandomProbability(mind.wCore.findFood.ans.fAns) ) {
 			mind.sOutString = sOut_FindFood;
 		} 
