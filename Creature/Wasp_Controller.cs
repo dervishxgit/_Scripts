@@ -29,28 +29,71 @@ public class Wasp_Controller : MonoBehaviour {
 	public GameObject waspRoot;				//creature's root object
 	public GameObject waspGeo;				//creature's root geometry
 	
-	public GameObject sensorElevation;
+	public GameObject sensorElevationLocation;
 	
 	public class Sensor_ {
 		//set
 		public float fRayDistance,
 					fMinDistance,
-					fMaxDistance;
+					fMaxDistance,
+					fDesiredDistance;
 		
 		public RaycastHit hitInfo;
 		
 		public bool bHitting;
 		
+		public Transform transAttach; //transform attached to
+		
 		static public void _InitializeSensor(Sensor_ sensor,
-			float raydistance, float mindistance, float maxdistance
+			float raydistance, float mindistance, float maxdistance,
+			float desiredDistance, Transform attach
 			) {
 			sensor.fRayDistance = raydistance;
 			sensor.fMinDistance = mindistance;
 			sensor.fMaxDistance = maxdistance;
+			sensor.fDesiredDistance = desiredDistance;
 			sensor.hitInfo = new RaycastHit();
 			sensor.bHitting = false;
+			sensor.transAttach = attach;
+		}
+		
+		static public bool _MaintainElevationReading(Sensor_ sen, out float fFuzzDistance, int checkMinMaxEqual) {
+			//cast ray (down)
+			Vector3 raydir = Vector3.down;
+			Vector3 raypos = sen.transAttach.position;
+			Ray rray = new Ray(raypos, raydir);
+			fFuzzDistance = 0.0f;
+			if( Physics.Raycast( rray, out sen.hitInfo, sen.fRayDistance) ) {
+				//if ray hit, make sure distance is within parameters
+				
+				switch(checkMinMaxEqual) {
+				case 0:
+					//check min
+					fFuzzDistance = AICORE._IsItMin(sen.hitInfo.distance, sen.fMinDistance, sen.fMaxDistance);
+					break;
+					
+				case 1:
+					//check max
+					fFuzzDistance = AICORE._IsItMax(sen.hitInfo.distance, sen.fMinDistance, sen.fMaxDistance);
+					break;
+					
+				case 2:
+					//check equal, later
+					break;
+				}
+				return true;
+			} else return false;
+			
+			//set out of fuzz distance to is min or max on range
 		}
 	};
+	
+	public Sensor_ sensorElevation = new Sensor_();
+	//set
+	float fSenElevRayDistance = 10.0f,
+		  fSenElevMinDistance = 1.0f,
+		  fSenElevMaxDistance = 20.0f,
+		  fSenElevDesiredDistance = 3.0f;
 	
 	public class FuzzyTarget {
 		public	GameObject gObject;
@@ -114,6 +157,10 @@ public class Wasp_Controller : MonoBehaviour {
 //		
 //		//create fuzzytarget
 //		this.FT = new FuzzyTarget();
+		
+		Sensor_._InitializeSensor(sensorElevation, fSenElevRayDistance,
+			fSenElevMinDistance, fSenElevMaxDistance, fSenElevDesiredDistance,
+			sensorElevationLocation.transform);
 	}
 	
 	// Update is called once per frame
