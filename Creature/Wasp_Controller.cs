@@ -90,10 +90,11 @@ public class Wasp_Controller : MonoBehaviour {
 	
 	public Sensor_ sensorElevation = new Sensor_();
 	//set
-	float fSenElevRayDistance = 10.0f,
+	float fSenElevRayDistance = 6.0f,
 		  fSenElevMinDistance = 0.25f,
-		  fSenElevMaxDistance = 20.0f,
-		  fSenElevDesiredDistance = 0.5f;
+		  fSenElevMaxDistance = 10.0f,
+		  fSenElevDesiredDistance = 1.0f;
+	float fElevTranslateMult = 30.0f;
 	
 	public class FuzzyTarget {
 		public	GameObject gObject;
@@ -254,6 +255,8 @@ public class Wasp_Controller : MonoBehaviour {
 			 * and where the destination is,
 			 * generically: orient to target (and/or ground), moveto target by increment
 			 */ 
+			float felevdistance = 0.0f;
+			
 			switch (_GetMoveState()) {
 			case "Standing":
 				break;
@@ -290,6 +293,13 @@ public class Wasp_Controller : MonoBehaviour {
 				//new test
 				bAtTarget = Datacore._SeekTarget3D( this, wCore.destinationNext.position, 
 					2.0f, bOrientToWorld, bUseTimeScaleForMovement ) ;
+				
+				felevdistance = 0.0f;
+				if(Sensor_._MaintainElevationReading(sensorElevation, out felevdistance, 0) ) {
+					//move away/up
+					float transAmount = AICORE._Defuzzify( 1 - felevdistance, sensorElevation.fMinDistance, sensorElevation.fMaxDistance );
+					transform.Translate(Vector3.up * fElevTranslateMult *  Time.deltaTime);
+				}
 				//temp force state change
 				if(bAtTarget) {
 					//Debug.Log("reached");
@@ -300,10 +310,10 @@ public class Wasp_Controller : MonoBehaviour {
 				break;
 				
 			case "Avoiding":
-				float felevdistance = 0.0f;
+				felevdistance = 0.0f;
 				if(Sensor_._MaintainElevationReading(sensorElevation, out felevdistance, 0) ) {
 					//move away/up
-					transform.Translate(Vector3.up * 10.0f *  Time.deltaTime);
+					transform.Translate(Vector3.up * fElevTranslateMult *  Time.deltaTime);
 				}
 				//back to flying
 				MoveState = stateMoveFlying;
@@ -315,10 +325,10 @@ public class Wasp_Controller : MonoBehaviour {
 	
 	private void RunControllerStateMachine() {
 		//test short-circuit elevation test to go to avoiding state
-		float fuzzelevDistance = 0.0f;
-		if(Sensor_._MaintainElevationReading(sensorElevation, out fuzzelevDistance, 0) ) {
-			MoveState = stateMoveAvoiding;
-		}
+//		float fuzzelevDistance = 0.0f;
+//		if(Sensor_._MaintainElevationReading(sensorElevation, out fuzzelevDistance, 0) ) {
+//			MoveState = stateMoveAvoiding;
+//		}
 		
 		switch(ControllerState) {
 		case stateControllerSeeking:
