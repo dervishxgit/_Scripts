@@ -91,9 +91,9 @@ public class Wasp_Controller : MonoBehaviour {
 	public Sensor_ sensorElevation = new Sensor_();
 	//set
 	float fSenElevRayDistance = 10.0f,
-		  fSenElevMinDistance = 1.0f,
+		  fSenElevMinDistance = 0.25f,
 		  fSenElevMaxDistance = 20.0f,
-		  fSenElevDesiredDistance = 3.0f;
+		  fSenElevDesiredDistance = 0.5f;
 	
 	public class FuzzyTarget {
 		public	GameObject gObject;
@@ -300,7 +300,13 @@ public class Wasp_Controller : MonoBehaviour {
 				break;
 				
 			case "Avoiding":
-				
+				float felevdistance = 0.0f;
+				if(Sensor_._MaintainElevationReading(sensorElevation, out felevdistance, 0) ) {
+					//move away/up
+					transform.Translate(Vector3.up * 10.0f *  Time.deltaTime);
+				}
+				//back to flying
+				MoveState = stateMoveFlying;
 				break;
 				
 			}
@@ -309,7 +315,10 @@ public class Wasp_Controller : MonoBehaviour {
 	
 	private void RunControllerStateMachine() {
 		//test short-circuit elevation test to go to avoiding state
-		
+		float fuzzelevDistance = 0.0f;
+		if(Sensor_._MaintainElevationReading(sensorElevation, out fuzzelevDistance, 0) ) {
+			MoveState = stateMoveAvoiding;
+		}
 		
 		switch(ControllerState) {
 		case stateControllerSeeking:

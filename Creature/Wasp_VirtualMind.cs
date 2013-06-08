@@ -231,7 +231,7 @@ public class Wasp_VirtualMind : MonoBehaviour {
 		tempcon01[0] = wasp.shouldISeekShelter.aConditions[0]._FuzzOutMax();
 		//not even needing behavior matrix if we only have ONE condition, so right now map directly to answer
 		wasp.seekShelter.ans.fAns = tempcon01[0];
-		Debug.Log(wasp.seekShelter.ans.fAns);
+		//Debug.Log(wasp.seekShelter.ans.fAns);
 	}
 	
 	void EndContemplate() {
@@ -245,15 +245,16 @@ public class Wasp_VirtualMind : MonoBehaviour {
 	
 	static void RunMindController(Wasp_VirtualMind mind) {
 		// TODO: collect all the answers and wieght, then select
+		Debug.Log(mind.wCore.seekShelter.ans.fAns);
 		
 		
-		
-		if( AICORE._RandomProbability(mind.wCore.findFood.ans.fAns) ) {
-			mind.sOutString = sOut_FindFood;
-		} 
-		else 
 		if( AICORE._RandomProbability(mind.wCore.seekShelter.ans.fAns) ) {
 			mind.sOutString = sOut_SeekShelter;
+		} 
+		else 
+		if( AICORE._RandomProbability(mind.wCore.findFood.ans.fAns) ) {
+			mind.sOutString = sOut_FindFood;
+			
 		}
 		
 		else {
