@@ -214,15 +214,7 @@ public class Wasp_Controller : MonoBehaviour {
 				//	if not facing, face
 				//MoveTo
 				
-				//proto
-//				bool facing = _CheckFacing(wCore.destinationNext);
-//				if(facing) {
-//					Debug.Log ("facing object");
-//					_MoveTo(wCore.destinationNext);
-//				} 
-//				else {
-//					_Face(this.FT);
-//				}
+				
 				
 				//new test
 				bAtTarget = Datacore._SeekTarget3D( this, wCore.destinationNext.position, 
@@ -232,10 +224,6 @@ public class Wasp_Controller : MonoBehaviour {
 					//Debug.Log("reached");
 					wCore.destinationNext.transform.root.gameObject.BroadcastMessage("tempEat", SendMessageOptions.DontRequireReceiver);
 					wCore.SendMessage("_NotifyReachedTarget", true, SendMessageOptions.DontRequireReceiver);
-					//MoveState = stateMoveLanding;
-					//Debug.Log("wasp at target");
-					//ControllerState = stateControllerSeeking;
-					
 				}
 					
 				break;
@@ -245,12 +233,6 @@ public class Wasp_Controller : MonoBehaviour {
 	}
 	
 	private void RunControllerStateMachine() {
-		//for now we just check if we reached our destination, goto seeking
-//		if( _ReachedTarget(wCore.destinationNext) ) {
-//			ControllerState = stateControllerSeeking;
-//		} else if( _CheckValidWaypoint(wCore.destinationNext) ) {
-//			ControllerState = stateControllerMoving;
-//		}
 		switch(ControllerState) {
 		case stateControllerSeeking:
 			if(_CheckValidWaypoint(wCore.destinationNext) && bGoToNext) {
