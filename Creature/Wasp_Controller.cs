@@ -290,32 +290,24 @@ public class Wasp_Controller : MonoBehaviour {
 				break;
 			case "Hovering":
 				//initiate holding pattern
-				//Debug.Log("entered hovering");
-				if(!bHoldingPattern) {
-					//StartCoroutine(EnterHoldingPattern_CO(this.wCore, wCore.destinationNext));
-					nextHoldingPosition = _GetNextHoldingPosition();
-					iHoldingCounter++;
-					Debug.Log(iHoldingCounter);
-					bHoldingPattern = true;
-				}
-				
-				else if (bHoldingPattern) {
-					if(iHoldingCounter >= iHoldTimes) {
-						//reset and move on
-						iHoldingCounter = 0;
-						bHoldingPattern = false;
-						MoveState = stateMoveFlying;
-					} else {
-						bool bInPosition = Datacore._SeekTarget3D( this, wCore.destinationNext.position, 
-						2.0f, bOrientToWorld, bUseTimeScaleForMovement ) ;
-						
-						if(bInPosition) {
-							bHoldingPattern = false;
-						}
-					}
-					
-					
-				}
+				//new test
+//				bHoldingPattern = Datacore._SeekTarget3D( this, nextHoldingPosition, 
+//					2.0f, bOrientToWorld, bUseTimeScaleForMovement ) ;
+//				
+////				felevdistance = 0.0f;
+////				if(Sensor_._MaintainElevationReading(sensorElevation, out felevdistance, 0) ) {
+////					//move away/up
+////					float transAmount = AICORE._Defuzzify( 1 - felevdistance, sensorElevation.fMinDistance, sensorElevation.fMaxDistance );
+////					transform.Translate(Vector3.up * fElevTranslateMult *  Time.deltaTime);
+////				}
+//				//temp force state change
+//				if(bHoldingPattern) {
+//					Debug.Log("reached");
+//					wCore.destinationNext.transform.root.gameObject.BroadcastMessage("tempEat", SendMessageOptions.DontRequireReceiver);
+//					wCore.SendMessage("_NotifyReachedTarget", true, SendMessageOptions.DontRequireReceiver);
+//					//test
+//					MoveState = stateMoveFlying;
+//				}
 				
 				break;
 			case "Flying":
@@ -341,7 +333,8 @@ public class Wasp_Controller : MonoBehaviour {
 					wCore.destinationNext.transform.root.gameObject.BroadcastMessage("tempEat", SendMessageOptions.DontRequireReceiver);
 					wCore.SendMessage("_NotifyReachedTarget", true, SendMessageOptions.DontRequireReceiver);
 					//test
-					MoveState = stateMoveHovering;
+					nextHoldingPosition = _GetNextHoldingPosition();
+					//MoveState = stateMoveHovering;
 				}
 					
 				break;
@@ -495,7 +488,7 @@ public class Wasp_Controller : MonoBehaviour {
 	
 	public static Vector3 _GetNextHoldingPosition() {
 		Vector3 rvec = new Vector3();
-		rvec = Random.insideUnitSphere * 10;
+		rvec = Random.insideUnitSphere;
 		return rvec;
 	}
 	
