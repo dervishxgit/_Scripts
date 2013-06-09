@@ -132,6 +132,11 @@ public class Wasp_Controller : MonoBehaviour {
 	bool bLanded = false, bLanding = false;
 	
 	public bool bHoldingPattern = false;
+	public Vector3 nextHoldingPosition;
+	public int iHoldingCounter = 0; //how many times wasp has held this pattern
+	public const int iHoldTimes = 5;      //max number of hold positions
+	public float fHoldWait = 1.5f;  //time to wait between hold positions
+	
 	
 	public bool bAtTarget = false;
 	bool bGoToNext = false;
@@ -287,7 +292,29 @@ public class Wasp_Controller : MonoBehaviour {
 				//initiate holding pattern
 				//Debug.Log("entered hovering");
 				if(!bHoldingPattern) {
-					StartCoroutine(EnterHoldingPattern_CO(this.wCore, wCore.destinationNext));
+					//StartCoroutine(EnterHoldingPattern_CO(this.wCore, wCore.destinationNext));
+					nextHoldingPosition = _GetNextHoldingPosition();
+					iHoldingCounter++;
+					Debug.Log(iHoldingCounter);
+					bHoldingPattern = true;
+				}
+				
+				else if (bHoldingPattern) {
+					if(iHoldingCounter >= iHoldTimes) {
+						//reset and move on
+						iHoldingCounter = 0;
+						bHoldingPattern = false;
+						MoveState = stateMoveFlying;
+					} else {
+						bool bInPosition = Datacore._SeekTarget3D( this, wCore.destinationNext.position, 
+						2.0f, bOrientToWorld, bUseTimeScaleForMovement ) ;
+						
+						if(bInPosition) {
+							bHoldingPattern = false;
+						}
+					}
+					
+					
 				}
 				
 				break;
@@ -465,7 +492,13 @@ public class Wasp_Controller : MonoBehaviour {
 	public static void _TakeOff(Wasp_Core wasp) {
 		
 	}
-
+	
+	public static Vector3 _GetNextHoldingPosition() {
+		Vector3 rvec = new Vector3();
+		rvec = Random.insideUnitSphere * 10;
+		return rvec;
+	}
+	
 	public static IEnumerator EnterHoldingPattern_CO(Wasp_Core wasp, Transform target) {
 		wasp.wController.bHoldingPattern = true;
 		
@@ -478,9 +511,9 @@ public class Wasp_Controller : MonoBehaviour {
 		for(int i = 0; i < numtimes; i++) {
 			Debug.Log("holding pattern + " + i);
 			Vector3 newposition = Random.insideUnitSphere;
-			//Datacore._SeekTarget3D(wasp, newposition, 1.0f, wasp.wController.bUseTimeScaleForMovement);
+			Datacore._SeekTarget3D(wasp, newposition, 1.0f, wasp.wController.bUseTimeScaleForMovement);
 			//wasp.transform.Translate(newposition);
-			wasp.StartCoroutine(_AnimateToTarget(wasp, target, 0.25f));
+			//wasp.StartCoroutine(_AnimateToTarget(wasp, target, 0.25f));
 			yield return new WaitForSeconds(fwait);
 		}
 		
