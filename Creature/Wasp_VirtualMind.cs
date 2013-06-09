@@ -245,7 +245,7 @@ public class Wasp_VirtualMind : MonoBehaviour {
 	
 	static void RunMindController(Wasp_VirtualMind mind) {
 		// TODO: collect all the answers and wieght, then select
-		Debug.Log(mind.wCore.seekShelter.ans.fAns);
+//		Debug.Log(mind.wCore.seekShelter.ans.fAns);
 		
 		
 		if( AICORE._RandomProbability(mind.wCore.seekShelter.ans.fAns) ) {

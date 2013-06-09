@@ -131,6 +131,8 @@ public class Wasp_Controller : MonoBehaviour {
 	
 	bool bLanded = false, bLanding = false;
 	
+	public bool bHoldingPattern = false;
+	
 	public bool bAtTarget = false;
 	bool bGoToNext = false;
 	public void _SetGoToNext(bool go) {
@@ -282,6 +284,12 @@ public class Wasp_Controller : MonoBehaviour {
 			case "Walking":
 				break;
 			case "Hovering":
+				//initiate holding pattern
+				//Debug.Log("entered hovering");
+				if(!bHoldingPattern) {
+					StartCoroutine(EnterHoldingPattern_CO(this.wCore, wCore.destinationNext));
+				}
+				
 				break;
 			case "Flying":
 				//Orient
@@ -302,21 +310,23 @@ public class Wasp_Controller : MonoBehaviour {
 				}
 				//temp force state change
 				if(bAtTarget) {
-					//Debug.Log("reached");
+					Debug.Log("reached");
 					wCore.destinationNext.transform.root.gameObject.BroadcastMessage("tempEat", SendMessageOptions.DontRequireReceiver);
 					wCore.SendMessage("_NotifyReachedTarget", true, SendMessageOptions.DontRequireReceiver);
+					//test
+					MoveState = stateMoveHovering;
 				}
 					
 				break;
 				
 			case "Avoiding":
-				felevdistance = 0.0f;
-				if(Sensor_._MaintainElevationReading(sensorElevation, out felevdistance, 0) ) {
-					//move away/up
-					transform.Translate(Vector3.up * fElevTranslateMult *  Time.deltaTime);
-				}
-				//back to flying
-				MoveState = stateMoveFlying;
+//				felevdistance = 0.0f;
+//				if(Sensor_._MaintainElevationReading(sensorElevation, out felevdistance, 0) ) {
+//					//move away/up
+//					transform.Translate(Vector3.up * fElevTranslateMult *  Time.deltaTime);
+//				}
+//				//back to flying
+//				MoveState = stateMoveFlying;
 				break;
 				
 			}
@@ -340,7 +350,11 @@ public class Wasp_Controller : MonoBehaviour {
 		case stateControllerMoving:
 			if(bGoToNext) {
 				
-			} else if(bAtTarget) ControllerState = stateControllerSeeking;
+			} 
+			else if(bAtTarget) {
+				//ControllerState = stateControllerSeeking;
+				MoveState = stateMoveHovering;
+			}
 			break;
 		}
 		
@@ -452,5 +466,36 @@ public class Wasp_Controller : MonoBehaviour {
 		
 	}
 
+	public static IEnumerator EnterHoldingPattern_CO(Wasp_Core wasp, Transform target) {
+		wasp.wController.bHoldingPattern = true;
+		
+		float fwait = 1.5f;
+		int numtimes = 5;
+		//get random transform points around target
+		
+		Vector3 vecTarget = target.position;
+		
+		for(int i = 0; i < numtimes; i++) {
+			Debug.Log("holding pattern + " + i);
+			Vector3 newposition = Random.insideUnitSphere;
+			//Datacore._SeekTarget3D(wasp, newposition, 1.0f, wasp.wController.bUseTimeScaleForMovement);
+			//wasp.transform.Translate(newposition);
+			wasp.StartCoroutine(_AnimateToTarget(wasp, target, 0.25f));
+			yield return new WaitForSeconds(fwait);
+		}
+		
+		wasp.wController.bHoldingPattern = false;
+		yield return null;
+	}
+	
+	public static IEnumerator _AnimateToTarget(Wasp_Core wasp, Transform target, float distThreshold) {
+		Vector3 vectarget = target.position - wasp.transform.position;
+		if(vectarget.magnitude > distThreshold) {
+			wasp.transform.Translate(vectarget * Time.deltaTime);
+		}
+		yield return new WaitForEndOfFrame();
+		
+	}
+	
 	
 }
