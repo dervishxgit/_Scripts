@@ -287,9 +287,11 @@ public class Wasp_Controller : MonoBehaviour {
 				
 				//test and bad for final night:
 				//just place chemo at location for whatever we were looking at
-				
-				wCore.waspChemoTransmitter._SpawnChemoBehavior(wCore.chemoBehaviorPrefab, new Chemo_(), 
+				if(!wCore._AtHive(wCore.myHive) ) {
+					wCore.waspChemoTransmitter._SpawnChemoBehavior(wCore.chemoBehaviorPrefab, new Chemo_(), 
 					wCore.currentColor, 10.0f);
+				}
+				
 				
 				//version dups color of target
 //				wCore.waspChemoTransmitter._SpawnChemoBehavior(wCore.chemoBehaviorPrefab, new Chemo_(), 
