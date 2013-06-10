@@ -287,7 +287,10 @@ public class Wasp_Controller : MonoBehaviour {
 				
 				//test and bad for final night:
 				//just place chemo at location for whatever we were looking at
-				if(!wCore._AtHive(wCore.myHive) ) {
+				if(wCore._AtHive(wCore.myHive) ) {
+					//don't chemo	
+				} else {
+					//feel free
 					wCore.waspChemoTransmitter._SpawnChemoBehavior(wCore.chemoBehaviorPrefab, new Chemo_(), 
 					wCore.currentColor, 10.0f);
 				}
@@ -343,7 +346,7 @@ public class Wasp_Controller : MonoBehaviour {
 				}
 				//temp force state change
 				if(bAtTarget) {
-					Debug.Log("reached");
+//					Debug.Log("reached");
 					wCore.destinationNext.transform.root.gameObject.BroadcastMessage("tempEat", SendMessageOptions.DontRequireReceiver);
 					wCore.SendMessage("_NotifyReachedTarget", true, SendMessageOptions.DontRequireReceiver);
 					//test

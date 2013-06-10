@@ -29,10 +29,10 @@ public class PlantBehaviour : MonoBehaviour
 	bool bRaining = false;
 	bool bDidRain = false;
 	int iRainCounter = 0;
-	float fWaitAfterRain = 5.0f;
+	float fWaitAfterRain = 3.0f;
 	public Vector3 posStart,
 			posEnd; //start and end of grow
-	float endY = 0.2f; //height of plant
+	float endY = 1.0f; //height of plant
 	
 	void Awake ()
 	{
@@ -135,7 +135,7 @@ public class PlantBehaviour : MonoBehaviour
 
 		case statePlantGrowing:
 			//grow towards target
-			plant.transform.Translate (Vector3.up * 0.05f * Time.deltaTime);
+			plant.transform.Translate (Vector3.up * 0.25f * Time.deltaTime);
 			break;
 
 		case statePlantBlooming:
