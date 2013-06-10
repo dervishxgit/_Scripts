@@ -285,6 +285,18 @@ public class Wasp_Controller : MonoBehaviour {
 //					MoveState = stateMoveTakeOff;
 //				}
 				
+				//test and bad for final night:
+				//just place chemo at location for whatever we were looking at
+				
+				wCore.waspChemoTransmitter._SpawnChemoBehavior(wCore.chemoBehaviorPrefab, new Chemo_(), 
+					wCore.currentColor, 10.0f);
+				
+				//version dups color of target
+//				wCore.waspChemoTransmitter._SpawnChemoBehavior(wCore.chemoBehaviorPrefab, new Chemo_(), 
+//					wCore.destinationNext.transform.root.gameObject.GetComponentInChildren<Renderer>().renderer.material.color, 10.0f);
+				
+				MoveState = stateMoveFlying;
+				
 				break;
 			case "Walking":
 				break;
@@ -335,6 +347,7 @@ public class Wasp_Controller : MonoBehaviour {
 					//test
 					nextHoldingPosition = _GetNextHoldingPosition();
 					//MoveState = stateMoveHovering;
+					MoveState = stateMoveLanding;
 				}
 					
 				break;
